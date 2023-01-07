@@ -74,7 +74,8 @@ public class FT_DropZone : MonoBehaviour
                 if (!grabbable.IsBeingHeld)
                 {
                     // wasn't being held and is the right game piece so snap to the drop zone
-                    Destroy(grabbable);
+                  //  Destroy(grabbable);
+                  grabbable.enabled=false;
                     StartCoroutine(SnapToZone(other.gameObject));
 
                 }
@@ -127,7 +128,8 @@ public class FT_DropZone : MonoBehaviour
         Rigidbody rb = otherGameObject.GetComponent<Rigidbody>();
         Destroy(rb);
         HVRGrabbable grabbable = otherGameObject.GetComponent<HVRGrabbable>();
-        Destroy(grabbable);
+        //Destroy(grabbable);
+        grabbable.enabled = false;
 
         // lerp to the Game Piece Guide scale, position, rotation
         Vector3 startingPos = otherGameObject.transform.position;
@@ -179,6 +181,7 @@ public class FT_DropZone : MonoBehaviour
         {
             currentStylePoints += (int)(distanceMultiplierBonus * distance);
             scoreMessageToReturn += "Distance Bonus: " + currentStylePoints + "\n";
+            FT_Steamworks_Integration.LongDistanceThrow100Points();
         }
         else
         {
