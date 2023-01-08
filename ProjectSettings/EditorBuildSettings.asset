@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_MyAssets/Scenes/Island_FurnToss_SRP_2023.unity
+    guid: 90bd31224169e9949927009436596244
+  - enabled: 1
     path: Assets/_MyAssets/Scenes/FT_SpaceStationLobby.unity
     guid: b408560a2a73180448b39071ba80f32f
   - enabled: 1
