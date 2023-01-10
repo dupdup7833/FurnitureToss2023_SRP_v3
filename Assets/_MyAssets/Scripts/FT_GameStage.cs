@@ -5,10 +5,12 @@ using TMPro;
 using HurricaneVR.Framework.Core.Utils;
 public class FT_GameStage : MonoBehaviour
 {
-    public  GameObject[] gamePieces;
-     public GameObject[] dropZones;
+    public GameObject[] gamePieces;
+    public GameObject[] dropZones;
 
-     public TextMeshPro scoreResult;
+    public float stageMinimumHeight = -5.0f;
+
+    public TextMeshPro scoreResult;
 
     public bool stageInProgress = false;
     public float startTime;
@@ -18,37 +20,38 @@ public class FT_GameStage : MonoBehaviour
 
     public string stageName;
 
-     public AudioClip AudioStageComplete;
+    public AudioClip AudioStageComplete;
 
     // Start is called before the first frame update
     void Start()
     {
         // disable all the game pieces
-        findGamePiecesAndDropZones(); 
-        Debug.Log("gamePieces: "+gamePieces.Length+"  dropZones: "+dropZones.Length);
+        findGamePiecesAndDropZones();
+        Debug.Log("gamePieces: " + gamePieces.Length + "  dropZones: " + dropZones.Length);
         SetupGamePieces(false);
         SetupDropZones(false);
-        
+
 
     }
 
-    private void findGamePiecesAndDropZones() {
+    private void findGamePiecesAndDropZones()
+    {
         gamePieces = GameObject.FindGameObjectsWithTag("FT_GamePiece");
-      /*  foreach (GameObject go in gamePiecesInScene ) {
-            Debug.Log("Added game piece");
-            gamePieces.Add((FT_GamePiece)go);
-        }
-        */
-        dropZones =  GameObject.FindGameObjectsWithTag("FT_DropZone");
+        /*  foreach (GameObject go in gamePiecesInScene ) {
+              Debug.Log("Added game piece");
+              gamePieces.Add((FT_GamePiece)go);
+          }
+          */
+        dropZones = GameObject.FindGameObjectsWithTag("FT_DropZone");
 
-       /* foreach (GameObject go in dropZonesInScene ) {
-             Debug.Log("Added drop zone");
-            dropZones.Add(go.GetComponent<FT_DropZone>());
-        }
-        */
-        
-        
-       
+        /* foreach (GameObject go in dropZonesInScene ) {
+              Debug.Log("Added drop zone");
+             dropZones.Add(go.GetComponent<FT_DropZone>());
+         }
+         */
+
+
+
     }
 
     private void SetupGamePieces(bool status)
@@ -56,6 +59,7 @@ public class FT_GameStage : MonoBehaviour
         for (int i = 0; i < gamePieces.Length; i++)
         {
             gamePieces[i].SetActive(status);
+              
             //Debug.Log("disabling:" + stagePieces[i].name);
         }
     }
@@ -66,6 +70,7 @@ public class FT_GameStage : MonoBehaviour
         for (int i = 0; i < dropZones.Length; i++)
         {
             dropZones[i].SetActive(status);
+            
             //Debug.Log("disabling:" + stagePieces[i].name);
         }
     }
@@ -81,7 +86,7 @@ public class FT_GameStage : MonoBehaviour
         while (stageInProgress)
         {
             timerVal = Time.time - startTime;
-          //  Debug.Log("Current Time: " + FormatTime(timerVal));
+            //  Debug.Log("Current Time: " + FormatTime(timerVal));
             yield return new WaitForSeconds(0.1f);
         }
 
@@ -101,15 +106,22 @@ public class FT_GameStage : MonoBehaviour
         startTime = Time.time;
         StartCoroutine(UpdateTimer());
         FT_GameController.GC.currentStage = this;
+        Debug.Log("current stage "+FT_GameController.GC.currentStage+" "+this);
+         SteamLeaderboards.Init();
 
     }
 
-    public void EndStage() {
+    public void EndStage()
+    {
         Debug.Log("EndStage");
         stageInProgress = false;
-         if (AudioStageComplete) {
-                if(SFXPlayer.Instance) SFXPlayer.Instance.PlaySFX(AudioStageComplete, FT_GameController.playerTransform.position);
-         }
+        if (AudioStageComplete)
+        {
+            if (SFXPlayer.Instance) SFXPlayer.Instance.PlaySFX(AudioStageComplete, FT_GameController.playerTransform.position);
+        }
+       
+        SteamLeaderboards.UpdateScore( FT_GameController.GC.stylePointsTotal);
+
     }
 
     public void CheckIfComplete()
@@ -121,30 +133,36 @@ public class FT_GameStage : MonoBehaviour
         {
             if (!dropZones[i].GetComponent<FT_DropZone>().objectPlaced)
             {
-//                Debug.Log("Found one not placed");
+                //                Debug.Log("Found one not placed");
                 anyLeftToPlace = true;
-            }  else {
+            }
+            else
+            {
                 piecesPlaced++;
             }
 
         }
-        Debug.Log(piecesPlaced+" out of "+dropZones.Length+" placed.");
-        if (anyLeftToPlace) {
+        Debug.Log(piecesPlaced + " out of " + dropZones.Length + " placed.");
+        if (anyLeftToPlace)
+        {
             return;
-        } else {
-            EndStage();
-            Debug.Log("ALL OBJECTS PLACED!  Time Elapsed "+GetFormattedTime());
         }
-        
+        else
+        {
+            EndStage();
+            Debug.Log("ALL OBJECTS PLACED!  Time Elapsed " + GetFormattedTime());
+        }
+
 
     }
 
     private void OnTriggerEnter(Collider other)
     {
         //  Debug.Log("on trigger enter" + other.gameObject.name);
-        if (other.CompareTag("Player") && !stageInProgress) {
-           Debug.Log("on trigger enter PLAYER");
-           StartStage();
-        } 
+        if (other.CompareTag("Player") && !stageInProgress)
+        {
+            Debug.Log("on trigger enter PLAYER");
+            StartStage();
+        }
     }
 }

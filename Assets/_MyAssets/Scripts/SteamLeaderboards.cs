@@ -32,7 +32,7 @@ public class SteamLeaderboards : MonoBehaviour
     {
         SteamAPICall_t hSteamAPICall = SteamUserStats.FindLeaderboard(s_leaderboardName);
         m_findResult.Set(hSteamAPICall, OnLeaderboardFindResult);
-        InitTimer();
+       // InitTimer();
     }
 
     static private void OnLeaderboardFindResult(LeaderboardFindResult_t pCallback, bool failure)
@@ -44,7 +44,7 @@ public class SteamLeaderboards : MonoBehaviour
 
     static private void OnLeaderboardUploadResult(LeaderboardScoreUploaded_t pCallback, bool failure)
     {
-        UnityEngine.Debug.Log("STEAM LEADERBOARDS: failure - " + failure + " Completed - " + pCallback.m_bSuccess + " NewScore: " + pCallback.m_nGlobalRankNew + " Score " + pCallback.m_nScore + " HasChanged - " + pCallback.m_bScoreChanged);
+        UnityEngine.Debug.Log("STEAM LEADERBOARDS: Succeeded - " + !failure + " Completed - " + pCallback.m_bSuccess + " NewScore: " + pCallback.m_nGlobalRankNew + " Score " + pCallback.m_nScore + " HasChanged - " + pCallback.m_bScoreChanged);
     }
 
 
