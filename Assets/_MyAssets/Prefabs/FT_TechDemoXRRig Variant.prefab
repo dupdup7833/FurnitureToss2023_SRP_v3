@@ -7,6 +7,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 863091116661665696, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_text
+      value: gfhfghfhfhg
+      objectReference: {fileID: 0}
+    - target: {fileID: 2477160155361013475, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_RenderMode
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3924027509334240876, guid: 6974999791dc8804fafee05e319aa932, type: 3}
       propertyPath: m_TagString
       value: Player
@@ -57,6 +65,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3924027509722682573, guid: 6974999791dc8804fafee05e319aa932, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4126968118537119993, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_PresetInfoIsWorld
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7187319768713420799, guid: 6974999791dc8804fafee05e319aa932, type: 3}
@@ -183,6 +195,42 @@ PrefabInstance:
       propertyPath: _fingers.Array.data[4].Bones.Array.data[2].Transform
       value: 
       objectReference: {fileID: 7605910921528454207}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_Pivot.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_Pivot.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9044779815686445242, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6974999791dc8804fafee05e319aa932, type: 3}
 --- !u!4 &437039301734385499 stripped

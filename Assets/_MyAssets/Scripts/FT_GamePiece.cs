@@ -14,6 +14,7 @@ public class FT_GamePiece : MonoBehaviour
     private string lastItemTouched = "";
 
     private Vector3 startingPositionVec3;
+    private Vector3 startingScaleVec3;
 
     private int surfacesTouched = 0;
 
@@ -27,37 +28,26 @@ public class FT_GamePiece : MonoBehaviour
     void Start()
     {
         this.startingPositionVec3 = this.transform.position;
+        this.startingScaleVec3 = this.transform.localScale;
         noCountedSurfacesTouchedSet.Add("Physics LeftHand");
         noCountedSurfacesTouchedSet.Add("Physics RightHand");
-      
+
     }
- 
 
-    void Update(){
-        ResetIfNotInPlayArea();
-    } 
-
-    private void ResetIfNotInPlayArea()
+    public void ResetGamePiece()
     {
-        // Debug.Log("in the coroutine begin");
-       // while (true)
-        //{
-          // Debug.Log("in the coroutine");
-            if (FT_GameController.GC.currentStage!=null)
-            {
-                //Debug.Log("checking position " + FT_GameController.GC.currentStage.stageMinimumHeight + "   " + this.transform.position.y);
-                if (FT_GameController.GC.currentStage.stageMinimumHeight > this.transform.position.y)
-                {
-                    Debug.Log("Had to reset position");
-                    this.transform.position = this.startingPositionVec3;
-                     Debug.Log("new y "+this.transform.position.y);
-                }
+        this.transform.position = this.startingPositionVec3;
+        this.transform.localScale = this.startingScaleVec3;
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = false;
+        HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
+        grabbable.enabled = true;
 
-            }
-           // yield return new WaitForSeconds(5.0f);
-     //   }  
     }
-
+    public void ResetPosition()
+    {
+        this.transform.position = this.startingPositionVec3;
+    }
     public void Released(HVRGrabberBase hvrbase, HVRGrabbable grabbable)
     {
         lastTouchedTime = Time.time;
@@ -67,6 +57,14 @@ public class FT_GamePiece : MonoBehaviour
         surfacesTouchedSet.Clear();
     }
 
+    public void PlacePiece()
+    {
+        // destroy the components so it can't be picked up again
+        Rigidbody rb = GetComponent<Rigidbody>();
+        rb.isKinematic = true;
+        HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
+        grabbable.enabled = false;
+    }
     private void OnCollisionEnter(Collision other)
     {
         //  Debug.Log("Last Item Touched: " + other.gameObject.name);
@@ -75,7 +73,7 @@ public class FT_GamePiece : MonoBehaviour
         {
             surfacesTouched += 1;
             surfacesTouchedSet.Add(lastItemTouched);
-            Debug.Log("ADDED: " + lastItemTouched);
+            //  Debug.Log("ADDED: " + lastItemTouched);
         }
         // TODO keep a set of surfaces touched.  Insure that a surface is only counted once.  Exclude certain surfaces like the floor.
 

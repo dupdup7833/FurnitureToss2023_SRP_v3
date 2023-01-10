@@ -59,18 +59,23 @@ public class FT_GameStage : MonoBehaviour
         for (int i = 0; i < gamePieces.Length; i++)
         {
             gamePieces[i].SetActive(status);
-              
+            gamePieces[i].GetComponent<FT_GamePiece>().ResetGamePiece();
+
             //Debug.Log("disabling:" + stagePieces[i].name);
         }
     }
 
 
-    private void SetupDropZones(bool status)
+    private void SetupDropZones(bool showDropZones)
     {
         for (int i = 0; i < dropZones.Length; i++)
         {
-            dropZones[i].SetActive(status);
-            
+            dropZones[i].SetActive(showDropZones);
+            if (showDropZones)
+            {
+                dropZones[i].GetComponent<FT_DropZone>().ResetDropZone();
+            }
+
             //Debug.Log("disabling:" + stagePieces[i].name);
         }
     }
@@ -106,8 +111,9 @@ public class FT_GameStage : MonoBehaviour
         startTime = Time.time;
         StartCoroutine(UpdateTimer());
         FT_GameController.GC.currentStage = this;
-        Debug.Log("current stage "+FT_GameController.GC.currentStage+" "+this);
-         SteamLeaderboards.Init();
+        FT_GameController.GC.stylePointsTotal = 0;
+        Debug.Log("current stage " + FT_GameController.GC.currentStage + " " + this);
+        SteamLeaderboards.Init();
 
     }
 
@@ -119,8 +125,8 @@ public class FT_GameStage : MonoBehaviour
         {
             if (SFXPlayer.Instance) SFXPlayer.Instance.PlaySFX(AudioStageComplete, FT_GameController.playerTransform.position);
         }
-       
-        SteamLeaderboards.UpdateScore( FT_GameController.GC.stylePointsTotal);
+
+        SteamLeaderboards.UpdateScore(FT_GameController.GC.stylePointsTotal);
 
     }
 
@@ -162,7 +168,7 @@ public class FT_GameStage : MonoBehaviour
         if (other.CompareTag("Player") && !stageInProgress)
         {
             Debug.Log("on trigger enter PLAYER");
-            StartStage();
+            // StartStage();
         }
     }
 }

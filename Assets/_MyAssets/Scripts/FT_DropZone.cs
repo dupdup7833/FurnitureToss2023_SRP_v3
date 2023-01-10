@@ -124,12 +124,7 @@ public class FT_DropZone : MonoBehaviour
         snapToZoneSound.Play(0);
         objectPlaced = true;
 
-        // destroy the components so it can't be picked up again
-        Rigidbody rb = otherGameObject.GetComponent<Rigidbody>();
-        Destroy(rb);
-        HVRGrabbable grabbable = otherGameObject.GetComponent<HVRGrabbable>();
-        //Destroy(grabbable);
-        grabbable.enabled = false;
+        otherGameObject.GetComponent<FT_GamePiece>().PlacePiece();
 
         // lerp to the Game Piece Guide scale, position, rotation
         Vector3 startingPos = otherGameObject.transform.position;
@@ -158,6 +153,11 @@ public class FT_DropZone : MonoBehaviour
         Snapped.Invoke();
     }
 
+    public void ResetDropZone() {
+        dropZone.SetActive(true);
+        this.gameObject.SetActive(true);
+        objectPlaced = false;
+    }
     private void ShowScore(string scoreMessageIn)
     {
         Destroy(scoreResult,5f);
