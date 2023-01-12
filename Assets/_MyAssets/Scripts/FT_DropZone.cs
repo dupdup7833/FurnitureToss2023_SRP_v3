@@ -160,13 +160,20 @@ public class FT_DropZone : MonoBehaviour
     }
     private void ShowScore(string scoreMessageIn)
     {
-        Destroy(scoreResult,5f);
+         
+        StartCoroutine(HideAfterSeconds(3, scoreResult.gameObject));
         scoreResult.transform.LookAt(FT_GameController.playerTransform);
         scoreResult.SetText(scoreMessageIn);
         scoreResult.gameObject.SetActive(true);
         Quaternion q = scoreResult.transform.rotation;
         scoreResult.transform.rotation = Quaternion.Euler(q.eulerAngles.x, q.eulerAngles.y + 180, q.eulerAngles.z);
     }
+
+     IEnumerator HideAfterSeconds(int seconds, GameObject obj)
+    {
+            yield return new WaitForSeconds(seconds);
+            obj.SetActive(false);
+        }
 
     private string CalculateScore(GameObject otherGameObject)
     {
