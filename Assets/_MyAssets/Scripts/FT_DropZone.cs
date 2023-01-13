@@ -47,10 +47,10 @@ public class FT_DropZone : MonoBehaviour
         guideGamePieceMesh = guideGamePiece.GetComponent<MeshFilter>().sharedMesh;
 
         snapToZoneSound = GetComponent<AudioSource>();
-        if (secondaryDropZone != null)
-        {
-            secondaryDropZone.dropZone.SetActive(false);
-        }
+      //  if (secondaryDropZone != null)
+      //  {
+      //       secondaryDropZone.dropZone.SetActive(false);
+      //  }
 
     }
 
@@ -148,6 +148,19 @@ public class FT_DropZone : MonoBehaviour
         }
         guideGamePiece.SetActive(false);
         dropZone.SetActive(false);
+        Debug.Log("about to check secondary drop zone");
+        if (secondaryDropZone != null)
+        {
+                Debug.Log("Turning on secondary drop zone");
+                  secondaryDropZone.gameObject.SetActive(true);
+            secondaryDropZone.dropZone.SetActive(true);
+           
+            // secondaryDropZone.gameObject.SetActive(true);
+           // secondaryDropZone.dropZone.SetActive(true);
+            Debug.Log("is the secondary drop zone active "+secondaryDropZone.dropZone.activeSelf);
+           
+          //  secondaryDropZone.objectPlaced = false;
+        }
 
         string scoreMessage = CalculateScore(otherGameObject);
         FT_GameController.GamePiecePlaced(scoreMessage);
@@ -158,22 +171,19 @@ public class FT_DropZone : MonoBehaviour
 
         // invoke the snapped event so that listening scoring tiles can turn on
         Snapped.Invoke();
-        if (secondaryDropZone != null)
-        {
-             secondaryDropZone.gameObject.SetActive(true);
-            secondaryDropZone.dropZone.SetActive(true);
-            Debug.Log("is the secondary drop zone active "+secondaryDropZone.dropZone.activeSelf);
-           
-            secondaryDropZone.objectPlaced = false;
-        }
+
     }
 
     public void ResetDropZone()
     {
-        if (!secondaryDropZone)
+        Debug.Log("Entering ResetDropZone.  gameObject "+gameObject.name+" isSecondaryDropZone "+isSecondaryDropZone);
+        if (!isSecondaryDropZone)
         {
             dropZone.SetActive(true);
             this.gameObject.SetActive(true);
+        } else {
+                       dropZone.SetActive(false);
+            this.gameObject.SetActive(false); 
         }
         objectPlaced = false;
 
