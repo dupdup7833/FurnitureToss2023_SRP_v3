@@ -7,6 +7,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2398222780404834530, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.216
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398222780404834530, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.026
+      objectReference: {fileID: 0}
+    - target: {fileID: 2398222780404834530, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.112
+      objectReference: {fileID: 0}
     - target: {fileID: 2532267379870658623, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.176
@@ -42,6 +54,10 @@ PrefabInstance:
     - target: {fileID: 2532267379870658623, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2951870539218565408, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2951870539218565409, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_Mesh
@@ -90,6 +106,10 @@ PrefabInstance:
     - target: {fileID: 2951870539218565410, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: secondaryDropZone
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2951870539218565413, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_Name

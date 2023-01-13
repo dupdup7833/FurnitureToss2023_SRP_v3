@@ -16,6 +16,8 @@ public class FT_DropZone : MonoBehaviour
     public int doubleDropBonus = 50;
     public int bankShotBonus = 50;
     public float distanceMultiplierBonus = 25.0f;
+    public FT_DropZone secondaryDropZone;
+    public bool isSecondaryDropZone = false;
 
     public TextMeshPro scoreResult;
 
@@ -45,6 +47,10 @@ public class FT_DropZone : MonoBehaviour
         guideGamePieceMesh = guideGamePiece.GetComponent<MeshFilter>().sharedMesh;
 
         snapToZoneSound = GetComponent<AudioSource>();
+        if (secondaryDropZone != null)
+        {
+            secondaryDropZone.dropZone.SetActive(false);
+        }
 
     }
 
@@ -74,8 +80,8 @@ public class FT_DropZone : MonoBehaviour
                 if (!grabbable.IsBeingHeld)
                 {
                     // wasn't being held and is the right game piece so snap to the drop zone
-                  //  Destroy(grabbable);
-                  grabbable.enabled=false;
+                    //  Destroy(grabbable);
+                    grabbable.enabled = false;
                     StartCoroutine(SnapToZone(other.gameObject));
 
                 }
@@ -112,7 +118,7 @@ public class FT_DropZone : MonoBehaviour
                 }
             }
             guideGamePiece.SetActive(false);
-           
+
         }
     }
 
@@ -120,7 +126,7 @@ public class FT_DropZone : MonoBehaviour
     {
         Debug.Log("Snap to Zone");
 
-        
+
         snapToZoneSound.Play(0);
         objectPlaced = true;
 
@@ -149,18 +155,33 @@ public class FT_DropZone : MonoBehaviour
 
         ShowScore(scoreMessage);
 
+
         // invoke the snapped event so that listening scoring tiles can turn on
         Snapped.Invoke();
+        if (secondaryDropZone != null)
+        {
+             secondaryDropZone.gameObject.SetActive(true);
+            secondaryDropZone.dropZone.SetActive(true);
+            Debug.Log("is the secondary drop zone active "+secondaryDropZone.dropZone.activeSelf);
+           
+            secondaryDropZone.objectPlaced = false;
+        }
     }
 
-    public void ResetDropZone() {
-        dropZone.SetActive(true);
-        this.gameObject.SetActive(true);
+    public void ResetDropZone()
+    {
+        if (!secondaryDropZone)
+        {
+            dropZone.SetActive(true);
+            this.gameObject.SetActive(true);
+        }
         objectPlaced = false;
+
+
     }
     private void ShowScore(string scoreMessageIn)
     {
-         
+
         StartCoroutine(HideAfterSeconds(3, scoreResult.gameObject));
         scoreResult.transform.LookAt(FT_GameController.playerTransform);
         scoreResult.SetText(scoreMessageIn);
@@ -169,11 +190,11 @@ public class FT_DropZone : MonoBehaviour
         scoreResult.transform.rotation = Quaternion.Euler(q.eulerAngles.x, q.eulerAngles.y + 180, q.eulerAngles.z);
     }
 
-     IEnumerator HideAfterSeconds(int seconds, GameObject obj)
+    IEnumerator HideAfterSeconds(int seconds, GameObject obj)
     {
-            yield return new WaitForSeconds(seconds);
-            obj.SetActive(false);
-        }
+        yield return new WaitForSeconds(seconds);
+        obj.SetActive(false);
+    }
 
     private string CalculateScore(GameObject otherGameObject)
     {
@@ -226,7 +247,7 @@ public class FT_DropZone : MonoBehaviour
         }
 
         // BANK SHOT
-        if (ftGamePiece.surfacesTouchedSet.Count>0)
+        if (ftGamePiece.surfacesTouchedSet.Count > 0)
         {
             int surfacesTouched = ftGamePiece.surfacesTouchedSet.Count;
             if (surfacesTouched == 1)
@@ -236,10 +257,10 @@ public class FT_DropZone : MonoBehaviour
             }
             else
             {
-                scoreMessageToReturn += "\n" + surfacesTouched + " Surface Bank Shot Bonus! +" + (surfacesTouched * bankShotBonus)*2;
-                currentStylePoints += (surfacesTouched * bankShotBonus)*2;
-                Debug.Log("Surfaces touched: "+ftGamePiece.surfacesTouchedSet);
-                
+                scoreMessageToReturn += "\n" + surfacesTouched + " Surface Bank Shot Bonus! +" + (surfacesTouched * bankShotBonus) * 2;
+                currentStylePoints += (surfacesTouched * bankShotBonus) * 2;
+                Debug.Log("Surfaces touched: " + ftGamePiece.surfacesTouchedSet);
+
             }
 
         }
