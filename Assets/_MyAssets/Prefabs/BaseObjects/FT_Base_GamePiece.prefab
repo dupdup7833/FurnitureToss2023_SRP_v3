@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 6253225758816123589}
   - component: {fileID: 6313479494629098737}
   m_Layer: 0
-  m_Name: FT_GamePiece
+  m_Name: FT_Base_GamePiece
   m_TagString: FT_GamePiece
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

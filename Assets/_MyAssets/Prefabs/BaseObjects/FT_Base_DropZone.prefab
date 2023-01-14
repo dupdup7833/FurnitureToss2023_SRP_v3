@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2951870539218565411}
   - component: {fileID: 9204875379487214568}
   m_Layer: 0
-  m_Name: FT_DropZone
+  m_Name: FT_Base_DropZone
   m_TagString: FT_DropZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

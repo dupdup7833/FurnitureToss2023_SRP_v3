@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 6280854018718782871}
   - component: {fileID: 6531446403588415403}
   m_Layer: 0
-  m_Name: ScoringTile
+  m_Name: FT_Base_ScoringTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
