@@ -18,6 +18,10 @@ public class FT_GamePiece : MonoBehaviour
 
     private int surfacesTouched = 0;
 
+    public bool gamePiecePlaced = false;
+
+    public bool projectileGamePiece = false;
+
     public HashSet<string> surfacesTouchedSet = new HashSet<string>();
 
     // Surfaces that don't count for bank shots
@@ -42,6 +46,7 @@ public class FT_GamePiece : MonoBehaviour
         rb.isKinematic = false;
         HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
         grabbable.enabled = true;
+        this.gamePiecePlaced = false;
 
     }
     public void ResetPosition()

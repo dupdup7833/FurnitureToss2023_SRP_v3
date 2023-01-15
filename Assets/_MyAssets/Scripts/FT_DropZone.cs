@@ -19,6 +19,7 @@ public class FT_DropZone : MonoBehaviour
     public FT_DropZone secondaryDropZone;
     public bool isSecondaryDropZone = false;
 
+
     public TextMeshPro scoreResult;
 
     // Transforms to act as start and end markers for the journey.
@@ -47,10 +48,10 @@ public class FT_DropZone : MonoBehaviour
         guideGamePieceMesh = guideGamePiece.GetComponent<MeshFilter>().sharedMesh;
 
         snapToZoneSound = GetComponent<AudioSource>();
-      //  if (secondaryDropZone != null)
-      //  {
-      //       secondaryDropZone.dropZone.SetActive(false);
-      //  }
+        //  if (secondaryDropZone != null)
+        //  {
+        //       secondaryDropZone.dropZone.SetActive(false);
+        //  }
 
     }
 
@@ -148,18 +149,20 @@ public class FT_DropZone : MonoBehaviour
         }
         guideGamePiece.SetActive(false);
         dropZone.SetActive(false);
+        FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
+        ftGamePiece.gamePiecePlaced = true;
         Debug.Log("about to check secondary drop zone");
         if (secondaryDropZone != null)
         {
-                Debug.Log("Turning on secondary drop zone");
-                  secondaryDropZone.gameObject.SetActive(true);
+            Debug.Log("Turning on secondary drop zone");
+            secondaryDropZone.gameObject.SetActive(true);
             secondaryDropZone.dropZone.SetActive(true);
-           
+
             // secondaryDropZone.gameObject.SetActive(true);
-           // secondaryDropZone.dropZone.SetActive(true);
-            Debug.Log("is the secondary drop zone active "+secondaryDropZone.dropZone.activeSelf);
-           
-          //  secondaryDropZone.objectPlaced = false;
+            // secondaryDropZone.dropZone.SetActive(true);
+            Debug.Log("is the secondary drop zone active " + secondaryDropZone.dropZone.activeSelf);
+
+            //  secondaryDropZone.objectPlaced = false;
         }
 
         string scoreMessage = CalculateScore(otherGameObject);
@@ -176,14 +179,16 @@ public class FT_DropZone : MonoBehaviour
 
     public void ResetDropZone()
     {
-        Debug.Log("Entering ResetDropZone.  gameObject "+gameObject.name+" isSecondaryDropZone "+isSecondaryDropZone);
+        Debug.Log("Entering ResetDropZone.  gameObject " + gameObject.name + " isSecondaryDropZone " + isSecondaryDropZone);
         if (!isSecondaryDropZone)
         {
             dropZone.SetActive(true);
             this.gameObject.SetActive(true);
-        } else {
-                       dropZone.SetActive(false);
-            this.gameObject.SetActive(false); 
+        }
+        else
+        {
+            dropZone.SetActive(false);
+            this.gameObject.SetActive(false);
         }
         objectPlaced = false;
 

@@ -32,10 +32,28 @@ public class FT_Gun : HVRGunBase
         //  bullet.transform.rotation = Quaternion.FromToRotation(bullet.transform.forward, direction) *
         //                                     bullet.transform.rotation;
         bullet.transform.rotation = BulletOrigin.rotation;
-       // bullet.transform.Rotate(0, 90, 0);
+        // bullet.transform.Rotate(0, 90, 0);
         bullet.GetComponent<Rigidbody>().AddForce(transform.forward * this.BulletSpeed);
-        Destroy(bullet, this.BulletLife);
+        FT_GamePiece ftGamePiece = bullet.GetComponent<FT_GamePiece>();
+        ftGamePiece.projectileGamePiece= true;
 
+        StartCoroutine(DestroyIfNotPlaced(ftGamePiece));
+
+
+    }
+
+    IEnumerator DestroyIfNotPlaced(FT_GamePiece ftGamePiece)
+    {
+
+        
+        yield return new WaitForSeconds(this.BulletLife);
+        Debug.Log("ftGamePiece.gamePiecePlaced "+ftGamePiece.gamePiecePlaced);
+        if (!ftGamePiece.gamePiecePlaced)
+        {
+            Destroy(ftGamePiece.gameObject);
+        } else {
+            FT_GameController.GC.currentStage.projectileGamePieces.Add(ftGamePiece.gameObject);
+        }
 
     }
 

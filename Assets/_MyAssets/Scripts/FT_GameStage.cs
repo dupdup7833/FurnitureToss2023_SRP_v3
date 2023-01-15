@@ -22,6 +22,8 @@ public class FT_GameStage : MonoBehaviour
 
     public AudioClip AudioStageComplete;
 
+    public List<GameObject> projectileGamePieces = new List<GameObject>();
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,37 +39,34 @@ public class FT_GameStage : MonoBehaviour
     private void findGamePiecesAndDropZones()
     {
         gamePieces = GameObject.FindGameObjectsWithTag("FT_GamePiece");
-        /*  foreach (GameObject go in gamePiecesInScene ) {
-              Debug.Log("Added game piece");
-              gamePieces.Add((FT_GamePiece)go);
-          }
-          */
         dropZones = GameObject.FindGameObjectsWithTag("FT_DropZone");
-
-        /* foreach (GameObject go in dropZonesInScene ) {
-              Debug.Log("Added drop zone");
-             dropZones.Add(go.GetComponent<FT_DropZone>());
-         }
-         */
-
-
-
     }
 
+
+    /** Loop through the game pieces that were setup via configuration and put them back to where they started.
+        Then remove the game pieces that were shot from the gun (projectile game pieces).  They are spawned in game.
+    */
     private void SetupGamePieces(bool status)
     {
+        // gamePieces = GameObject.FindGameObjectsWithTag("FT_GamePiece");
         for (int i = 0; i < gamePieces.Length; i++)
         {
             gamePieces[i].SetActive(status);
             gamePieces[i].GetComponent<FT_GamePiece>().ResetGamePiece();
-
-            //Debug.Log("disabling:" + stagePieces[i].name);
         }
+
+        foreach (var item in projectileGamePieces)
+        {
+            Destroy(item);
+
+        }
+
     }
 
 
     private void SetupDropZones(bool showDropZones)
     {
+        // dropZones = GameObject.FindGameObjectsWithTag("FT_DropZone");
         for (int i = 0; i < dropZones.Length; i++)
         {
             dropZones[i].SetActive(showDropZones);
@@ -80,10 +79,7 @@ public class FT_GameStage : MonoBehaviour
         }
     }
     // Update is called once per frame
-    void Update()
-    {
 
-    }
 
     IEnumerator UpdateTimer()
     {

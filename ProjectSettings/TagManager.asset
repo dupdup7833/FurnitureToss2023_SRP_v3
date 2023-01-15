@@ -14,6 +14,7 @@ TagManager:
   - Synty Tree
   - Synty Medium Farm
   - Synty Small Farm
+  - projectile
   layers:
   - Default
   - TransparentFX
