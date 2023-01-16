@@ -6,19 +6,28 @@ public class FT_DropZoneObstacle : MonoBehaviour
 {
     // Start is called before the first frame update
 
+    //public Transform startPoint;
     public Transform startPoint;
+    private Vector3 startPointSaved;
     public Transform endPoint;
+
+
     public GameObject obstacle;
 
-    public float stoppingDistance = 0.25f;
+    public float stoppingDistance = 0.01f;
 
-    public float speed = 50f;
+    public float speed = 3f;
     private Vector3 currentDestination;
     void Start()
     {
-        obstacle.transform.position = startPoint.position;
+        // save the starting point of the obstacle
+        startPointSaved = obstacle.transform.position;
+
+        // make the obstacle start with going towards the end point
         currentDestination = endPoint.position;
-        startPoint.gameObject.SetActive(false);
+
+        // turn off guides in game
+        startPoint.GetComponent<MeshRenderer>().enabled = false;
         endPoint.gameObject.SetActive(false);
     }
 
@@ -26,18 +35,18 @@ public class FT_DropZoneObstacle : MonoBehaviour
 
     private void Update()
     {
+        // get the direction to current destination
+        Vector3 direction = currentDestination - startPoint.transform.position;
 
-        //this.transform.position += new Vector3(1f, 0f, 0f);
-        Vector3 direction = currentDestination - obstacle.transform.position;
+        // move towards the target using speed and direction
+        startPoint.transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
 
-
-        obstacle.transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
-
+        // if close enough to the end target, within stopping distance, flip the direction
         if (direction.magnitude < stoppingDistance)
         {
             if (currentDestination == endPoint.position)
             {
-                currentDestination = startPoint.position;
+                currentDestination = startPointSaved;
             }
             else
             {

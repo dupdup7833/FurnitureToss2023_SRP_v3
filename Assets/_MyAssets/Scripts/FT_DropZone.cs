@@ -17,6 +17,8 @@ public class FT_DropZone : MonoBehaviour
     public int bankShotBonus = 50;
     public float distanceMultiplierBonus = 25.0f;
     public FT_DropZone secondaryDropZone;
+
+    public FT_DropZoneObstacle obstacle;
     public bool isSecondaryDropZone = false;
 
 
@@ -28,7 +30,7 @@ public class FT_DropZone : MonoBehaviour
     private Mesh guideGamePieceMesh;
 
     // Movement speed in units per second.
-    public float speed = 1.0F;
+    
 
     AudioSource snapToZoneSound;
 
@@ -46,7 +48,10 @@ public class FT_DropZone : MonoBehaviour
         // set up guide game piece
         guideGamePiece.SetActive(false);
         guideGamePieceMesh = guideGamePiece.GetComponent<MeshFilter>().sharedMesh;
-
+        if (obstacle != null)
+        {
+            obstacle.gameObject.SetActive(false);
+        }
         snapToZoneSound = GetComponent<AudioSource>();
         //  if (secondaryDropZone != null)
         //  {
@@ -147,8 +152,14 @@ public class FT_DropZone : MonoBehaviour
             // yield return new WaitForSeconds(.01f);
             yield return null;
         }
+        // hide everything related to the dropzone
         guideGamePiece.SetActive(false);
         dropZone.SetActive(false);
+        if (obstacle != null)
+        {
+            obstacle.gameObject.SetActive(false);
+        }
+
         FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
         ftGamePiece.gamePiecePlaced = true;
         Debug.Log("about to check secondary drop zone");
@@ -180,6 +191,10 @@ public class FT_DropZone : MonoBehaviour
     public virtual void ResetDropZone()
     {
         Debug.Log("Entering ResetDropZone.  gameObject " + gameObject.name + " isSecondaryDropZone " + isSecondaryDropZone);
+        if (obstacle != null)
+        {
+            obstacle.gameObject.SetActive(true);
+        }
         if (!isSecondaryDropZone)
         {
             dropZone.SetActive(true);
