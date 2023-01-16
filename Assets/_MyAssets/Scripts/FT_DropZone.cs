@@ -177,7 +177,7 @@ public class FT_DropZone : MonoBehaviour
 
     }
 
-    public void ResetDropZone()
+    public virtual void ResetDropZone()
     {
         Debug.Log("Entering ResetDropZone.  gameObject " + gameObject.name + " isSecondaryDropZone " + isSecondaryDropZone);
         if (!isSecondaryDropZone)
