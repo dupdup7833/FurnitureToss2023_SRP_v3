@@ -5,7 +5,7 @@ using TMPro;
 public class FT_Scoreboard : MonoBehaviour
 {
     public TextMeshPro timerText;
-    public TextMeshPro stylePointsTotalText;
+    public TextMeshProUGUI stylePointsTotalText;
     public TextMeshPro informationText;
 
 
