@@ -5,7 +5,7 @@ using TMPro;
 public class FT_Scoreboard : MonoBehaviour
 {
     public TextMeshPro timerText;
-    public TextMeshProUGUI stylePointsTotalText;
+    public TextMeshPro stylePointsTotalText;
     public TextMeshPro informationText;
 
 
@@ -20,16 +20,19 @@ public class FT_Scoreboard : MonoBehaviour
         //textItems = GetComponentsInChildren<TextMeshPro>();
         //textmeshPro.text = "Example of text to be displayed.";
 
-        gameStage = GameObject.FindWithTag("FT_GameStage").GetComponent<FT_GameStage>();
+       // gameStage = GameObject.FindWithTag("FT_GameStage").GetComponent<FT_GameStage>();
+       gameStage = FT_GameController.GC.currentStage;
         if (gameStage is null){
-             Debug.LogError("Could not find the game object");
+             Debug.Log("Could not find the game object");
+
+             gameStage = GameObject.FindWithTag("FT_GameStage").GetComponent<FT_GameStage>();
         }
         Debug.Log("My Stage is: "+gameStage.stageName);
         FT_GameController.gamePiecePlacedEvent.AddListener(UpdateScorboard);
     }
 
     // Update is called once per frame
-    void Update()
+     protected virtual void Update()
     {
         if (gameStage.stageInProgress)
         {
