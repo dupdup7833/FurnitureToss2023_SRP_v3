@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 2041422503623216259}
   - component: {fileID: 6253225758816123589}
   - component: {fileID: 6313479494629098737}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: FT_Base_GamePiece
   m_TagString: FT_GamePiece
   m_Icon: {fileID: 0}
@@ -253,6 +253,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lastTouchedTime: 0
+  gamePiecePlaced: 0
+  projectileGamePiece: 0
   pieceName: RedChair
 --- !u!114 &6313479494629098737
 MonoBehaviour:
