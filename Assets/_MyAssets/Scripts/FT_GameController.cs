@@ -24,13 +24,16 @@ public class FT_GameController : MonoBehaviour
 
     public static Transform playerTransform;
 
-    
+    public FT_PlayerOptions playerOptions = new FT_PlayerOptions();
+
+
 
     public static GamePiecePlacedStringEvent gamePiecePlacedEvent = new GamePiecePlacedStringEvent();
 
     void Start()
     {
-
+        SetPlayerOptions();
+        LoadPlayerOptions();
 
     }
     void Awake()
@@ -45,6 +48,29 @@ public class FT_GameController : MonoBehaviour
 
     }
 
+    private void LoadPlayerOptions()
+    {
+        playerOptions.hudTimer = PlayerPrefs.GetInt("hudTimer") == 1;
+        playerOptions.hudInfoText = PlayerPrefs.GetInt("hudInfoText") == 1;
+        playerOptions.hudStylePointsTotal = PlayerPrefs.GetInt("hudStylePointsTotal") == 1;
+        playerOptions.hudStylePointsTotalAlwaysOn = PlayerPrefs.GetInt("hudStylePointsTotalAlwaysOn") == 1;
+        playerOptions.hudDuration = PlayerPrefs.GetFloat("hudDuration");
+        Debug.Log("PlayerOptions.hudTimer:" + playerOptions.hudTimer);
+        Debug.Log("PlayerOptions.hudInfoText:" + playerOptions.hudInfoText);
+        Debug.Log("PlayerOptions.hudStylePointsTotal:" + playerOptions.hudStylePointsTotal);
+        Debug.Log("PlayerOptions.hudStylePointsTotalAlwaysOn:" + playerOptions.hudStylePointsTotalAlwaysOn);
+        Debug.Log("PlayerOptions.hudDuration:" + playerOptions.hudDuration);
+
+    }
+
+    private void SetPlayerOptions()
+    {
+        PlayerPrefs.SetInt("hudTimer", 0);
+        PlayerPrefs.SetInt("hudInfoText", 1);
+        PlayerPrefs.SetInt("hudStylePointsTotal", 1);
+        PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn", 0);
+        PlayerPrefs.SetFloat("hudDuration", 2.0f);
+    }
     void Update()
     {
         // TEMPORARY FOR GAME TESTING
@@ -68,7 +94,7 @@ public class FT_GameController : MonoBehaviour
 
     public void UnloadPreviousScene()
     {
-         Debug.Log("UnLoading Scene "+currentSceneName);
+        Debug.Log("UnLoading Scene " + currentSceneName);
         if (!string.IsNullOrEmpty(currentSceneName))
         {
             SceneManager.UnloadSceneAsync(currentSceneName);
@@ -77,13 +103,13 @@ public class FT_GameController : MonoBehaviour
     }
     public void LoadScene(string sceneName)
     {
-        Debug.Log("Loading Scene "+sceneName);
+        Debug.Log("Loading Scene " + sceneName);
         UnloadPreviousScene();
 
         currentSceneName = sceneName;
         //
-       // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-       StartCoroutine(LoadYourAsyncScene(sceneName));
+        // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        StartCoroutine(LoadYourAsyncScene(sceneName));
     }
 
 
@@ -94,8 +120,8 @@ public class FT_GameController : MonoBehaviour
         // You could also load the Scene by using sceneBuildIndex. In this case Scene2 has
         // a sceneBuildIndex of 1 as shown in Build Settings.
 
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName,  LoadSceneMode.Additive);
-       //asyncLoad.allowSceneActivation = false;
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+        //asyncLoad.allowSceneActivation = false;
 
         // Wait until the asynchronous scene fully loads
         while (!asyncLoad.isDone)

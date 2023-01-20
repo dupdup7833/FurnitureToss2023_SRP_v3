@@ -1,17 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
-public class FT_Scoreboard_HUD : FT_Scoreboard
+public class FT_HUD : FT_Scoreboard
 {
-    
-    public bool showTimer = true;
-    // Update is called once per frame
+
     protected override void Update()
     {
-        // HUD Doesn't have the timer
-        if (showTimer) {
+        if (FT_GameController.GC.playerOptions.hudTimer)
+        {
             base.Update();
         }
     }
+
+    protected override void UpdateScorboard(string message)
+    {
+        if (FT_GameController.GC.playerOptions.hudInfoText)
+        {
+            base.UpdateScorboard(message);
+        }
+         ShowStylePointsText();
+    }
+
+    protected override void ShowStylePointsText()
+    {
+
+        if (FT_GameController.GC.playerOptions.hudStylePointsTotal)
+        {
+            stylePointsTotalText.text = "Style Points Total: " + FT_GameController.GC.stylePointsTotal;
+            if (!FT_GameController.GC.playerOptions.hudStylePointsTotalAlwaysOn)
+            {
+                StartCoroutine(HideStylePointsText());
+            }
+
+        }
+    }
+
+    IEnumerator HideStylePointsText()
+    {
+        yield return new WaitForSeconds(FT_GameController.GC.playerOptions.hudDuration);
+        stylePointsTotalText.text = "";
+
+    }
+
+
+
 }

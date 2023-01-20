@@ -11,7 +11,7 @@ public class FT_Scoreboard : MonoBehaviour
 
     private FT_GameStage gameStage;
 
-    public float informationDisplayDuration = 5.0f;
+   
 
 
     // Start is called before the first frame update
@@ -20,19 +20,21 @@ public class FT_Scoreboard : MonoBehaviour
         //textItems = GetComponentsInChildren<TextMeshPro>();
         //textmeshPro.text = "Example of text to be displayed.";
 
-       // gameStage = GameObject.FindWithTag("FT_GameStage").GetComponent<FT_GameStage>();
-       gameStage = FT_GameController.GC.currentStage;
-        if (gameStage is null){
-             Debug.Log("Could not find the game object");
+        // gameStage = GameObject.FindWithTag("FT_GameStage").GetComponent<FT_GameStage>();
+        gameStage = FT_GameController.GC.currentStage;
+        if (gameStage is null)
+        {
+            Debug.Log
+            ("Could not find the game object");
 
-             gameStage = GameObject.FindWithTag("FT_GameStage").GetComponent<FT_GameStage>();
+            gameStage = GameObject.FindWithTag("FT_GameStage").GetComponent<FT_GameStage>();
         }
-        Debug.Log("My Stage is: "+gameStage.stageName);
+        Debug.Log("My Stage is: " + gameStage.stageName);
         FT_GameController.gamePiecePlacedEvent.AddListener(UpdateScorboard);
     }
 
     // Update is called once per frame
-     protected virtual void Update()
+    protected virtual void Update()
     {
         if (gameStage.stageInProgress)
         {
@@ -40,11 +42,12 @@ public class FT_Scoreboard : MonoBehaviour
         }
     }
 
-    public void UpdateScorboard(string message)
+    protected virtual void UpdateScorboard(string message)
     {
         Debug.Log("Update the scorboard");
-        StartCoroutine(ShowInformationText(informationDisplayDuration, message));
-        stylePointsTotalText.text = "Style Points Total: "+ FT_GameController.GC.stylePointsTotal;
+        StartCoroutine(ShowInformationText(FT_GameController.GC.playerOptions.hudDuration, message));
+        ShowStylePointsText();
+
     }
 
     IEnumerator ShowInformationText(float displayDuration, string message)
@@ -53,5 +56,10 @@ public class FT_Scoreboard : MonoBehaviour
         yield return new WaitForSeconds(displayDuration);
         informationText.text = "";
 
+    }
+
+    protected virtual void ShowStylePointsText()
+    {
+        stylePointsTotalText.text = "Style Points Total: " + FT_GameController.GC.stylePointsTotal;
     }
 }
