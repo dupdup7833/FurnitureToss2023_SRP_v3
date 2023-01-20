@@ -9,11 +9,15 @@ public class FT_Drone : MonoBehaviour
     UnityEngine.AI.NavMeshAgent agent;
 
     public float DelayBetweenRoutes = 1.0f;
+    public FT_GamePiece gamePiece;
     // Start is called before the first frame update
     void Start()
     {
 
         player = FT_GameController.playerTransform;
+
+         Rigidbody rb = gamePiece.GetComponent<Rigidbody>();
+        rb.isKinematic = true;
 
         agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
         StartCoroutine(UpdateWander());
