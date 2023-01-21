@@ -8,6 +8,8 @@ public class FT_GameStage : MonoBehaviour
     public GameObject[] gamePieces;
     public GameObject[] dropZones;
 
+    public GameObject[] drones;
+
     public float stageMinimumHeight = -5.0f;
 
     public TextMeshPro scoreResult;
@@ -32,6 +34,7 @@ public class FT_GameStage : MonoBehaviour
         Debug.Log("gamePieces: " + gamePieces.Length + "  dropZones: " + dropZones.Length);
         SetupGamePieces(false);
         SetupDropZones(false);
+        SetupDrones(false);
 
 
     }
@@ -40,6 +43,7 @@ public class FT_GameStage : MonoBehaviour
     {
         gamePieces = GameObject.FindGameObjectsWithTag("FT_GamePiece");
         dropZones = GameObject.FindGameObjectsWithTag("FT_DropZone");
+        drones = GameObject.FindGameObjectsWithTag("FT_Drone");
     }
 
 
@@ -64,6 +68,19 @@ public class FT_GameStage : MonoBehaviour
     }
 
 
+    private void SetupDrones(bool status)
+    {
+        for (int i = 0; i < drones.Length; i++)
+        {
+            drones[i].SetActive(status);
+            if (status)
+            {
+                drones[i].GetComponent<FT_Drone>().ResetDrone();
+            }
+
+
+        }
+    }
     private void SetupDropZones(bool showDropZones)
     {
         // dropZones = GameObject.FindGameObjectsWithTag("FT_DropZone");
@@ -104,6 +121,7 @@ public class FT_GameStage : MonoBehaviour
         stageInProgress = true;
         SetupGamePieces(true);
         SetupDropZones(true);
+        SetupDrones(true);
         startTime = Time.time;
         StartCoroutine(UpdateTimer());
         FT_GameController.GC.currentStage = this;

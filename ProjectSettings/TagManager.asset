@@ -15,22 +15,23 @@ TagManager:
   - Synty Medium Farm
   - Synty Small Farm
   - projectile
+  - FT_Drone
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - FT_UI
   - Water
   - UI
-  - 
-  - 
+  - DroneFeet
+  - Floor
   - Player
   - DynamicPose
   - PW_VFX
   - PW_Object_Small
   - PW_Object_Medium
   - PW_Object_Large
-  - 
+  - FT_GamePieces
   - 
   - 
   - 
@@ -51,4 +52,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: FT_UI
+    uniqueID: 3596025515
     locked: 0
