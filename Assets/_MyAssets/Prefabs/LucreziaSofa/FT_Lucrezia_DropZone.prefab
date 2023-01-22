@@ -75,6 +75,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: scoreResult
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2951870539218565413, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_Name
       value: FT_Lucrezia_DropZone

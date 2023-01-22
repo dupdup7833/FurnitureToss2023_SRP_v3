@@ -16,6 +16,7 @@ TagManager:
   - Synty Small Farm
   - projectile
   - FT_Drone
+  - Floor
   layers:
   - Default
   - TransparentFX

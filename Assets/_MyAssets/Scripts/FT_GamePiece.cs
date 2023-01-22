@@ -11,7 +11,7 @@ using HurricaneVR.Framework.Core.Grabbers;
 public class FT_GamePiece : MonoBehaviour
 {
     public float lastTouchedTime = 0.0f;
-    private string lastItemTouched = "";
+    private GameObject lastItemTouched;
 
     private Vector3 startingPositionVec3;
     private Vector3 startingScaleVec3;
@@ -57,7 +57,7 @@ public class FT_GamePiece : MonoBehaviour
     {
         lastTouchedTime = Time.time;
         //        Debug.Log("Time Touched Object: " + lastTouchedTime);
-        lastItemTouched = "";
+        lastItemTouched = null;
         surfacesTouched = 0;
         surfacesTouchedSet.Clear();
     }
@@ -73,12 +73,13 @@ public class FT_GamePiece : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         //  Debug.Log("Last Item Touched: " + other.gameObject.name);
-        lastItemTouched = other.gameObject.name;
-        if (!lastItemTouched.Contains("Floor") && !(noCountedSurfacesTouchedSet.Contains(lastItemTouched)))
+        lastItemTouched = other.gameObject;
+        if (lastItemTouched.tag!="Floor" && !(noCountedSurfacesTouchedSet.Contains(lastItemTouched.name)))
         {
-            surfacesTouched += 1;
-            surfacesTouchedSet.Add(lastItemTouched);
-            //  Debug.Log("ADDED: " + lastItemTouched);
+            
+            surfacesTouchedSet.Add(lastItemTouched.name);
+            surfacesTouched  = surfacesTouchedSet.Count;
+             Debug.Log("ADDED: " + lastItemTouched.name);
         }
         // TODO keep a set of surfaces touched.  Insure that a surface is only counted once.  Exclude certain surfaces like the floor.
 

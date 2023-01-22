@@ -289,7 +289,10 @@ public class FT_DropZone : MonoBehaviour
             {
                 scoreMessageToReturn += "\n" + surfacesTouched + " Surface Bank Shot Bonus! +" + (surfacesTouched * bankShotBonus) * 2;
                 currentStylePoints += (surfacesTouched * bankShotBonus) * 2;
-                Debug.Log("Surfaces touched: " + ftGamePiece.surfacesTouchedSet);
+               // Debug.Log("Surfaces touched: " + ftGamePiece.surfacesTouchedSet);
+                foreach (string surface in ftGamePiece.surfacesTouchedSet) {
+                    Debug.Log("Surfaces touched: " +surface);
+                }
 
             }
 
