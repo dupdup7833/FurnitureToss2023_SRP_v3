@@ -30,7 +30,7 @@ public class FT_DropZone : MonoBehaviour
     private Mesh guideGamePieceMesh;
 
     // Movement speed in units per second.
-    
+
 
     AudioSource snapToZoneSound;
 
@@ -67,7 +67,7 @@ public class FT_DropZone : MonoBehaviour
         // if (!objectPlaced && other.tag == "FT_GamePiece" && guideGamePieceMesh == other.GetComponent<MeshFilter>().sharedMesh)
         // {
 
-        StartCoroutine(SnapToZone(grabble.gameObject));
+        StartCoroutine(SnapToZone(grabble.gameObject, forceDrop: false));
         // }
     }
 
@@ -78,26 +78,25 @@ public class FT_DropZone : MonoBehaviour
         {
             HVRGrabbable grabbable = other.gameObject.GetComponent<HVRGrabbable>();
 
+
+
             if (grabbable != null)
             {
-
-                //Debug.Log("is being held " + grabbable.IsBeingHeld);
-                // it is not held a entering the zone, so snap to drop zone
-                if (!grabbable.IsBeingHeld)
+                if (grabbable.IsBeingForcedGrabbed)
                 {
-                    // wasn't being held and is the right game piece so snap to the drop zone
-                    //  Destroy(grabbable);
-                    grabbable.enabled = false;
-                    StartCoroutine(SnapToZone(other.gameObject));
-
+                    // pulled into the zone via a force grab
+                    ForceGrabDrop(other, grabbable);
                 }
-                else
+                else if (!grabbable.IsBeingHeld)
                 {
+                    // it is not held a entering the zone, so snap to drop zone
+                    DroppedIntoTheZone(other, grabbable);
+                }
+                else if (grabbable.IsBeingHeld)
+                {
+                    // Still being held so show the game piece guide and
                     // listen for the piece to be dropped
-                    grabbable.Released.AddListener(releaseIt);
-
-                    // show the game piece guide
-                    guideGamePiece.SetActive(true);
+                    ShowHoverGamePieceAndListenForDrop(grabbable);
                 }
             }
             else
@@ -107,6 +106,27 @@ public class FT_DropZone : MonoBehaviour
             }
         }
 
+    }
+
+    private void DroppedIntoTheZone(Collider other, HVRGrabbable grabbable)
+    {
+        grabbable.enabled = false;
+        StartCoroutine(SnapToZone(other.gameObject, forceDrop: false));
+    }
+
+    private void ShowHoverGamePieceAndListenForDrop(HVRGrabbable grabbable)
+    {
+        grabbable.Released.AddListener(releaseIt);
+
+        // show the game piece guide
+        guideGamePiece.SetActive(true);
+    }
+
+    private void ForceGrabDrop(Collider other, HVRGrabbable grabbable)
+    {
+        Debug.Log("IsBeingForcedGrabbed:" + grabbable.IsBeingForcedGrabbed);
+        grabbable.enabled = false;
+        StartCoroutine(SnapToZone(other.gameObject, forceDrop: true));
     }
 
     private void OnTriggerExit(Collider other)
@@ -128,7 +148,7 @@ public class FT_DropZone : MonoBehaviour
         }
     }
 
-    IEnumerator SnapToZone(GameObject otherGameObject)
+    IEnumerator SnapToZone(GameObject otherGameObject, bool forceDrop)
     {
         Debug.Log("Snap to Zone");
 
@@ -176,7 +196,7 @@ public class FT_DropZone : MonoBehaviour
             //  secondaryDropZone.objectPlaced = false;
         }
 
-        string scoreMessage = CalculateScore(otherGameObject);
+        string scoreMessage = CalculateScore(otherGameObject, forceDrop: forceDrop);
         FT_GameController.GamePiecePlaced(scoreMessage);
         FT_GameController.GC.currentStage.CheckIfComplete();
 
@@ -226,7 +246,7 @@ public class FT_DropZone : MonoBehaviour
         obj.SetActive(false);
     }
 
-    private string CalculateScore(GameObject otherGameObject)
+    private string CalculateScore(GameObject otherGameObject, bool forceDrop)
     {
         int currentStylePoints = 0;
         FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
@@ -238,7 +258,7 @@ public class FT_DropZone : MonoBehaviour
         if (distance > 3)
         {
             currentStylePoints += (int)(distanceMultiplierBonus * distance);
-            scoreMessageToReturn += "Distance Bonus: " + currentStylePoints + "\n";
+            scoreMessageToReturn += "Distance Bonus +" + currentStylePoints + "\n";
             FT_Steamworks_Integration.LongDistanceThrow100Points();
         }
         else
@@ -260,7 +280,7 @@ public class FT_DropZone : MonoBehaviour
         {
             Debug.Log("Time since it was touched:" + (Time.time - ftGamePiece.lastTouchedTime));
         }
-        Debug.Log("Distance Thrown:" + distance);
+        // Debug.Log("Distance Thrown:" + distance);
 
 
         // DOUBLE DROP BONUS
@@ -289,19 +309,37 @@ public class FT_DropZone : MonoBehaviour
             {
                 scoreMessageToReturn += "\n" + surfacesTouched + " Surface Bank Shot Bonus! +" + (surfacesTouched * bankShotBonus) * 2;
                 currentStylePoints += (surfacesTouched * bankShotBonus) * 2;
-               // Debug.Log("Surfaces touched: " + ftGamePiece.surfacesTouchedSet);
-                foreach (string surface in ftGamePiece.surfacesTouchedSet) {
-                    Debug.Log("Surfaces touched: " +surface);
+                // Debug.Log("Surfaces touched: " + ftGamePiece.surfacesTouchedSet);
+                foreach (string surface in ftGamePiece.surfacesTouchedSet)
+                {
+                    Debug.Log("Surfaces touched: " + surface);
                 }
 
             }
 
         }
+
+        /// ADDITIVE BONUSES - added to any previous caculation
+        // Force Drop
+        if (forceDrop)
+        {
+            scoreMessageToReturn += "\nForce Grab Drop +50";
+            currentStylePoints += 50;
+        }
+
+
+
+        // check for a force grab
+
+
         // scoreMessageToReturn += "good stuff!!!";
+        Debug.Log("Score Message to Return: "+scoreMessageToReturn);
 
         FT_GameController.GC.lastPlacement = Time.time;
         FT_GameController.GC.stylePointsTotal += currentStylePoints;
 
         return scoreMessageToReturn;
+
+
     }
 }
