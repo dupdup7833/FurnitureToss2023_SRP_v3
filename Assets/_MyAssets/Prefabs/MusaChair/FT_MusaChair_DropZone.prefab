@@ -135,6 +135,14 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.0793
       objectReference: {fileID: 0}
+    - target: {fileID: 4529657035346131427, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6178615146989825758, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.567
+      objectReference: {fileID: 0}
     - target: {fileID: 7500165675442980810, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_Mesh
       value: 

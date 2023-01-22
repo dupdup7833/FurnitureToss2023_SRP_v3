@@ -25,7 +25,7 @@ public class FT_GamePiece : MonoBehaviour
     public HashSet<string> surfacesTouchedSet = new HashSet<string>();
 
     // Surfaces that don't count for bank shots
-    public HashSet<string> noCountedSurfacesTouchedSet = new HashSet<string>();
+    public HashSet<string> objectNamesToNotCountForSurfacesTouchedSet = new HashSet<string>{"Physics LeftHand","Physics RightHand","FloorCollision","FT_Painting1_GamePiece(Clone)"};
 
     public string pieceName;
     // Start is called before the first frame update
@@ -33,9 +33,7 @@ public class FT_GamePiece : MonoBehaviour
     {
         this.startingPositionVec3 = this.transform.position;
         this.startingScaleVec3 = this.transform.localScale;
-        noCountedSurfacesTouchedSet.Add("Physics LeftHand");
-        noCountedSurfacesTouchedSet.Add("Physics RightHand");
-
+ 
     }
 
     public void ResetGamePiece()
@@ -73,15 +71,20 @@ public class FT_GamePiece : MonoBehaviour
     private void OnCollisionEnter(Collision other)
     {
         //  Debug.Log("Last Item Touched: " + other.gameObject.name);
-        lastItemTouched = other.gameObject;
-        if (lastItemTouched.tag!="Floor" && !(noCountedSurfacesTouchedSet.Contains(lastItemTouched.name)))
-        {
-            
-            surfacesTouchedSet.Add(lastItemTouched.name);
-            surfacesTouched  = surfacesTouchedSet.Count;
-             Debug.Log("ADDED: " + lastItemTouched.name);
-        }
+        CalculateSurfacesTouched(other);
         // TODO keep a set of surfaces touched.  Insure that a surface is only counted once.  Exclude certain surfaces like the floor.
 
+    }
+
+    private void CalculateSurfacesTouched(Collision other)
+    {
+        lastItemTouched = other.gameObject;
+        if ( !(objectNamesToNotCountForSurfacesTouchedSet.Contains(lastItemTouched.name)))
+        {
+
+            surfacesTouchedSet.Add(lastItemTouched.name);
+            surfacesTouched = surfacesTouchedSet.Count;
+          //  Debug.Log("ADDED: " + lastItemTouched.name);
+        }
     }
 }

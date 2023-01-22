@@ -12,10 +12,13 @@ using TMPro;
 public class FT_DropZone : MonoBehaviour
 {
     public UnityEvent Snapped = new UnityEvent();
+    public float durationOfScoringMessageSeconds = 5.0f;
     public int comboBonus = 100;
     public int doubleDropBonus = 50;
     public int bankShotBonus = 50;
     public float distanceMultiplierBonus = 25.0f;
+
+    public int forceGrabDrop = 25;
     public FT_DropZone secondaryDropZone;
 
     public FT_DropZoneObstacle obstacle;
@@ -39,8 +42,6 @@ public class FT_DropZone : MonoBehaviour
     private float journeyLength;
 
     public bool objectPlaced = false;
-
-
 
 
     void Start()
@@ -232,7 +233,7 @@ public class FT_DropZone : MonoBehaviour
     private void ShowScore(string scoreMessageIn)
     {
 
-        StartCoroutine(HideAfterSeconds(3, scoreResult.gameObject));
+        StartCoroutine(HideAfterSeconds(durationOfScoringMessageSeconds, scoreResult.gameObject));
         scoreResult.transform.LookAt(FT_GameController.playerTransform);
         scoreResult.SetText(scoreMessageIn);
         scoreResult.gameObject.SetActive(true);
@@ -240,7 +241,7 @@ public class FT_DropZone : MonoBehaviour
         scoreResult.transform.rotation = Quaternion.Euler(q.eulerAngles.x, q.eulerAngles.y + 180, q.eulerAngles.z);
     }
 
-    IEnumerator HideAfterSeconds(int seconds, GameObject obj)
+    IEnumerator HideAfterSeconds(float seconds, GameObject obj)
     {
         yield return new WaitForSeconds(seconds);
         obj.SetActive(false);
@@ -323,8 +324,8 @@ public class FT_DropZone : MonoBehaviour
         // Force Drop
         if (forceDrop)
         {
-            scoreMessageToReturn += "\nForce Grab Drop +50";
-            currentStylePoints += 50;
+            scoreMessageToReturn += "\nForce Grab Drop +" + forceGrabDrop;
+            currentStylePoints += forceGrabDrop;
         }
 
 
@@ -333,7 +334,7 @@ public class FT_DropZone : MonoBehaviour
 
 
         // scoreMessageToReturn += "good stuff!!!";
-        Debug.Log("Score Message to Return: "+scoreMessageToReturn);
+        Debug.Log("Score Message to Return: " + scoreMessageToReturn);
 
         FT_GameController.GC.lastPlacement = Time.time;
         FT_GameController.GC.stylePointsTotal += currentStylePoints;
