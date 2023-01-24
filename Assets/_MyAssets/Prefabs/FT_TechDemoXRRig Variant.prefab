@@ -254,7 +254,6 @@ MonoBehaviour:
   timerText: {fileID: 8857041555118436248}
   stylePointsTotalText: {fileID: 2883846688199093593}
   informationText: {fileID: 7938931650798413383}
-  informationDisplayDuration: 5
 --- !u!1 &994782220668315502
 GameObject:
   m_ObjectHideFlags: 0
@@ -1134,6 +1133,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 885885627402359450, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3924027509007222379, guid: 6974999791dc8804fafee05e319aa932, type: 3}
       propertyPath: m_TagString
       value: Player
@@ -1141,6 +1144,10 @@ PrefabInstance:
     - target: {fileID: 3924027509387932073, guid: 6974999791dc8804fafee05e319aa932, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3924027509387932085, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_PoseSource
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3924027509722682562, guid: 6974999791dc8804fafee05e319aa932, type: 3}
       propertyPath: m_Name
