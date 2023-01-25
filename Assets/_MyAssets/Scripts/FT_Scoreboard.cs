@@ -11,7 +11,7 @@ public class FT_Scoreboard : MonoBehaviour
 
     private FT_GameStage gameStage;
 
-   
+    private bool gameStageInLevel = true;
 
 
     // Start is called before the first frame update
@@ -27,16 +27,23 @@ public class FT_Scoreboard : MonoBehaviour
             Debug.Log
             ("Could not find the game object");
 
-            gameStage = GameObject.FindWithTag("FT_GameStage").GetComponent<FT_GameStage>();
+            gameStage = GameObject.FindWithTag("FT_GameStage")?.GetComponent<FT_GameStage>();
         }
-        Debug.Log("My Stage is: " + gameStage.stageName);
-        FT_GameController.gamePiecePlacedEvent.AddListener(UpdateScorboard);
+        if (gameStage != null)
+        {
+            Debug.Log("My Stage is: " + gameStage.stageName);
+            FT_GameController.gamePiecePlacedEvent.AddListener(UpdateScorboard);
+        }
+        else
+        {
+            gameStageInLevel = false;
+        }
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
-        if (gameStage.stageInProgress)
+        if (gameStageInLevel && gameStage.stageInProgress)
         {
             timerText.text = "Elapsed Time: " + gameStage.GetFormattedTime();
         }
@@ -45,21 +52,30 @@ public class FT_Scoreboard : MonoBehaviour
     protected virtual void UpdateScorboard(string message)
     {
         Debug.Log("Update the scorboard");
-        StartCoroutine(ShowInformationText(FT_GameController.GC.playerOptions.hudDuration, message));
-        ShowStylePointsText();
+        if (gameStageInLevel)
+        {
+            StartCoroutine(ShowInformationText(FT_GameController.GC.playerOptions.hudDuration, message));
+            ShowStylePointsText();
+        }
 
     }
 
     IEnumerator ShowInformationText(float displayDuration, string message)
     {
-        informationText.text = message;
-        yield return new WaitForSeconds(displayDuration);
-        informationText.text = "";
+        if (gameStageInLevel)
+        {
+            informationText.text = message;
+            yield return new WaitForSeconds(displayDuration);
+            informationText.text = "";
+        }
 
     }
 
     protected virtual void ShowStylePointsText()
     {
-        stylePointsTotalText.text = "Style Points Total: " + FT_GameController.GC.stylePointsTotal;
+        if (gameStageInLevel)
+        {
+            stylePointsTotalText.text = "Style Points Total: " + FT_GameController.GC.stylePointsTotal;
+        }
     }
 }
