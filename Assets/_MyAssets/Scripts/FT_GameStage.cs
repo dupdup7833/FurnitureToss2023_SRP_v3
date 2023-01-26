@@ -24,6 +24,9 @@ public class FT_GameStage : MonoBehaviour
 
     public AudioClip AudioStageComplete;
 
+    public FT_LeaderboardUI_ESL StylePointsLeaderboard;
+    public FT_LeaderboardUI_ESL TimeLeaderboard;
+
     public List<GameObject> projectileGamePieces = new List<GameObject>();
 
     // Start is called before the first frame update
@@ -35,6 +38,7 @@ public class FT_GameStage : MonoBehaviour
         SetupGamePieces(false);
         SetupDropZones(false);
         SetupDrones(false);
+        RefreshLeaderboards();
 
 
     }
@@ -140,10 +144,40 @@ public class FT_GameStage : MonoBehaviour
             if (SFXPlayer.Instance) SFXPlayer.Instance.PlaySFX(AudioStageComplete, FT_GameController.playerTransform.position);
         }
 
-        SteamLeaderboards.UpdateScore(FT_GameController.GC.stylePointsTotal);
+        //SteamLeaderboards.UpdateScore(FT_GameController.GC.stylePointsTotal);
+        UploadScoresToSteamLeaderboard();
 
     }
 
+
+    // need to spread calls to steam out otherwise they will be denied.  Using a coroutine and wait for seconds to spread out
+    // call to get the leaderboards and to upload to them.
+    private void UploadScoresToSteamLeaderboard()
+    {
+        Debug.Log("TimerVal" + timerVal);
+        StylePointsLeaderboard.UploadScoreToLeaderboard(FT_GameController.GC.stylePointsTotal);
+        StartCoroutine(UploadAfterSeconds(2));
+
+    }
+
+    IEnumerator UploadAfterSeconds(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        TimeLeaderboard.UploadScoreToLeaderboard((int)timerVal);
+    }
+    private void RefreshLeaderboards()
+    {
+        StylePointsLeaderboard.FetchLeaderboard();
+        StartCoroutine(RefreshSecondLeaderboard(3));
+
+    }
+
+    IEnumerator RefreshSecondLeaderboard(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        TimeLeaderboard.FetchLeaderboard();
+
+    }
     public void CheckIfComplete()
     {
         piecesPlaced = 0;

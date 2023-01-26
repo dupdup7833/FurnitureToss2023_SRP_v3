@@ -93,7 +93,8 @@ namespace EasySteamLeaderboard
 				else
 				{
 					//Debug.Log("Uploading score");
-					SteamAPICall_t handle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodForceUpdate, scoreToUpload, null, 0);
+					SteamAPICall_t handle = SteamUserStats.UploadLeaderboardScore(m_SteamLeaderboard, ELeaderboardUploadScoreMethod.k_ELeaderboardUploadScoreMethodKeepBest, scoreToUpload, null, 0);
+					
 					OnLeaderboardScoreUploadedCallResult.Set(handle);
 				}
 			}
