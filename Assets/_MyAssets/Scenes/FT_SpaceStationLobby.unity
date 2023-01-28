@@ -5536,6 +5536,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: button_stand (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 303630451937837364, guid: 6d27760462e99c64eb1f988cbad0eaa2, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5937599519990215283, guid: 6d27760462e99c64eb1f988cbad0eaa2, type: 3}
       propertyPath: m_RootOrder
       value: 6
