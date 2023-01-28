@@ -49,10 +49,18 @@ MonoBehaviour:
   - {fileID: 0}
   dropZones:
   - {fileID: 0}
+  drones: []
+  stageMinimumHeight: -5
+  scoreResult: {fileID: 0}
   stageInProgress: 0
   startTime: 0
   timerVal: 0
+  piecesPlaced: 0
   stageName: 
+  AudioStageComplete: {fileID: 8300000, guid: 737ee09d02910254f91b75c20342759f, type: 3}
+  StylePointsLeaderboard: {fileID: 0}
+  TimeLeaderboard: {fileID: 0}
+  projectileGamePieces: []
 --- !u!65 &3717774432497544922
 BoxCollider:
   m_ObjectHideFlags: 0

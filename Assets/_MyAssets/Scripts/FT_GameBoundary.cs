@@ -6,7 +6,7 @@ public class FT_GameBoundary : MonoBehaviour
 {
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log(other.gameObject.name + " has left the playspace");
+//        Debug.Log(other.gameObject.name + " has left the playspace");
         ResetPositionOfGamePiecesOutsideGameBoundary(other);
 
     }

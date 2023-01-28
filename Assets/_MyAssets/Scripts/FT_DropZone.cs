@@ -132,6 +132,7 @@ public class FT_DropZone : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
+        
         if (!objectPlaced && other.tag == "FT_GamePiece")
         {
             HVRGrabbable grabbable = other.gameObject.GetComponent<HVRGrabbable>();
@@ -174,6 +175,9 @@ public class FT_DropZone : MonoBehaviour
             yield return null;
         }
         // hide everything related to the dropzone
+        if (otherGameObject.transform.position!=guideGamePiece.transform.position){
+            Debug.Log("IT DID NOT GET SNAPPED");
+        }
         guideGamePiece.SetActive(false);
         dropZone.SetActive(false);
         if (obstacle != null)
