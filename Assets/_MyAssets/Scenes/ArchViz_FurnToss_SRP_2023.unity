@@ -47012,7 +47012,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1154649299}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.7315416, y: -9.9, z: -73.250565}
+  m_LocalPosition: {x: 2.7315416, y: -20.04, z: -73.250565}
   m_LocalScale: {x: 50, y: 1, z: 50}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -49447,7 +49447,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7455373346208720132, guid: 05fce4283b815aa4994debb5c565ebca, type: 3}
       propertyPath: LeaderboardName
-      value: ArchViz #1 Style Points Leaderboard 2
+      value: ArchVizStylePointsLeaderboard_1
       objectReference: {fileID: 0}
     - target: {fileID: 7455373346208720132, guid: 05fce4283b815aa4994debb5c565ebca, type: 3}
       propertyPath: LeaderboardTitle
@@ -57718,6 +57718,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1353724069}
   - component: {fileID: 1353724070}
+  - component: {fileID: 1353724071}
   m_Layer: 0
   m_Name: SteamManager
   m_TagString: Untagged
@@ -57753,6 +57754,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   steamEnabled: 1
+--- !u!114 &1353724071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1353724068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daf9799db2022c54985ba6adb60b107e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SteamLeaderboardEntries:
+    m_SteamLeaderboardEntries: 0
+  m_SteamLeaderboardEntryCurrentUser:
+    m_SteamLeaderboardEntries: 0
+  m_SteamLeaderboardEntriesFriends:
+    m_SteamLeaderboardEntries: 0
 --- !u!1 &1354054084
 GameObject:
   m_ObjectHideFlags: 0

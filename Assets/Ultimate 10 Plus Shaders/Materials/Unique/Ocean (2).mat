@@ -33,10 +33,10 @@ Material:
     - _Cull: 2
     - _Glossiness: 0.631
     - _Metallic: 0.16
-    - _NormalStrength1: 0.17
+    - _NormalStrength1: 0
     - _NormalStrength2: 0.8
     m_Colors:
-    - _Color: {r: 0, g: 0.43840182, b: 0.745283, a: 0}
+    - _Color: {r: 0, g: 0.43921572, b: 0.74509805, a: 0}
     - _FlowDirection1: {r: 0.01, g: 0.01, b: 0, a: 1}
     - _FlowDirection2: {r: 0, g: 0.01, b: 0, a: 1}
   m_BuildTextureStacks: []

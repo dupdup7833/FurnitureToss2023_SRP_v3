@@ -38,7 +38,7 @@ public class FT_GameStage : MonoBehaviour
         SetupGamePieces(false);
         SetupDropZones(false);
         SetupDrones(false);
-        RefreshLeaderboards();
+        StartCoroutine(RefreshLeaderboards(2));
 
 
     }
@@ -131,7 +131,7 @@ public class FT_GameStage : MonoBehaviour
         FT_GameController.GC.currentStage = this;
         FT_GameController.GC.stylePointsTotal = 0;
         Debug.Log("current stage " + FT_GameController.GC.currentStage + " " + this);
-        SteamLeaderboards.Init();
+       SteamLeaderboards.Init();
 
     }
 
@@ -165,19 +165,22 @@ public class FT_GameStage : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         TimeLeaderboard.UploadScoreToLeaderboard((int)timerVal);
     }
-    private void RefreshLeaderboards()
+    IEnumerator RefreshLeaderboards(float seconds) 
     {
-        StylePointsLeaderboard.FetchLeaderboard();
+           yield return new WaitForSeconds(seconds);
+         StylePointsLeaderboard.FetchLeaderboard();
+        // TimeLeaderboard.FetchLeaderboard();
+
         StartCoroutine(RefreshSecondLeaderboard(3));
 
     }
 
-    IEnumerator RefreshSecondLeaderboard(float seconds)
-    {
-        yield return new WaitForSeconds(seconds);
-        TimeLeaderboard.FetchLeaderboard();
+     IEnumerator RefreshSecondLeaderboard(float seconds)
+      {
+          yield return new WaitForSeconds(seconds);
+          TimeLeaderboard.FetchLeaderboard();
 
-    }
+     }
     public void CheckIfComplete()
     {
         piecesPlaced = 0;
