@@ -135,7 +135,8 @@ public class FT_LeaderboardUI_ESL : MonoBehaviour
     public void FetchLeaderboard()
     {
         //string lbid = Fetch_IDField.text; //get id from input field from user
-
+        Debug.Log("Fetching leaderboard "+LeaderboardName);
+        
         FetchLeaderboardWithID(LeaderboardName, 1, 20);
     }
 

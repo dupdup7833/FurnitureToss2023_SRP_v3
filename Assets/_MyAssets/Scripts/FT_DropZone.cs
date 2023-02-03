@@ -49,10 +49,10 @@ public class FT_DropZone : MonoBehaviour
         // set up guide game piece
         guideGamePiece.SetActive(false);
         guideGamePieceMesh = guideGamePiece.GetComponent<MeshFilter>().sharedMesh;
-        if (obstacle != null)
-        {
-            obstacle.gameObject.SetActive(false);
-        }
+      //  if (obstacle != null)
+       // {
+       //     obstacle.SetObstacleStatus(false);
+      //  }
         snapToZoneSound = GetComponent<AudioSource>();
         //  if (secondaryDropZone != null)
         //  {
@@ -182,7 +182,7 @@ public class FT_DropZone : MonoBehaviour
         dropZone.SetActive(false);
         if (obstacle != null)
         {
-            obstacle.gameObject.SetActive(false);
+            obstacle.SetObstacleStatus(false);
         }
 
         FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
@@ -218,7 +218,7 @@ public class FT_DropZone : MonoBehaviour
         Debug.Log("Entering ResetDropZone.  gameObject " + gameObject.name + " isSecondaryDropZone " + isSecondaryDropZone);
         if (obstacle != null)
         {
-            obstacle.gameObject.SetActive(true);
+            obstacle.SetObstacleStatus(true);
         }
         if (!isSecondaryDropZone)
         {

@@ -127,6 +127,8 @@ public bool steamEnabled = true;
 			Debug.LogError("[Steamworks.NET] SteamAPI_Init() failed. Refer to Valve's documentation or the comment above this line for more information.", this);
 
 			return;
+		} else {
+			Debug.Log("Steamworks: steamAPI initialized");
 		}
 
 		s_EverInitialized = true;

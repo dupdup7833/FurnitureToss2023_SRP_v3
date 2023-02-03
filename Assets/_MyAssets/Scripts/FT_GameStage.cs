@@ -131,7 +131,7 @@ public class FT_GameStage : MonoBehaviour
         FT_GameController.GC.currentStage = this;
         FT_GameController.GC.stylePointsTotal = 0;
         Debug.Log("current stage " + FT_GameController.GC.currentStage + " " + this);
-       SteamLeaderboards.Init();
+        SteamLeaderboards.Init();
 
     }
 
@@ -156,7 +156,7 @@ public class FT_GameStage : MonoBehaviour
     {
         Debug.Log("TimerVal" + timerVal);
         StylePointsLeaderboard.UploadScoreToLeaderboard(FT_GameController.GC.stylePointsTotal);
-        StartCoroutine(UploadAfterSeconds(2));
+        StartCoroutine(UploadAfterSeconds(1));
 
     }
 
@@ -165,22 +165,23 @@ public class FT_GameStage : MonoBehaviour
         yield return new WaitForSeconds(seconds);
         TimeLeaderboard.UploadScoreToLeaderboard((int)timerVal);
     }
-    IEnumerator RefreshLeaderboards(float seconds) 
+    IEnumerator RefreshLeaderboards(float seconds)
     {
-           yield return new WaitForSeconds(seconds);
-         StylePointsLeaderboard.FetchLeaderboard();
+        yield return new WaitForSeconds(seconds);
+        StylePointsLeaderboard.FetchLeaderboard();
         // TimeLeaderboard.FetchLeaderboard();
 
-        StartCoroutine(RefreshSecondLeaderboard(3));
+        StartCoroutine(RefreshSecondLeaderboard(1));
 
     }
 
-     IEnumerator RefreshSecondLeaderboard(float seconds)
-      {
-          yield return new WaitForSeconds(seconds);
-          TimeLeaderboard.FetchLeaderboard();
+    IEnumerator RefreshSecondLeaderboard(float seconds)
+    {
 
-     }
+        yield return new WaitForSeconds(seconds);
+        TimeLeaderboard.FetchLeaderboard();
+
+    }
     public void CheckIfComplete()
     {
         piecesPlaced = 0;

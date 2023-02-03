@@ -10,11 +10,17 @@ public class FT_Drone : MonoBehaviour
     int startingHealthPoints = 3;
     int healthPoints;
 
-    public float DelayBetweenRoutes = 1.0f;
+    public float DelayBetweenRoutes = 3.0f;
     public FT_GamePiece gamePiece;
 
     Vector3 startingPosition;
     Quaternion startingRotation;
+
+    Vector3 topCorner = new Vector3(4.58f, 0.91f, -63.66f);
+    Vector3 bottomCorner = new Vector3(-2.6f, 0.91f, -86.80f);
+
+
+
 
     private bool carryingTheFurniturePiece = true;
 
@@ -33,12 +39,12 @@ public class FT_Drone : MonoBehaviour
         // rb.isKinematic = true;
 
         agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
-        StartCoroutine(UpdateWander());
+
     }
 
     private void OnCollisionEnter(Collision other)
     {
-        Debug.Log("just got hit by" + other.gameObject.name + " with tag " + other.gameObject.tag);
+       // Debug.Log("just got hit by" + other.gameObject.name + " with tag " + other.gameObject.tag);
         if (other.gameObject.tag == "FT_GamePiece")
         {
             RegisterHitOnDrone();
@@ -48,6 +54,7 @@ public class FT_Drone : MonoBehaviour
 
     private void RegisterHitOnDrone()
     {
+        FindASpotOnTheLevel();
         healthPoints -= 1;
         Debug.Log("health points: " + healthPoints);
         if (healthPoints <= 0)
@@ -80,9 +87,9 @@ public class FT_Drone : MonoBehaviour
     public void ResetDrone()
     {
         Debug.Log("Reseting the drone");
-        Debug.Log("Drone starting position is "+startingPosition);
+        Debug.Log("Drone starting position is " + startingPosition);
         Rigidbody rb = this.GetComponent<Rigidbody>();
-       // rb.velocity = new Vector3(0,0,0);
+        // rb.velocity = new Vector3(0,0,0);
         rb.isKinematic = true;
         rb.position = startingPosition;
         rb.rotation = startingRotation;
@@ -94,41 +101,73 @@ public class FT_Drone : MonoBehaviour
         this.agent.enabled = true;
         carryingTheFurniturePiece = true;
         StartCoroutine(UpdateWander());
-        
+
     }
     IEnumerator UpdateWander()
     {
-
+        Debug.Log("UpdateWander "+Time.time);
         while (this.agent.enabled)
         {
-            yield return new WaitForSeconds(DelayBetweenRoutes);
-
-
-
-            Evade(player);
+            FindASpotOnTheLevel();
+            yield return new WaitForSecondsRealtime(DelayBetweenRoutes);
+           
         }
-
-
-
     }
 
 
+
+    void FindASpotOnTheLevel()
+    {
+///        Debug.Log("FindASpotOnTheLevel: "+Time.time);
+        Vector3 newDestination = new Vector3(Random.Range(bottomCorner.x, topCorner.x), topCorner.y, Random.Range(bottomCorner.z, topCorner.z));
+        agent.SetDestination(newDestination);
+    }
+
+
+    //// NOT USED YET
     void Evade(Transform target)
     {
-        // Debug.Log("Evade");
+        Debug.Log("Navmesh: Evade Player Position: " + target.position);
         Vector3 targetDir = target.position - this.transform.position;
         float lookAhead = targetDir.magnitude * 3;
         // agent.speed = 3.0f;
         //anim.speed = 3.0f;
         Flee(target.position + target.forward * lookAhead);
     }
-
     void Flee(Vector3 location)
     {
         Vector3 fleeVector = location - this.transform.position;
         if (agent.enabled)
         {
             agent.SetDestination(this.transform.position - fleeVector);
+            Debug.Log("Navmesh: Evade Drone Target Position: " + (this.transform.position - fleeVector));
+
         }
     }
+
+    Vector3 wanderTarget = Vector3.zero;
+    void Wander()
+    {
+        float wanderRadius = 10;
+        float wanderDistance = 10;
+        float wanderJitter = 1;
+
+        wanderTarget += new Vector3(Random.Range(-1.0f, 1.0f) * wanderJitter,
+                                        0,
+                                        Random.Range(-1.0f, 1.0f) * wanderJitter);
+        wanderTarget.Normalize();
+        wanderTarget *= wanderRadius;
+
+        Vector3 targetLocal = wanderTarget + new Vector3(0, 0, wanderDistance);
+        Vector3 targetWorld = this.gameObject.transform.InverseTransformVector(targetLocal);
+
+        Seek(targetWorld);
+    }
+
+    void Seek(Vector3 location)
+    {
+        agent.SetDestination(location);
+    }
 }
+
+

@@ -69,7 +69,7 @@ public class FT_GameController : MonoBehaviour
         PlayerPrefs.SetInt("hudInfoText", 0);
         PlayerPrefs.SetInt("hudStylePointsTotal", 0);
         PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn", 0);
-        PlayerPrefs.SetFloat("hudDuration", 2.0f);
+        PlayerPrefs.SetFloat("hudDuration", 5.0f);
     }
     void Update()
     {

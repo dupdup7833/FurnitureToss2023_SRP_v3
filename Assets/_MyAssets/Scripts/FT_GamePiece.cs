@@ -31,14 +31,14 @@ public class FT_GamePiece : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        this.startingPositionVec3 = this.transform.position;
+        this.startingPositionVec3 = this.transform.localPosition;
         this.startingScaleVec3 = this.transform.localScale;
  
     }
 
     public void ResetGamePiece()
     {
-        this.transform.position = this.startingPositionVec3;
+        this.transform.localPosition = this.startingPositionVec3;
         this.transform.localScale = this.startingScaleVec3;
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = false;
@@ -49,7 +49,7 @@ public class FT_GamePiece : MonoBehaviour
     }
     public void ResetPosition()
     {
-        this.transform.position = this.startingPositionVec3;
+        this.transform.localPosition = this.startingPositionVec3;
     }
     public void Released(HVRGrabberBase hvrbase, HVRGrabbable grabbable)
     {

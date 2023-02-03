@@ -18,6 +18,8 @@ public class FT_DropZoneObstacle : MonoBehaviour
 
     public float speed = 3f;
     private Vector3 currentDestination;
+
+    private bool isActive = false;
     void Start()
     {
         // save the starting point of the obstacle
@@ -28,29 +30,39 @@ public class FT_DropZoneObstacle : MonoBehaviour
 
         // turn off guides in game
         startPoint.GetComponent<MeshRenderer>().enabled = false;
+        startPoint.gameObject.SetActive(false);
         endPoint.gameObject.SetActive(false);
     }
 
+    public void SetObstacleStatus(bool active)
+    {
+        Debug.Log("SetObstacleStatus: "+active);
+        isActive = active;
+        startPoint.gameObject.SetActive(active);
+    }
 
 
     private void Update()
     {
-        // get the direction to current destination
-        Vector3 direction = currentDestination - startPoint.transform.position;
-
-        // move towards the target using speed and direction
-        startPoint.transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
-
-        // if close enough to the end target, within stopping distance, flip the direction
-        if (direction.magnitude < stoppingDistance)
+        if (isActive)
         {
-            if (currentDestination == endPoint.position)
+            // get the direction to current destination
+            Vector3 direction = currentDestination - startPoint.transform.position;
+
+            // move towards the target using speed and direction
+            startPoint.transform.Translate(direction.normalized * speed * Time.deltaTime, Space.World);
+
+            // if close enough to the end target, within stopping distance, flip the direction
+            if (direction.magnitude < stoppingDistance)
             {
-                currentDestination = startPointSaved;
-            }
-            else
-            {
-                currentDestination = endPoint.position;
+                if (currentDestination == endPoint.position)
+                {
+                    currentDestination = startPointSaved;
+                }
+                else
+                {
+                    currentDestination = endPoint.position;
+                }
             }
         }
     }
