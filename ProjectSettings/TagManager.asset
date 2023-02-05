@@ -17,6 +17,8 @@ TagManager:
   - projectile
   - FT_Drone
   - Floor
+  - Terrain
+  - Water
   layers:
   - Default
   - TransparentFX

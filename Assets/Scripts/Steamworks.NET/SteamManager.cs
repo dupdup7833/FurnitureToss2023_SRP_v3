@@ -178,7 +178,7 @@ public bool steamEnabled = true;
 		}
 
 		// Run Steam client callbacks
-		SteamAPI.RunCallbacks();
+//S		SteamAPI.RunCallbacks();
 	}
 #else
 	public static bool Initialized {
