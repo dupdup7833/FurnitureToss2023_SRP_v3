@@ -15,7 +15,7 @@ public class FT_PlayerController : HVRPlayerController
     public float boatSpeed = 0.02f;
 
 
-
+/*
     protected override void HandleHorizontalMovement()
     {
         if (!boat.inBoat)
@@ -77,4 +77,5 @@ public class FT_PlayerController : HVRPlayerController
             }
         }
     }
+    */
 }
