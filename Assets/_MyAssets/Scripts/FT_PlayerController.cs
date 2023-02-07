@@ -8,8 +8,8 @@ public class FT_PlayerController : HVRPlayerController
     // Start is called before the first frame update
 
     [Header("Furniture Toss")]
-    private bool inBoat = true;
-    public GameObject boat;
+    //private bool inBoat = true;
+    public FT_Boat boat;
 
     [Range(0.01f, 0.03f)]
     public float boatSpeed = 0.02f;
@@ -18,39 +18,26 @@ public class FT_PlayerController : HVRPlayerController
 
     protected override void HandleHorizontalMovement()
     {
-        if (!inBoat)
+        if (!boat.inBoat)
         {
             //      Debug.Log("not in boat");
             base.HandleHorizontalMovement();
-         //   base.xzVelocity*=10f;
+            //   base.xzVelocity*=10f;
 
 
         }
         else
         {
-            base.HandleHorizontalMovement();
+            //   base.HandleHorizontalMovement();
             //        Debug.Log("in boat");
         }
     }
 
-    public void InBoat(bool shouldShowBoat)
-    {
-        Debug.Log("Teleport: InBoat " +shouldShowBoat);
-        if (shouldShowBoat)
-        {
-            inBoat = true;
-            boat.SetActive(true);
-        }
-        else
-        {
-            inBoat = false;
-           // boat.SetActive(false);
-        }
-    }
+
 
     //  protected virtual void CheckTriggerPull()
     //     {
-           
+
     //         if (!Grabbable.IsHandGrabbed)
     //             return;
 
@@ -74,14 +61,20 @@ public class FT_PlayerController : HVRPlayerController
     //         }
     //     }
 
- 
-    protected override void Update() {
-        Debug.Log("Trigger: "+ LeftHand.Controller.Trigger);
-        if (RightHand.Controller.Trigger>0.2f){
-             GetMovementDirection(out var forward, out var right);
-             
-        // Vector3 move = new Vector3(1, 0, 0);
-        CharacterController.Move(forward*RightHand.Controller.Trigger*boatSpeed);
+
+    protected override void Update()
+    {
+        //        Debug.Log("Trigger: "+ LeftHand.Controller.Trigger);
+        if (boat.inBoat)
+        {
+            if (RightHand.Controller.Trigger > 0.6f)
+            {
+                GetMovementDirection(out var forward, out var right);
+
+                // Vector3 move = new Vector3(1, 0, 0);
+                CharacterController.Move(
+                    boat.transform.forward * RightHand.Controller.Trigger * boatSpeed);
+            }
         }
     }
 }
