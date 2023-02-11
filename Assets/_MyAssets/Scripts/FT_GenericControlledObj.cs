@@ -166,11 +166,11 @@ public class FT_GenericControlledObj : MonoBehaviour
 
         Debug.Log("about to translate" + speed * Time.deltaTime);
 
-        if (boat.onTheWater && y > -1)
+        if (boat.isClearForward && y > -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
         }
-        else if (y == -1)
+        else if (boat.isClearBackward && y == -1 )
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime * y);
         }

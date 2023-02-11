@@ -11,8 +11,6 @@ GameObject:
   - component: {fileID: 6307188407357888855}
   - component: {fileID: 6307188407357888851}
   - component: {fileID: 6307188407357888850}
-  - component: {fileID: 6307188407357888853}
-  - component: {fileID: 6307188407357888852}
   m_Layer: 0
   m_Name: Cube (1)
   m_TagString: Untagged
@@ -85,33 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6307188407357888853
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6307188407357888854}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6307188407357888852
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6307188407357888854}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84a4f15a3179f1d4993aded11f4d0232, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  locked: 0
-  markerActive: 1
 --- !u!1 &6307188407524493512
 GameObject:
   m_ObjectHideFlags: 0
@@ -123,7 +94,6 @@ GameObject:
   - component: {fileID: 6307188407524493513}
   - component: {fileID: 6307188407524493508}
   - component: {fileID: 6307188407524493511}
-  - component: {fileID: 6307188407524493510}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -196,19 +166,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6307188407524493510
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6307188407524493512}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 135.8171}
-  m_Center: {x: 0.000000031720703, y: 0.0000000025701126, z: -55.335545}
 --- !u!1 &6307188407860130159
 GameObject:
   m_ObjectHideFlags: 0
@@ -220,8 +177,8 @@ GameObject:
   - component: {fileID: 6307188407860130152}
   - component: {fileID: 6307188407860130155}
   - component: {fileID: 6307188407860130154}
-  - component: {fileID: 6307188407860130157}
-  - component: {fileID: 1126364885}
+  - component: {fileID: 703970190}
+  - component: {fileID: 703970189}
   m_Layer: 0
   m_Name: Boat
   m_TagString: Untagged
@@ -295,7 +252,7 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6307188407860130157
+--- !u!65 &703970190
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -304,11 +261,11 @@ BoxCollider:
   m_GameObject: {fileID: 6307188407860130159}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 5.413404, y: 1, z: 13.784023}
-  m_Center: {x: 0.5050079, y: 0, z: -0.34472898}
---- !u!114 &1126364885
+  m_Size: {x: 6.309943, y: 4.049412, z: 14.74275}
+  m_Center: {x: 0.51139903, y: 1.7264833, z: -13.789656}
+--- !u!114 &703970189
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -320,10 +277,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ef5fdf5c4dbd4b498f6036fc39eaf28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 6307188407860130152}
+  boat: {fileID: 1521631190}
+  ftPlayerController: {fileID: 0}
   mountPosition: {fileID: 6307188407874696227}
   rotationSpeed: 25
-  speedAdjustment: 1
+  speedAdjustment: 2
   resetPositionOnRide: 0
   rotateUpAndDown: 0
 --- !u!1 &6307188407874696226
@@ -434,7 +393,6 @@ GameObject:
   - component: {fileID: 6307188407973740048}
   - component: {fileID: 6307188407973740524}
   - component: {fileID: 6307188407973740527}
-  - component: {fileID: 6307188407973740526}
   - component: {fileID: 6307188407973740525}
   m_Layer: 0
   m_Name: PassengerTrigger
@@ -508,19 +466,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!65 &6307188407973740526
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6307188407973740051}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &6307188407973740525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -557,7 +502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6307188409125391852}
   m_LocalRotation: {x: 0.39402533, y: -0.107482865, z: -0.25149652, w: 0.8774628}
-  m_LocalPosition: {x: -0.232, y: 0.376, z: 3.42}
+  m_LocalPosition: {x: -0.23, y: 0.38, z: 2.63}
   m_LocalScale: {x: 4.7918506, y: 4.8120327, z: 4.812036}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -635,6 +580,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 76f42063ac80e7e45aa27bebda813768, type: 2}
+    - target: {fileID: 54000010279591738, guid: b209c30bc3eb7884781069adc59ed447, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 54000010279591738, guid: b209c30bc3eb7884781069adc59ed447, type: 3}
       propertyPath: m_UseGravity
       value: 1
@@ -840,25 +789,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e252cf222c4f0084c946e85d6bc91369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Joystick: {fileID: 6307739385175674462}
-  joyMove: 0.1
-  flyWithUnicorn: 0
-  moveAction:
-    actionPath: /actions/HVR/in/RightPrimaryAxis
-    needsReinit: 0
-  jumpAction:
-    actionPath: /actions/platformer/in/Jump
-    needsReinit: 1
-  actionThrottle:
-    actionPath: /actions/platformer/in/Accelerate
-    needsReinit: 1
-  character: {fileID: 0}
+  controlledObject: {fileID: 703970189}
   jumpHighlight: {fileID: 0}
---- !u!4 &6307739385175674462 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4000013232486850, guid: b209c30bc3eb7884781069adc59ed447, type: 3}
-  m_PrefabInstance: {fileID: 6307188407943739292}
+--- !u!114 &2112920612
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6306218091281160630}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe9c2fb39c4bdd42bcfca07a09191f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snapTo: {fileID: 6307188409125391853}
+  snapTime: 2
 --- !u!1001 &6307188408280208651
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -944,6 +890,8 @@ PrefabInstance:
       objectReference: {fileID: 7400000, guid: 1be4c706de90c6243b04c520beae2530, type: 2}
     m_RemovedComponents:
     - {fileID: 11169454, guid: 24256176751bad5448dd9dff840c91bc, type: 3}
+    - {fileID: 1627375644, guid: 24256176751bad5448dd9dff840c91bc, type: 3}
+    - {fileID: 6479088532396968598, guid: 24256176751bad5448dd9dff840c91bc, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 24256176751bad5448dd9dff840c91bc, type: 3}
 --- !u!1 &6307188408280238811 stripped
 GameObject:
@@ -961,11 +909,38 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 1
   m_Interpolate: 1
-  m_Constraints: 0
+  m_Constraints: 80
   m_CollisionDetection: 3
+--- !u!65 &1521631189
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6307188408280238811}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.2521214, y: 14.844523, z: 0.6567257}
+  m_Center: {x: 0.5535214, y: 1.1374482, z: -1.1775852}
+--- !u!114 &1521631190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6307188408280238811}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4161a9ca5d9e7e4caa8fcc36a137cb5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inBoat: 0
+  onTheWater: 1
 --- !u!4 &6307188408280578673 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 438138, guid: 24256176751bad5448dd9dff840c91bc, type: 3}
