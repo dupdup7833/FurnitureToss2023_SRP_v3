@@ -70,7 +70,7 @@ namespace Valve.VR.InteractionSystem.Sample
                 xMovement = m.x;
                 yMovement = m.y;
 
-                // Debug.Log("X: " + xMovement + " Y:" + yMovement);
+                 Debug.Log("X: " + xMovement + " Y:" + yMovement);
                 movement = new Vector3(m.x, m.y, 0);
                 throttle = controller.Trigger;
                 //  jump = jumpAction[hand].stateDown;

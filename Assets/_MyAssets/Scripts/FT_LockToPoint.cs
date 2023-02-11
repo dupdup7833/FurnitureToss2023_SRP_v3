@@ -24,9 +24,10 @@ public class FT_LockToPoint : MonoBehaviour
     private void FixedUpdate()
     {
         bool used = false;
-        if (grabbable != null)
+        if (grabbable != null){
 
-            used = grabbable.IsHandGrabbed;
+            used = grabbable.IsHandGrabbed || grabbable.IsBeingForcedGrabbed;
+        }
 
         if (used)
         {

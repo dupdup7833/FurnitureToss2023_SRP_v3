@@ -7,8 +7,9 @@ public class FT_GenericControlledObj : MonoBehaviour
     Animator anim;
     public Transform player;
 
-    
-        public FT_PlayerController ftPlayerController;
+    public FT_Boat boat;
+
+    public FT_PlayerController ftPlayerController;
     public Transform mountPosition;
     public float rotationSpeed = 500.0f;
     public float speedAdjustment = 1.25f;
@@ -23,7 +24,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     public bool resetPositionOnRide = true;
     public bool rotateUpAndDown = true;
 
- private Transform previousParent;
+    private Transform previousParent;
     private void Awake()
     {
 
@@ -48,41 +49,41 @@ public class FT_GenericControlledObj : MonoBehaviour
     }
 
 
-    
 
 
-        public void MoveWithControlledObj(bool shouldMoveWithControlledObj)
+
+    public void MoveWithControlledObj(bool shouldMoveWithControlledObj)
+    {
+        if (shouldMoveWithControlledObj)
         {
-            if (shouldMoveWithControlledObj)
-            {
-                Debug.Log("ftPlayers parent "+ftPlayerController.transform.parent);
-                previousParent = ftPlayerController.transform.parent.parent;
-                ftPlayerController.transform.parent.SetParent(this.transform, true);
-            }
-            else
-            {
-                ftPlayerController.transform.parent.SetParent(previousParent, true);
-            }
-
+            Debug.Log("ftPlayers parent " + ftPlayerController.transform.parent);
+            previousParent = ftPlayerController.transform.parent.parent;
+            ftPlayerController.transform.parent.SetParent(this.transform, true);
         }
+        else
+        {
+            ftPlayerController.transform.parent.SetParent(previousParent, true);
+        }
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Player")
-         {
-            Debug.Log("boat trigger: Entered the trigger"+other.gameObject.tag );
-             MoveWithControlledObj(true);
-         }
+        {
+            Debug.Log("boat trigger: Entered the trigger" + other.gameObject.tag);
+            MoveWithControlledObj(true);
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
 
         if (other.gameObject.tag == "Player")
-         {
+        {
             MoveWithControlledObj(false);
-            Debug.Log("boat trigger: Exited the trigger"+other.gameObject.tag );
-         }
+            Debug.Log("boat trigger: Exited the trigger" + other.gameObject.tag);
+        }
     }
     public void ResetPosition(bool flyWithUnicorn)
     {
@@ -107,6 +108,7 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     public void Move(Vector3 movement, float speed)
     {
+
         Debug.Log("moving object");
         int x = 0;
         int y = 0;
@@ -157,13 +159,22 @@ public class FT_GenericControlledObj : MonoBehaviour
         }
         /*else if (movement.y < 0.5f && movement.y < -0.5f)
         {
-            
+
         }*/
         //Debug.Log("Movement Vector: " + movement.x + " " + movement.y + " " + movement.z);
         // Debug.Log("rotation" + this.transform.rotation.x + "," + this.transform.rotation.y + "," + this.transform.rotation.z);
 
         Debug.Log("about to translate" + speed * Time.deltaTime);
-        this.transform.Translate(0, 0, speed * Time.deltaTime);
+
+        if (boat.onTheWater && y > -1)
+        {
+            this.transform.Translate(0, 0, speed * Time.deltaTime);
+        }
+        else if (y == -1)
+        {
+            this.transform.Translate(0, 0, speed * Time.deltaTime * y);
+        }
+
 
     }
     public void StartFlying(bool flyWithUnicorn)
