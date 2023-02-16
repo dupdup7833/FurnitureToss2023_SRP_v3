@@ -15,6 +15,24 @@ public class FT_PlayerController : HVRPlayerController
     //  [Range(0.01f, 0.03f)]
     //  public float boatSpeed = 0.02f;
 
+    Vector3 lastGoodPosition;
+//     void OnControllerColliderHit(ControllerColliderHit hit)
+//     {
+//         if (hit.gameObject.tag == "Water")
+//         {
+//             //CharacterController.Move(hit.normal);//new Vector3(hit.normal.x,.25f,hit.normal.z)
+             
+//             CharacterController.enabled = false;
+// CharacterController.transform.position =  lastGoodPosition+new Vector3(hit.normal.x,hit.normal.y*.50f,hit.normal.z);
+// CharacterController.enabled = true;
+//         } else {
+//             lastGoodPosition = transform.position;
+//         }
+        
+//         Debug.Log("OnControllerColliderHit " + hit.gameObject.tag+" "+hit.normal);
+
+//     }
+
     protected override void HandleRotation()
     {
         if (overridePlayerMovement)
