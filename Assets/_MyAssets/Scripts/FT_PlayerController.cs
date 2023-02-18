@@ -35,6 +35,7 @@ public class FT_PlayerController : HVRPlayerController
 
     protected override void HandleRotation()
     {
+       
         if (overridePlayerMovement)
         {
 
