@@ -14,6 +14,8 @@ public class FT_GenericControlledObj : MonoBehaviour
     public float rotationSpeed = 500.0f;
     public float speedAdjustment = 1.25f;
 
+    public float distanceToLeaveControlledObj = 1.7f;
+
     public enum controlledObjectType { Unicorn, Boat };
     Vector3 startPos;
     Quaternion startRot;
@@ -24,7 +26,11 @@ public class FT_GenericControlledObj : MonoBehaviour
     public bool resetPositionOnRide = true;
     public bool rotateUpAndDown = true;
 
+    public bool playerInTheControlledObj = false;
+
     private Transform previousParent;
+
+
     private void Awake()
     {
 
@@ -56,13 +62,21 @@ public class FT_GenericControlledObj : MonoBehaviour
     {
         if (shouldMoveWithControlledObj)
         {
-            Debug.Log("ftPlayers parent " + ftPlayerController.transform.parent);
+            // Debug.Log("ftPlayers parent " + ftPlayerController.transform.parent);
             previousParent = ftPlayerController.transform.parent.parent;
             ftPlayerController.transform.parent.SetParent(this.transform, true);
+            FT_GameController.GC.currentVehicle = this;
+            playerInTheControlledObj = true;
+            StartCoroutine(CheckIfPlayerLeavesTheControlledObj());
+
         }
         else
         {
             ftPlayerController.transform.parent.SetParent(previousParent, true);
+            FT_GameController.GC.currentVehicle = null;
+            playerInTheControlledObj = false;
+            StopCoroutine(CheckIfPlayerLeavesTheControlledObj());
+            //  Debug.Log("they left the boat");
         }
 
     }
@@ -71,20 +85,68 @@ public class FT_GenericControlledObj : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Debug.Log("boat trigger: Entered the trigger" + other.gameObject.tag);
+            // Debug.Log("boat trigger: Entered the trigger" + other.gameObject.tag);
+
             MoveWithControlledObj(true);
+
         }
+        else if (other.gameObject.tag == "FT_GamePiece")
+        {
+            HandleParentingCapturedObjects(other, shouldRelease: false);
+        }
+
+
+
     }
 
     private void OnTriggerExit(Collider other)
     {
+        HandleParentingCapturedObjects(other, shouldRelease: true);
 
-        if (other.gameObject.tag == "Player")
+    }
+
+    private void HandleParentingCapturedObjects(Collider other, bool shouldRelease)
+    {
+        if (other.gameObject.tag == "FT_GamePiece")
         {
-            MoveWithControlledObj(false);
-            Debug.Log("boat trigger: Exited the trigger" + other.gameObject.tag);
+            if (shouldRelease)
+            {
+                other.gameObject.transform.SetParent(other.gameObject.GetComponent<FT_GamePiece>().originalParent);
+            }
+            else
+            {
+                other.gameObject.transform.SetParent(this.transform);
+            }
         }
     }
+
+    // private void OnTriggerStay(Collider other)
+    // {
+    //     if (other.gameObject.tag == "Player")
+    //     {
+    //         Debug.Log("boat trigger: stayed in the trigger" + other.gameObject.tag);
+    //         //MoveWithControlledObj(true);
+    //     }
+    // }
+
+
+    IEnumerator CheckIfPlayerLeavesTheControlledObj()
+    {
+        while (playerInTheControlledObj)
+        {
+            // Debug.Log("CheckIfPlayerLeavesTheControlledObj is still running");
+            if (Vector3.Distance(this.transform.position, ftPlayerController.transform.position) > distanceToLeaveControlledObj)
+            {
+                MoveWithControlledObj(false);
+            }
+            yield return new WaitForSeconds(1);
+        }
+        // Debug.Log("Boat: distance check "+Vector3.Distance(this.transform.position, ftPlayerController.transform.position));
+        // MyCollisions();
+    }
+
+
+
     public void ResetPosition(bool flyWithUnicorn)
     {
         Debug.Log("Reset position");
@@ -100,16 +162,12 @@ public class FT_GenericControlledObj : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
 
-    }
 
     public void Move(Vector3 movement, float speed)
     {
 
-        Debug.Log("moving object");
+        // Debug.Log("moving object");
         int x = 0;
         int y = 0;
         if (movement.x > 0.9f)
@@ -137,7 +195,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         }
         else if (y == 1 || y == -1)
         {
-            Debug.Log("rotation limit" + transform.rotation.x);
+            //  Debug.Log("rotation limit" + transform.rotation.x);
             /// this.transform.rotation = Quaternion.Euler(this.transform.rotation.x,0, this.transform.rotation.y);
             //  if (transform.rotation.x > -0.023f && transform.rotation.x <0.027f) { 
 
@@ -164,13 +222,13 @@ public class FT_GenericControlledObj : MonoBehaviour
         //Debug.Log("Movement Vector: " + movement.x + " " + movement.y + " " + movement.z);
         // Debug.Log("rotation" + this.transform.rotation.x + "," + this.transform.rotation.y + "," + this.transform.rotation.z);
 
-        Debug.Log("about to translate" + speed * Time.deltaTime);
+        //Debug.Log("about to translate" + speed * Time.deltaTime);
 
         if (boat.isClearForward && y > -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
         }
-        else if (boat.isClearBackward && y == -1 )
+        else if (boat.isClearBackward && y == -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime * y);
         }

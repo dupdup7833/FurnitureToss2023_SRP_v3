@@ -16,6 +16,8 @@ public class FT_GamePiece : MonoBehaviour
     private Vector3 startingPositionVec3;
     private Vector3 startingScaleVec3;
 
+    public Transform originalParent;
+
     private int surfacesTouched = 0;
 
     public bool gamePiecePlaced = false;
@@ -33,6 +35,7 @@ public class FT_GamePiece : MonoBehaviour
     {
         this.startingPositionVec3 = this.transform.localPosition;
         this.startingScaleVec3 = this.transform.localScale;
+        this.originalParent = this.transform.parent;
  
     }
 
@@ -58,6 +61,7 @@ public class FT_GamePiece : MonoBehaviour
         lastItemTouched = null;
         surfacesTouched = 0;
         surfacesTouchedSet.Clear();
+
     }
 
     public void PlacePiece()

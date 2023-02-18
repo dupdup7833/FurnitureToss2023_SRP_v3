@@ -26,6 +26,8 @@ public class FT_GameController : MonoBehaviour
 
     public FT_PlayerOptions playerOptions = new FT_PlayerOptions();
 
+    public FT_GenericControlledObj currentVehicle;
+
 
 
     public static GamePiecePlacedStringEvent gamePiecePlacedEvent = new GamePiecePlacedStringEvent();
