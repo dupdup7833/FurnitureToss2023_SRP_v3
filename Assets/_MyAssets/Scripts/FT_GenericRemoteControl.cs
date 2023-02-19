@@ -79,6 +79,8 @@ namespace Valve.VR.InteractionSystem.Sample
             }
             else
             {
+                Debug.Log("controlled object"+controlledObject);
+                Debug.Log("controlledObject.ftPlayerController"+controlledObject.ftPlayerController);
                 controlledObject.ftPlayerController.overridePlayerMovement = false;
                 movement = Vector2.zero;
                 jump = false;

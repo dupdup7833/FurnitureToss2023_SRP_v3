@@ -5,9 +5,11 @@ using UnityEngine;
 public class FT_GenericControlledObj : MonoBehaviour
 {
     Animator anim;
-    public Transform player;
+    //public Transform player;
 
-    public FT_Boat boat;
+    
+
+
 
     public FT_PlayerController ftPlayerController;
     public Transform mountPosition;
@@ -30,30 +32,65 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     private Transform previousParent;
 
+    [Header("Collision Detection")]
+    public GameObject frontChecker;
+    public GameObject backChecker;
+    public bool isClearForward = true;
+    public bool isClearBackward = true;
 
-    private void Awake()
-    {
+
+    public float frontDistanceCheck = 2.0f;
+    public float backDistanceCheck = 2.0f;
+    public string validSurfaceTag = "Water";
 
 
-    }
 
 
     // Start is called before the first frame update
     void Start()
     {
-        startRot = Quaternion.identity;
-        startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-        startPos = transform.position;
+        SaveControlledObjectStartingValues();
+        StartAnimation();
+        HideFrontAndRearCheckers();
+    }
+
+
+    private void FixedUpdate()
+    {
+        CheckWhetherForwardAndBackAreClear();
+
+    }
+
+    private void StartAnimation()
+    {
         anim = this.GetComponent<Animator>();
         if (anim != null)
         {
             anim.SetInteger("animation", 9);
         }
-        playerPrevParent = player.transform.parent;
-
-
     }
 
+    private void SaveControlledObjectStartingValues()
+    {
+        startRot = Quaternion.identity;
+        startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+        startPos = transform.position;
+
+        playerPrevParent = this.transform.parent;
+    }
+
+    private void HideFrontAndRearCheckers()
+    {
+        if (frontChecker != null)
+        {
+            frontChecker.GetComponent<MeshRenderer>().enabled = false;
+        }
+        if (backChecker != null)
+        {
+            backChecker.GetComponent<MeshRenderer>().enabled = false;
+        }
+
+    }
 
 
 
@@ -154,9 +191,9 @@ public class FT_GenericControlledObj : MonoBehaviour
         transform.position = startPos;
         if (flyWithUnicorn)
         {
-            player.SetParent(playerPrevParent);
-            player.transform.localPosition = Vector3.zero;
-            player.transform.localRotation = Quaternion.identity;
+            this.transform.SetParent(playerPrevParent);
+            this.transform.localPosition = Vector3.zero;
+            this.transform.localRotation = Quaternion.identity;
 
             //player.transform.position = playerStartPos;
         }
@@ -224,11 +261,11 @@ public class FT_GenericControlledObj : MonoBehaviour
 
         //Debug.Log("about to translate" + speed * Time.deltaTime);
 
-        if (boat.isClearForward && y > -1)
+        if (isClearForward && y > -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
         }
-        else if (boat.isClearBackward && y == -1)
+        else if (isClearBackward && y == -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime * y);
         }
@@ -239,14 +276,57 @@ public class FT_GenericControlledObj : MonoBehaviour
     {
         if (flyWithUnicorn)
         {
-            playerStartRot = Quaternion.identity;
-            playerStartPos = new Vector3(player.transform.position.x, player.transform.position.y, player.transform.position.z);
-            player.SetParent(mountPosition.transform);
+            startRot = Quaternion.identity;
+            startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+            this.transform.SetParent(mountPosition.transform);
             if (resetPositionOnRide)
             {
-                player.transform.localPosition = Vector3.zero;
-                player.transform.localRotation = Quaternion.identity;
+                this.transform.localPosition = Vector3.zero;
+                this.transform.localRotation = Quaternion.identity;
             }
+        }
+    }
+
+
+    private void CheckWhetherForwardAndBackAreClear()
+    {
+        RaycastHit hit;
+        // Bit shift the index of the layer (8) to get a bit mask
+        // int layerMask = 1 << 8;
+
+        // This would cast rays only against colliders in layer 8.
+        // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
+        //layerMask = ~layerMask;
+        LayerMask layerMask = new LayerMask();
+        Vector3 tiltedForward = Quaternion.Euler(120, 0, 0) * Vector3.forward;
+        if (Physics.Raycast(frontChecker.transform.position, transform.TransformDirection(tiltedForward), out hit, frontDistanceCheck, layerMask))
+        {
+            // Debug.DrawRay(front.transform.position, transform.TransformDirection(tiltedForward) * hit.distance, Color.magenta, 30f, true);
+            // Debug.Log("Did Hit >" + hit.transform.gameObject.tag);
+            if (hit.transform.gameObject.tag == validSurfaceTag)
+            {
+                isClearForward = true;
+            }
+            else
+            {
+                isClearForward = false;
+            }
+
+        }
+        Vector3 tiltedBackward = Quaternion.Euler(210, 0, 0) * Vector3.forward;
+        if (Physics.Raycast(backChecker.transform.position, transform.TransformDirection(tiltedBackward), out hit, backDistanceCheck, layerMask))
+        {
+            // Debug.DrawRay(back.transform.position, transform.TransformDirection(tiltedBackward) * hit.distance, Color.magenta, 30f, true);
+            // Debug.Log("Did Hit >"+hit.transform.gameObject.tag);
+            if (hit.transform.gameObject.tag == validSurfaceTag)
+            {
+                isClearBackward = true;
+            }
+            else
+            {
+                isClearBackward = false;
+            }
+
         }
     }
 }
