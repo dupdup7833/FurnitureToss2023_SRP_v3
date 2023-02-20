@@ -7,12 +7,10 @@ public class FT_GenericControlledObj : MonoBehaviour
     Animator anim;
     //public Transform player;
 
-    
-
-
+    public Transform mountPosition;
 
     public FT_PlayerController ftPlayerController;
-    public Transform mountPosition;
+
     public float rotationSpeed = 500.0f;
     public float speedAdjustment = 1.25f;
 
@@ -264,21 +262,24 @@ public class FT_GenericControlledObj : MonoBehaviour
         if (isClearForward && y > -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
+            Debug.Log("about to translate forward" + speed * Time.deltaTime);
         }
         else if (isClearBackward && y == -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime * y);
+            Debug.Log("about to translate backward" + speed * Time.deltaTime * y);
         }
 
 
     }
+
     public void StartFlying(bool flyWithUnicorn)
     {
         if (flyWithUnicorn)
         {
             startRot = Quaternion.identity;
             startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            this.transform.SetParent(mountPosition.transform);
+            // TODO NEED TO FIX TO GET FLYING WORKING this.transform.SetParent(mountPosition.transform);
             if (resetPositionOnRide)
             {
                 this.transform.localPosition = Vector3.zero;
@@ -329,4 +330,18 @@ public class FT_GenericControlledObj : MonoBehaviour
 
         }
     }
+
+    public void SnapPlayerToMountPosition()
+    {
+        ftPlayerController.CharacterController.enabled = false;
+        ftPlayerController.transform.position = mountPosition.position;
+        ftPlayerController.transform.rotation = mountPosition.rotation;
+    }
+
+    public void ReleasePlayerFromMountPosition()
+    {
+        ftPlayerController.CharacterController.enabled = true;
+
+    }
+
 }
