@@ -8,6 +8,7 @@ using HurricaneVR.Framework.Core;
 public class FT_LockToPoint : MonoBehaviour
 {
     public Transform snapTo;
+    
     private Rigidbody body;
     public float snapTime = 2;
 
@@ -19,6 +20,7 @@ public class FT_LockToPoint : MonoBehaviour
     {
         grabbable = GetComponent<HVRGrabbable>();
         body = GetComponent<Rigidbody>();
+        
     }
 
     private void FixedUpdate()

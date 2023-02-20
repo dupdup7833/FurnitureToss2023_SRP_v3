@@ -9,6 +9,8 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     public Transform mountPosition;
 
+
+
     public FT_PlayerController ftPlayerController;
 
     public float rotationSpeed = 500.0f;
@@ -29,6 +31,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     public bool playerInTheControlledObj = false;
 
     private Transform previousParent;
+    private Transform previousRotation;
 
     [Header("Collision Detection")]
     public GameObject frontChecker;
@@ -52,6 +55,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     {
         SaveControlledObjectStartingValues();
         StartAnimation();
+        previousParent = ftPlayerController.transform.parent;
 
     }
 
@@ -90,8 +94,9 @@ public class FT_GenericControlledObj : MonoBehaviour
         if (shouldMoveWithControlledObj)
         {
             // Debug.Log("ftPlayers parent " + ftPlayerController.transform.parent);
-            previousParent = ftPlayerController.transform.parent.parent;
-            ftPlayerController.transform.parent.SetParent(this.transform, true);
+            //
+             previousRotation = ftPlayerController.transform;
+            ftPlayerController.transform.SetParent(this.transform, true);
             FT_GameController.GC.currentVehicle = this;
             playerInTheControlledObj = true;
             StartCoroutine(CheckIfPlayerLeavesTheControlledObj());
@@ -99,11 +104,14 @@ public class FT_GenericControlledObj : MonoBehaviour
         }
         else
         {
-            ftPlayerController.transform.parent.SetParent(previousParent, true);
+            Debug.Log("they left the "+this.gameObject.name);
+            ftPlayerController.transform.SetParent(previousParent, true);
+            ftPlayerController.transform.rotation = Quaternion.identity;
             FT_GameController.GC.currentVehicle = null;
             playerInTheControlledObj = false;
             StopCoroutine(CheckIfPlayerLeavesTheControlledObj());
-            //  Debug.Log("they left the boat");
+            Debug.Log("they left the "+this.gameObject.name+" and everything should have been cleaned up");
+              
         }
 
     }
@@ -114,7 +122,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         {
             // Debug.Log("boat trigger: Entered the trigger" + other.gameObject.tag);
 
-            MoveWithControlledObj(true);
+         //   MoveWithControlledObj(true);
 
         }
         else if (other.gameObject.tag == "FT_GamePiece")
@@ -161,7 +169,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     {
         while (playerInTheControlledObj)
         {
-            // Debug.Log("CheckIfPlayerLeavesTheControlledObj is still running");
+              Debug.Log("CheckIfPlayerLeavesTheControlledObj is still running");
             if (Vector3.Distance(this.transform.position, ftPlayerController.transform.position) > distanceToLeaveControlledObj)
             {
                 MoveWithControlledObj(false);
@@ -334,14 +342,20 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     public void SnapPlayerToMountPosition()
     {
+       
+        MoveWithControlledObj(true);
         ftPlayerController.CharacterController.enabled = false;
         ftPlayerController.transform.position = mountPosition.position;
         ftPlayerController.transform.rotation = mountPosition.rotation;
+         
     }
 
     public void ReleasePlayerFromMountPosition()
     {
+        MoveWithControlledObj(false);
+         ftPlayerController.transform.rotation = previousRotation.rotation;
         ftPlayerController.CharacterController.enabled = true;
+       
 
     }
 
