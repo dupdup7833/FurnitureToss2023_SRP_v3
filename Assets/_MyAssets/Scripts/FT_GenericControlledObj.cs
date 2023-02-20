@@ -12,7 +12,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     public FT_PlayerController ftPlayerController;
 
     public float rotationSpeed = 500.0f;
-    public float speedAdjustment = 1.25f;
+    public float speedAdjustment = 2f;
 
     public float distanceToLeaveControlledObj = 1.7f;
 
@@ -24,7 +24,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     Transform playerPrevParent;
 
     public bool resetPositionOnRide = true;
-    public bool rotateUpAndDown = true;
+    public bool rotateUpAndDown = false;
 
     public bool playerInTheControlledObj = false;
 
@@ -41,6 +41,9 @@ public class FT_GenericControlledObj : MonoBehaviour
     public float backDistanceCheck = 2.0f;
     public string validSurfaceTag = "Water";
 
+    [Header("Debugging")]
+    public bool drawFrontandBackCheckers = true;
+
 
 
 
@@ -49,7 +52,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     {
         SaveControlledObjectStartingValues();
         StartAnimation();
-        HideFrontAndRearCheckers();
+
     }
 
 
@@ -77,18 +80,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         playerPrevParent = this.transform.parent;
     }
 
-    private void HideFrontAndRearCheckers()
-    {
-        if (frontChecker != null)
-        {
-            frontChecker.GetComponent<MeshRenderer>().enabled = false;
-        }
-        if (backChecker != null)
-        {
-            backChecker.GetComponent<MeshRenderer>().enabled = false;
-        }
 
-    }
 
 
 
@@ -262,12 +254,13 @@ public class FT_GenericControlledObj : MonoBehaviour
         if (isClearForward && y > -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
-            Debug.Log("about to translate forward" + speed * Time.deltaTime);
+            Debug.Log("about to translate FORWARD" + speed * Time.deltaTime);
         }
         else if (isClearBackward && y == -1)
+
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime * y);
-            Debug.Log("about to translate backward" + speed * Time.deltaTime * y);
+            Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime * y);
         }
 
 
@@ -293,17 +286,21 @@ public class FT_GenericControlledObj : MonoBehaviour
     {
         RaycastHit hit;
         // Bit shift the index of the layer (8) to get a bit mask
-        // int layerMask = 1 << 8;
+        int layerMask = 1 << 8;
 
         // This would cast rays only against colliders in layer 8.
         // But instead we want to collide against everything except layer 8. The ~ operator does this, it inverts a bitmask.
-        //layerMask = ~layerMask;
-        LayerMask layerMask = new LayerMask();
-        Vector3 tiltedForward = Quaternion.Euler(120, 0, 0) * Vector3.forward;
+        layerMask = ~layerMask;
+
+        Vector3 tiltedForward = Quaternion.Euler(50, 0, 0) * Vector3.forward;
+        if (drawFrontandBackCheckers)
+        {
+            Debug.DrawRay(frontChecker.transform.position, transform.TransformDirection(tiltedForward), Color.magenta, 1f, true);
+        }
         if (Physics.Raycast(frontChecker.transform.position, transform.TransformDirection(tiltedForward), out hit, frontDistanceCheck, layerMask))
         {
-            // Debug.DrawRay(front.transform.position, transform.TransformDirection(tiltedForward) * hit.distance, Color.magenta, 30f, true);
-            // Debug.Log("Did Hit >" + hit.transform.gameObject.tag);
+
+            Debug.Log("Did Hit >" + hit.transform.gameObject.tag);
             if (hit.transform.gameObject.tag == validSurfaceTag)
             {
                 isClearForward = true;
@@ -314,10 +311,14 @@ public class FT_GenericControlledObj : MonoBehaviour
             }
 
         }
-        Vector3 tiltedBackward = Quaternion.Euler(210, 0, 0) * Vector3.forward;
+        Vector3 tiltedBackward = Quaternion.Euler(120, 0, 0) * Vector3.forward;
+        if (drawFrontandBackCheckers)
+        {
+            Debug.DrawRay(backChecker.transform.position, transform.TransformDirection(tiltedBackward), Color.magenta, 1f, true);
+        }
         if (Physics.Raycast(backChecker.transform.position, transform.TransformDirection(tiltedBackward), out hit, backDistanceCheck, layerMask))
         {
-            // Debug.DrawRay(back.transform.position, transform.TransformDirection(tiltedBackward) * hit.distance, Color.magenta, 30f, true);
+
             // Debug.Log("Did Hit >"+hit.transform.gameObject.tag);
             if (hit.transform.gameObject.tag == validSurfaceTag)
             {
