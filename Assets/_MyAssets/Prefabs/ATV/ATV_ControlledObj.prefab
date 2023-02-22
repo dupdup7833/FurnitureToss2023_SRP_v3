@@ -35,6 +35,10 @@ PrefabInstance:
       propertyPath: validSurfaceTag
       value: Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 1220581823781848807, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: resetPlayerRotationOnDismount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_Size.x
       value: 1.5158501
@@ -111,6 +115,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: -18.959
       objectReference: {fileID: 0}
+    - target: {fileID: 7895692697101311825, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 9117ac3f74b9e3a4fa7b52da5e801799, type: 3}
     - target: {fileID: 8174552673256698600, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_RootOrder
       value: 0

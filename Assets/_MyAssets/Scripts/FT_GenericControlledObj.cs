@@ -7,28 +7,25 @@ public class FT_GenericControlledObj : MonoBehaviour
     Animator anim;
     //public Transform player;
 
+    AudioSource audioSource;
+
     public Transform mountPosition;
-
-
 
     public FT_PlayerController ftPlayerController;
 
     public float rotationSpeed = 500.0f;
     public float speedAdjustment = 2f;
 
-    public float distanceToLeaveControlledObj = 1.7f;
-
-    public enum controlledObjectType { Unicorn, Boat };
     Vector3 startPos;
     Quaternion startRot;
-    Vector3 playerStartPos;
-    Quaternion playerStartRot;
+
     Transform playerPrevParent;
 
-    public bool resetPositionOnRide = true;
+    /// public bool resetPositionOnRide = true;
+    public bool resetPlayerRotationOnDismount = false;
     public bool rotateUpAndDown = false;
 
-    public bool playerInTheControlledObj = false;
+    public bool playerMovesWithTheControlledObj = true;
 
     private Transform previousParent;
     private Transform previousRotation;
@@ -39,6 +36,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     public bool isClearForward = true;
     public bool isClearBackward = true;
 
+    public float idleVolume = 0.5f;
 
     public float frontDistanceCheck = 2.0f;
     public float backDistanceCheck = 2.0f;
@@ -47,23 +45,21 @@ public class FT_GenericControlledObj : MonoBehaviour
     [Header("Debugging")]
     public bool drawFrontandBackCheckers = true;
 
-
-
-
     // Start is called before the first frame update
     void Start()
     {
+        ftPlayerController = GameObject.FindGameObjectWithTag("Player").GetComponent<FT_PlayerController>();
         SaveControlledObjectStartingValues();
         StartAnimation();
         previousParent = ftPlayerController.transform.parent;
-
+        audioSource = this.GetComponent<AudioSource>();
+        audioSource.volume = idleVolume;
     }
 
 
     private void FixedUpdate()
     {
         CheckWhetherForwardAndBackAreClear();
-
     }
 
     private void StartAnimation()
@@ -84,48 +80,9 @@ public class FT_GenericControlledObj : MonoBehaviour
         playerPrevParent = this.transform.parent;
     }
 
-
-
-
-
-
-    public void MoveWithControlledObj(bool shouldMoveWithControlledObj)
-    {
-        if (shouldMoveWithControlledObj)
-        {
-            // Debug.Log("ftPlayers parent " + ftPlayerController.transform.parent);
-            //
-             previousRotation = ftPlayerController.transform;
-            ftPlayerController.transform.SetParent(this.transform, true);
-            FT_GameController.GC.currentVehicle = this;
-            playerInTheControlledObj = true;
-            StartCoroutine(CheckIfPlayerLeavesTheControlledObj());
-
-        }
-        else
-        {
-            Debug.Log("they left the "+this.gameObject.name);
-            ftPlayerController.transform.SetParent(previousParent, true);
-            ftPlayerController.transform.rotation = Quaternion.identity;
-            FT_GameController.GC.currentVehicle = null;
-            playerInTheControlledObj = false;
-            StopCoroutine(CheckIfPlayerLeavesTheControlledObj());
-            Debug.Log("they left the "+this.gameObject.name+" and everything should have been cleaned up");
-              
-        }
-
-    }
-
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
-        {
-            // Debug.Log("boat trigger: Entered the trigger" + other.gameObject.tag);
-
-         //   MoveWithControlledObj(true);
-
-        }
-        else if (other.gameObject.tag == "FT_GamePiece")
+        if (other.gameObject.tag == "FT_GamePiece")
         {
             HandleParentingCapturedObjects(other, shouldRelease: false);
         }
@@ -155,47 +112,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         }
     }
 
-    // private void OnTriggerStay(Collider other)
-    // {
-    //     if (other.gameObject.tag == "Player")
-    //     {
-    //         Debug.Log("boat trigger: stayed in the trigger" + other.gameObject.tag);
-    //         //MoveWithControlledObj(true);
-    //     }
-    // }
 
-
-    IEnumerator CheckIfPlayerLeavesTheControlledObj()
-    {
-        while (playerInTheControlledObj)
-        {
-              Debug.Log("CheckIfPlayerLeavesTheControlledObj is still running");
-            if (Vector3.Distance(this.transform.position, ftPlayerController.transform.position) > distanceToLeaveControlledObj)
-            {
-                MoveWithControlledObj(false);
-            }
-            yield return new WaitForSeconds(1);
-        }
-        // Debug.Log("Boat: distance check "+Vector3.Distance(this.transform.position, ftPlayerController.transform.position));
-        // MyCollisions();
-    }
-
-
-
-    public void ResetPosition(bool flyWithUnicorn)
-    {
-        Debug.Log("Reset position");
-        this.transform.rotation = startRot;
-        transform.position = startPos;
-        if (flyWithUnicorn)
-        {
-            this.transform.SetParent(playerPrevParent);
-            this.transform.localPosition = Vector3.zero;
-            this.transform.localRotation = Quaternion.identity;
-
-            //player.transform.position = playerStartPos;
-        }
-    }
 
 
 
@@ -262,32 +179,38 @@ public class FT_GenericControlledObj : MonoBehaviour
         if (isClearForward && y > -1)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
-            Debug.Log("about to translate FORWARD" + speed * Time.deltaTime);
+            
+         //   Debug.Log("about to translate FORWARD" + speed * Time.deltaTime);
         }
         else if (isClearBackward && y == -1)
 
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime * y);
-            Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime * y);
-        }
+             
+          //  Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime * y);
+        }  
+
+        audioSource.volume = System.Math.Max(speed,idleVolume);
+
+        
 
 
     }
 
-    public void StartFlying(bool flyWithUnicorn)
-    {
-        if (flyWithUnicorn)
-        {
-            startRot = Quaternion.identity;
-            startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
-            // TODO NEED TO FIX TO GET FLYING WORKING this.transform.SetParent(mountPosition.transform);
-            if (resetPositionOnRide)
-            {
-                this.transform.localPosition = Vector3.zero;
-                this.transform.localRotation = Quaternion.identity;
-            }
-        }
-    }
+    /* public void StartFlying(bool flyWithUnicorn)
+     {
+         if (flyWithUnicorn)
+         {
+             startRot = Quaternion.identity;
+             startPos = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z);
+             // TODO NEED TO FIX TO GET FLYING WORKING this.transform.SetParent(mountPosition.transform);
+             if (resetPositionOnRide)
+             {
+                 this.transform.localPosition = Vector3.zero;
+                 this.transform.localRotation = Quaternion.identity;
+             }
+         }
+     }*/
 
 
     private void CheckWhetherForwardAndBackAreClear()
@@ -308,7 +231,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         if (Physics.Raycast(frontChecker.transform.position, transform.TransformDirection(tiltedForward), out hit, frontDistanceCheck, layerMask))
         {
 
-            Debug.Log("Did Hit >" + hit.transform.gameObject.tag);
+            //            Debug.Log("Did Hit >" + hit.transform.gameObject.tag);
             if (hit.transform.gameObject.tag == validSurfaceTag)
             {
                 isClearForward = true;
@@ -342,20 +265,38 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     public void SnapPlayerToMountPosition()
     {
-       
-        MoveWithControlledObj(true);
         ftPlayerController.CharacterController.enabled = false;
-        ftPlayerController.transform.position = mountPosition.position;
-        ftPlayerController.transform.rotation = mountPosition.rotation;
-         
+        if (playerMovesWithTheControlledObj)
+        {
+            // previousRotation = ftPlayerController.transform;
+            ftPlayerController.transform.SetParent(this.transform, true);
+            //  FT_GameController.GC.currentVehicle = this;
+            //  playerInTheControlledObj = true;
+
+
+            ftPlayerController.transform.position = mountPosition.position;
+            ftPlayerController.transform.rotation = mountPosition.rotation;
+        }
     }
 
     public void ReleasePlayerFromMountPosition()
     {
-        MoveWithControlledObj(false);
-         ftPlayerController.transform.rotation = previousRotation.rotation;
-        ftPlayerController.CharacterController.enabled = true;
-       
+        if (playerMovesWithTheControlledObj)
+        {
+            if (resetPlayerRotationOnDismount)
+            {
+                ftPlayerController.transform.rotation = Quaternion.identity;
+            }
+            ftPlayerController.CharacterController.enabled = true;
+            Debug.Log("they left the " + this.gameObject.name);
+            ftPlayerController.transform.SetParent(previousParent, true);
+            //  ftPlayerController.transform.rotation = Quaternion.identity;
+            // FT_GameController.GC.currentVehicle = null;
+            // playerInTheControlledObj = false;
+
+            Debug.Log("they left the " + this.gameObject.name + " and everything should have been cleaned up");
+        }
+        audioSource.volume = idleVolume;
 
     }
 
