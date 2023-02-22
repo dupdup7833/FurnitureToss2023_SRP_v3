@@ -42,6 +42,8 @@ public class FT_GenericControlledObj : MonoBehaviour
     public float backDistanceCheck = 2.0f;
     public string validSurfaceTag = "Water";
 
+    public float checkHowOftenSeconds = 0.1f;
+
     [Header("Debugging")]
     public bool drawFrontandBackCheckers = true;
 
