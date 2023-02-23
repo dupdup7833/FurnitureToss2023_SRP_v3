@@ -52,12 +52,12 @@ public class FT_GenericRemoteControl : MonoBehaviour
     private void Start()
     {
         grabbable = GetComponent<HVRGrabbable>();
-        StartCoroutine(CheckForControllerUsage(controlledObject.checkHowOftenSeconds));
+        // StartCoroutine(CheckForControllerUsage(controlledObject.checkHowOftenSeconds));
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
-        
+
 
         /*  Joystick.localPosition = movement * joyMove;
 
@@ -70,58 +70,44 @@ public class FT_GenericRemoteControl : MonoBehaviour
 
         //Debug.Log("Accelerate value:" + throttle);
 
-    }
 
-    private IEnumerator CheckForControllerUsage(float checkHowOftenSeconds)
-    {
-        while (true)
-        {
-            if (grabbable.IsHandGrabbed)
-            {
-                float throttle = 0;
-                controlledObject.ftPlayerController.overridePlayerMovement = true;
-                //   Debug.Log("return Inputs.MovementAxis"+Inputs.MovementAxis);
-                var controller = grabbable.HandGrabbers[0].Controller;
-
-                Debug.Log("controller.Trigger" + controller.Trigger);
-                Debug.Log("joystick axis" + controller.JoystickAxis);
-
-                /// hand = interactable.attachedToHand.handType;
-                Vector2 m = controller.JoystickAxis;
-                xMovement = m.x;
-                yMovement = m.y;
-
-                Debug.Log("X: " + xMovement + " Y:" + yMovement);
-                movement = new Vector3(m.x, m.y, 0);
-                throttle = controller.Trigger;
-                //  jump = jumpAction[hand].stateDown;
-                //glow = Mathf.Lerp(glow, jumpAction[hand].state ? 1.5f : 1.0f, Time.deltaTime * 20);
-                Debug.Log("controlled object" + controlledObject);
-                Debug.Log("controlledObject.ftPlayerController" + controlledObject.ftPlayerController);
-                controlledObject.Move(movement, throttle);
-            }
-            else
-            {
-
-                controlledObject.ftPlayerController.overridePlayerMovement = false;
-                movement = Vector2.zero;
-                jump = false;
-                glow = 0;
-            }
-            yield return new WaitForSeconds(checkHowOftenSeconds);
-        }
-
-    }
-    private void NewMethod()
-    {
 
 
         if (grabbable.IsHandGrabbed)
         {
+            float throttle = 0;
+            controlledObject.ftPlayerController.overridePlayerMovement = true;
+            //   Debug.Log("return Inputs.MovementAxis"+Inputs.MovementAxis);
+            var controller = grabbable.HandGrabbers[0].Controller;
 
+            Debug.Log("controller.Trigger" + controller.Trigger);
+            Debug.Log("joystick axis" + controller.JoystickAxis);
+
+            /// hand = interactable.attachedToHand.handType;
+            Vector2 m = controller.JoystickAxis;
+            xMovement = m.x;
+            yMovement = m.y;
+
+            Debug.Log("X: " + xMovement + " Y:" + yMovement);
+            movement = new Vector3(m.x, m.y, 0);
+            throttle = controller.Trigger;
+            //  jump = jumpAction[hand].stateDown;
+            //glow = Mathf.Lerp(glow, jumpAction[hand].state ? 1.5f : 1.0f, Time.deltaTime * 20);
+            Debug.Log("controlled object" + controlledObject);
+            Debug.Log("controlledObject.ftPlayerController" + controlledObject.ftPlayerController);
+            controlledObject.Move(movement, throttle);
+        }
+        else
+        {
+
+            controlledObject.ftPlayerController.overridePlayerMovement = false;
+            movement = Vector2.zero;
+            jump = false;
+            glow = 0;
         }
 
     }
+
 
 }
 
