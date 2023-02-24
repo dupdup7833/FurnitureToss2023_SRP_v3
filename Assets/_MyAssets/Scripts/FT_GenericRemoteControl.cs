@@ -84,7 +84,10 @@ public class FT_GenericRemoteControl : MonoBehaviour
             Debug.Log("joystick axis" + controller.JoystickAxis);
 
             /// hand = interactable.attachedToHand.handType;
-            Vector2 m = controller.JoystickAxis;
+           // Debug.Log("controller.GetType"+controller.Vive+" xxx "+controller.WMR);
+            Vector2 m =  controller.Vive ? controller.TrackpadAxis: controller.JoystickAxis;
+             
+            
             xMovement = m.x;
             yMovement = m.y;
 
