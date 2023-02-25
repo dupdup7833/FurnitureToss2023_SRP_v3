@@ -45,13 +45,17 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     public float frontDistanceCheck = 2.0f;
     public float backDistanceCheck = 2.0f;
+
+    public bool checkForValidSufaceTag = true;
     public string validSurfaceTag = "Water";
 
     public float checkHowOftenSeconds = 0.1f;
 
     [Header("Debugging")]
     public bool drawFrontandBackCheckers = true;
-    
+
+    protected Rigidbody rb;
+
 
     // Start is called before the first frame update
     void Start()
@@ -62,12 +66,17 @@ public class FT_GenericControlledObj : MonoBehaviour
         previousParent = ftPlayerController.transform.parent;
         audioSource = this.GetComponent<AudioSource>();
         audioSource.volume = idleVolume;
+        rb = this.GetComponent<Rigidbody>();
     }
 
 
     private void FixedUpdate()
     {
-        CheckWhetherForwardAndBackAreClear();
+        
+        if (checkForValidSufaceTag) {
+            CheckWhetherForwardAndBackAreClear();
+        }
+         
     }
 
     private void StartAnimation()
@@ -124,7 +133,7 @@ public class FT_GenericControlledObj : MonoBehaviour
 
 
 
-    public void Move(Vector3 movement, float speed)
+    public virtual void Move(Vector3 movement, float speed)
     {
 
 
@@ -155,9 +164,9 @@ public class FT_GenericControlledObj : MonoBehaviour
             x = movement.x;
             y = movement.y;
             movementThreshold = 0;
-             
-                
-             
+
+
+
         }
 
 
@@ -206,20 +215,20 @@ public class FT_GenericControlledObj : MonoBehaviour
         //Debug.Log("Movement Vector: " + movement.x + " " + movement.y + " " + movement.z);
         // Debug.Log("rotation" + this.transform.rotation.x + "," + this.transform.rotation.y + "," + this.transform.rotation.z);
 
-        Debug.Log("about to translate" + speed + " " + y+ " movement y "+movement.y);
+        Debug.Log("about to translate" + speed + " " + y + " movement y " + movement.y);
 
-        if (isClearForward && y > movementThreshold)
+        if ((!checkForValidSufaceTag||isClearForward) && y > movementThreshold)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
 
             //   Debug.Log("about to translate FORWARD" + speed * Time.deltaTime);
         }
-        else if (isClearBackward && y < -1 * movementThreshold)
+        else if ((!checkForValidSufaceTag|| isClearBackward) && y < -1 * movementThreshold)
 
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
 
-               Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime );
+            Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime);
         }
 
         audioSource.volume = System.Math.Max(speed, idleVolume);
