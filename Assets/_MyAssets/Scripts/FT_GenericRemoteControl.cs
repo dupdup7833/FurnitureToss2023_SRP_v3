@@ -55,7 +55,7 @@ public class FT_GenericRemoteControl : MonoBehaviour
         // StartCoroutine(CheckForControllerUsage(controlledObject.checkHowOftenSeconds));
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
 
 
@@ -113,5 +113,4 @@ public class FT_GenericRemoteControl : MonoBehaviour
 
 
 }
-
 

@@ -59,6 +59,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0.08485603
       objectReference: {fileID: 0}
+    - target: {fileID: 4432649813861287336, guid: b99abff2a1963d54795cf1e068326988, type: 3}
+      propertyPath: m_Mass
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 4636794314927586855, guid: b99abff2a1963d54795cf1e068326988, type: 3}
       propertyPath: m_RootOrder
       value: 0

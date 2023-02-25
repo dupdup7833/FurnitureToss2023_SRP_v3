@@ -13,8 +13,13 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     public FT_PlayerController ftPlayerController;
 
+    public ForwardMovementControlledBy forwardMovementControlledBy = ForwardMovementControlledBy.JoystickOrTrackpad;
     public float rotationSpeed = 500.0f;
     public float speedAdjustment = 2f;
+
+    public float movementThreshold = 0.9f;
+
+    public bool normalizeMovement = false;
 
     Vector3 startPos;
     Quaternion startRot;
@@ -46,6 +51,7 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     [Header("Debugging")]
     public bool drawFrontandBackCheckers = true;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -121,33 +127,57 @@ public class FT_GenericControlledObj : MonoBehaviour
     public void Move(Vector3 movement, float speed)
     {
 
+
         // Debug.Log("moving object");
-        int x = 0;
-        int y = 0;
-        if (movement.x > 0.9f)
+        float x = 0;
+        float y = 0;
+        if (normalizeMovement)
         {
-            x = 1;
+            if (movement.x > movementThreshold)
+            {
+                x = 1;
+            }
+            else if (movement.x < -movementThreshold)
+            {
+                x = -1;
+            }
+            else if (movement.y > movementThreshold)
+            {
+                y = 1;
+            }
+            else if (movement.y < -movementThreshold)
+            {
+                y = -1;
+            }
         }
-        else if (movement.x < -0.9f)
+        else
         {
-            x = -1;
-        }
-        else if (movement.y > 0.9f)
-        {
-            y = 1;
-        }
-        else if (movement.y < -0.9f)
-        {
-            y = -1;
+            x = movement.x;
+            y = movement.y;
+            movementThreshold = 0;
+             
+                
+             
         }
 
-        speed *= speedAdjustment;
-        if (x == 1 || x == -1)
+
+
+        if (forwardMovementControlledBy == ForwardMovementControlledBy.JoystickOrTrackpad)
+        {
+            speed = speedAdjustment * y;
+        }
+        else if (forwardMovementControlledBy == ForwardMovementControlledBy.Trigger)
+        {
+            speed *= speedAdjustment;
+        }
+
+
+        if (x > movementThreshold || x < -1 * movementThreshold)
         {
             //    
             this.transform.Rotate(0, x * Time.deltaTime * rotationSpeed, 0);
         }
-        else if (y == 1 || y == -1)
+        if (y > movementThreshold || y < -1 * movementThreshold)
         {
             //  Debug.Log("rotation limit" + transform.rotation.x);
             /// this.transform.rotation = Quaternion.Euler(this.transform.rotation.x,0, this.transform.rotation.y);
@@ -176,25 +206,25 @@ public class FT_GenericControlledObj : MonoBehaviour
         //Debug.Log("Movement Vector: " + movement.x + " " + movement.y + " " + movement.z);
         // Debug.Log("rotation" + this.transform.rotation.x + "," + this.transform.rotation.y + "," + this.transform.rotation.z);
 
-        //Debug.Log("about to translate" + speed * Time.deltaTime);
+        Debug.Log("about to translate" + speed + " " + y+ " movement y "+movement.y);
 
-        if (isClearForward && y > -1)
+        if (isClearForward && y > movementThreshold)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
-            
-         //   Debug.Log("about to translate FORWARD" + speed * Time.deltaTime);
+
+            //   Debug.Log("about to translate FORWARD" + speed * Time.deltaTime);
         }
-        else if (isClearBackward && y == -1)
+        else if (isClearBackward && y < -1 * movementThreshold)
 
         {
-            this.transform.Translate(0, 0, speed * Time.deltaTime * y);
-             
-          //  Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime * y);
-        }  
+            this.transform.Translate(0, 0, speed * Time.deltaTime);
 
-        audioSource.volume = System.Math.Max(speed,idleVolume);
+               Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime );
+        }
 
-        
+        audioSource.volume = System.Math.Max(speed, idleVolume);
+
+
 
 
     }
@@ -268,10 +298,10 @@ public class FT_GenericControlledObj : MonoBehaviour
     public void SnapPlayerToMountPosition()
     {
         ftPlayerController.overridePlayerMovement = true;
-       
+
         if (playerMovesWithTheControlledObj)
         {
-             ftPlayerController.CharacterController.enabled = false;
+            ftPlayerController.CharacterController.enabled = false;
             // previousRotation = ftPlayerController.transform;
             ftPlayerController.transform.SetParent(this.transform, true);
             //  FT_GameController.GC.currentVehicle = this;
@@ -281,7 +311,7 @@ public class FT_GenericControlledObj : MonoBehaviour
             ftPlayerController.transform.position = mountPosition.position;
             ftPlayerController.transform.rotation = mountPosition.rotation;
         }
-         
+
 
     }
 
@@ -304,8 +334,14 @@ public class FT_GenericControlledObj : MonoBehaviour
             Debug.Log("they left the " + this.gameObject.name + " and everything should have been cleaned up");
         }
         audioSource.volume = idleVolume;
-        
+
 
     }
 
+}
+
+public enum ForwardMovementControlledBy
+{
+    Trigger,
+    JoystickOrTrackpad
 }
