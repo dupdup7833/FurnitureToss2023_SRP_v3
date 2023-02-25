@@ -19,6 +19,7 @@ TagManager:
   - Floor
   - Terrain
   - Water
+  - FT_Vehicle
   layers:
   - Default
   - TransparentFX

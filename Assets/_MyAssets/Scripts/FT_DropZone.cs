@@ -8,6 +8,7 @@ using System.Collections;
 using HurricaneVR.Framework.Core;
 using HurricaneVR.Framework.Core.Grabbers;
 using TMPro;
+using System.Collections.Generic;
 
 public class FT_DropZone : MonoBehaviour
 {
@@ -17,6 +18,8 @@ public class FT_DropZone : MonoBehaviour
     public int doubleDropBonus = 50;
     public int bankShotBonus = 50;
     public float distanceMultiplierBonus = 25.0f;
+
+    public float ejectForce = 700f;
 
     public int forceGrabDrop = 25;
     public FT_DropZone secondaryDropZone;
@@ -43,16 +46,18 @@ public class FT_DropZone : MonoBehaviour
 
     public bool objectPlaced = false;
 
+    private Dictionary<int, Rigidbody> rigidbodiesInZone = new Dictionary<int, Rigidbody>();
+
 
     void Start()
     {
         // set up guide game piece
         guideGamePiece.SetActive(false);
         guideGamePieceMesh = guideGamePiece.GetComponent<MeshFilter>().sharedMesh;
-      //  if (obstacle != null)
-       // {
-       //     obstacle.SetObstacleStatus(false);
-      //  }
+        //  if (obstacle != null)
+        // {
+        //     obstacle.SetObstacleStatus(false);
+        //  }
         snapToZoneSound = GetComponent<AudioSource>();
         //  if (secondaryDropZone != null)
         //  {
@@ -68,7 +73,7 @@ public class FT_DropZone : MonoBehaviour
         // if (!objectPlaced && other.tag == "FT_GamePiece" && guideGamePieceMesh == other.GetComponent<MeshFilter>().sharedMesh)
         // {
 
-        StartCoroutine(SnapToZone(grabble.gameObject, forceDrop: false));
+        PreSnapToZone(grabble.gameObject, forceDrop: false);
         // }
     }
 
@@ -106,15 +111,48 @@ public class FT_DropZone : MonoBehaviour
                 Debug.Log(other.gameObject.name);
             }
         }
+        else if (!objectPlaced && (other.tag == "FT_GamePiece" ||other.tag == "FT_Vehicle")  )
+        {
+            // it's a game object but not the one that matches
+            AddToRigidbodiesInZone(other.gameObject);
+        }
 
     }
 
+    private void AddToRigidbodiesInZone(GameObject other)
+    {
+        rigidbodiesInZone.Add(other.gameObject.GetInstanceID(), other.GetComponent<Rigidbody>());
+        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
+    }
+
+    private void RemoveFromRigidbodiesInZone(GameObject other)
+    {
+        rigidbodiesInZone.Remove(other.GetInstanceID());
+        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
+    }
     private void DroppedIntoTheZone(Collider other, HVRGrabbable grabbable)
     {
         grabbable.enabled = false;
-        StartCoroutine(SnapToZone(other.gameObject, forceDrop: false));
+        Debug.Log("this is the one");
+        PreSnapToZone(other.gameObject, forceDrop: false);
+
     }
 
+    private void PreSnapToZone(GameObject otherGameObject, bool forceDrop)
+    {
+        EjectOtherRigidBodies();
+         StartCoroutine(SnapToZone(otherGameObject, forceDrop));
+    }
+
+    private void EjectOtherRigidBodies()
+    {
+        Debug.Log("ejecting");
+        foreach (Rigidbody rb in rigidbodiesInZone.Values)
+        {
+            Debug.Log("ejecting and object: "+rb.gameObject.name);
+            rb.AddForce(Vector3.up * ejectForce);
+        }
+    }
     private void ShowHoverGamePieceAndListenForDrop(HVRGrabbable grabbable)
     {
         grabbable.Released.AddListener(releaseIt);
@@ -127,12 +165,12 @@ public class FT_DropZone : MonoBehaviour
     {
         Debug.Log("IsBeingForcedGrabbed:" + grabbable.IsBeingForcedGrabbed);
         grabbable.enabled = false;
-        StartCoroutine(SnapToZone(other.gameObject, forceDrop: true));
+        PreSnapToZone(other.gameObject, forceDrop: true);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        
+
         if (!objectPlaced && other.tag == "FT_GamePiece")
         {
             HVRGrabbable grabbable = other.gameObject.GetComponent<HVRGrabbable>();
@@ -146,13 +184,17 @@ public class FT_DropZone : MonoBehaviour
                 }
             }
             guideGamePiece.SetActive(false);
-
+            
+        }
+        if (other.tag == "FT_GamePiece" ||other.tag == "FT_Vehicle"){
+        RemoveFromRigidbodiesInZone(other.gameObject);
         }
     }
 
     IEnumerator SnapToZone(GameObject otherGameObject, bool forceDrop)
     {
         Debug.Log("Snap to Zone");
+
 
 
         snapToZoneSound.Play(0);
@@ -175,7 +217,8 @@ public class FT_DropZone : MonoBehaviour
             yield return null;
         }
         // hide everything related to the dropzone
-        if (otherGameObject.transform.position!=guideGamePiece.transform.position){
+        if (otherGameObject.transform.position != guideGamePiece.transform.position)
+        {
             Debug.Log("IT DID NOT GET SNAPPED");
         }
         guideGamePiece.SetActive(false);
@@ -231,6 +274,7 @@ public class FT_DropZone : MonoBehaviour
             this.gameObject.SetActive(false);
         }
         objectPlaced = false;
+        rigidbodiesInZone.Clear();
 
 
     }

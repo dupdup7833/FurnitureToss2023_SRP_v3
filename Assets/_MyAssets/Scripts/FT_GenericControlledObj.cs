@@ -267,9 +267,11 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     public void SnapPlayerToMountPosition()
     {
-        ftPlayerController.CharacterController.enabled = false;
+        ftPlayerController.overridePlayerMovement = true;
+       
         if (playerMovesWithTheControlledObj)
         {
+             ftPlayerController.CharacterController.enabled = false;
             // previousRotation = ftPlayerController.transform;
             ftPlayerController.transform.SetParent(this.transform, true);
             //  FT_GameController.GC.currentVehicle = this;
@@ -279,10 +281,13 @@ public class FT_GenericControlledObj : MonoBehaviour
             ftPlayerController.transform.position = mountPosition.position;
             ftPlayerController.transform.rotation = mountPosition.rotation;
         }
+         
+
     }
 
     public void ReleasePlayerFromMountPosition()
     {
+        ftPlayerController.overridePlayerMovement = false;
         if (playerMovesWithTheControlledObj)
         {
             if (resetPlayerRotationOnDismount)
@@ -299,6 +304,7 @@ public class FT_GenericControlledObj : MonoBehaviour
             Debug.Log("they left the " + this.gameObject.name + " and everything should have been cleaned up");
         }
         audioSource.volume = idleVolume;
+        
 
     }
 

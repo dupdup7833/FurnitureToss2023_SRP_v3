@@ -388,7 +388,7 @@ GameObject:
   - component: {fileID: 7895692697101311825}
   m_Layer: 0
   m_Name: ControlledObjBase
-  m_TagString: Untagged
+  m_TagString: FT_Vehicle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -436,9 +436,11 @@ MonoBehaviour:
   backChecker: {fileID: 1364813193705759424}
   isClearForward: 1
   isClearBackward: 1
+  idleVolume: 0.5
   frontDistanceCheck: 2
   backDistanceCheck: 2
   validSurfaceTag: Water
+  checkHowOftenSeconds: 0.1
   drawFrontandBackCheckers: 1
 --- !u!65 &2925005849058799521
 BoxCollider:

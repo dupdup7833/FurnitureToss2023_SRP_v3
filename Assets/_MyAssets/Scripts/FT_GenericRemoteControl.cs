@@ -55,7 +55,7 @@ public class FT_GenericRemoteControl : MonoBehaviour
         // StartCoroutine(CheckForControllerUsage(controlledObject.checkHowOftenSeconds));
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
 
 
@@ -76,12 +76,12 @@ public class FT_GenericRemoteControl : MonoBehaviour
         if (grabbable.IsHandGrabbed)
         {
             float throttle = 0;
-            controlledObject.ftPlayerController.overridePlayerMovement = true;
+        //    controlledObject.ftPlayerController.overridePlayerMovement = true;
             //   Debug.Log("return Inputs.MovementAxis"+Inputs.MovementAxis);
             var controller = grabbable.HandGrabbers[0].Controller;
 
-            Debug.Log("controller.Trigger" + controller.Trigger);
-            Debug.Log("joystick axis" + controller.JoystickAxis);
+       //     Debug.Log("controller.Trigger" + controller.Trigger);
+        //    Debug.Log("joystick axis" + controller.JoystickAxis);
 
             /// hand = interactable.attachedToHand.handType;
            // Debug.Log("controller.GetType"+controller.Vive+" xxx "+controller.WMR);
@@ -91,19 +91,19 @@ public class FT_GenericRemoteControl : MonoBehaviour
             xMovement = m.x;
             yMovement = m.y;
 
-            Debug.Log("X: " + xMovement + " Y:" + yMovement);
+           // Debug.Log("X: " + xMovement + " Y:" + yMovement);
             movement = new Vector3(m.x, m.y, 0);
             throttle = controller.Trigger;
             //  jump = jumpAction[hand].stateDown;
             //glow = Mathf.Lerp(glow, jumpAction[hand].state ? 1.5f : 1.0f, Time.deltaTime * 20);
-            Debug.Log("controlled object" + controlledObject);
-            Debug.Log("controlledObject.ftPlayerController" + controlledObject.ftPlayerController);
+           // Debug.Log("controlled object" + controlledObject);
+           // Debug.Log("controlledObject.ftPlayerController" + controlledObject.ftPlayerController);
             controlledObject.Move(movement, throttle);
         }
         else
         {
-
-            controlledObject.ftPlayerController.overridePlayerMovement = false;
+          
+           // controlledObject.ftPlayerController.overridePlayerMovement = false;
             movement = Vector2.zero;
             jump = false;
             glow = 0;

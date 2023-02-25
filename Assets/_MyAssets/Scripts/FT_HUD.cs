@@ -8,10 +8,10 @@ public class FT_HUD : FT_Scoreboard
 
     protected override void Update()
     {
-        if (FT_GameController.GC.playerOptions.hudTimer)
-        {
-            base.Update();
-        }
+        // if (FT_GameController.GC.playerOptions.hudTimer)
+        // {
+        //     base.Update();
+        // }
     }
 
     protected override void UpdateScorboard(string message)

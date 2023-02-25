@@ -123,6 +123,7 @@ MonoBehaviour:
   doubleDropBonus: 50
   bankShotBonus: 50
   distanceMultiplierBonus: 25
+  ejectForce: 700
   forceGrabDrop: 25
   secondaryDropZone: {fileID: 0}
   obstacle: {fileID: 0}
@@ -320,7 +321,7 @@ MeshCollider:
   m_GameObject: {fileID: 2951870540005278616}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30

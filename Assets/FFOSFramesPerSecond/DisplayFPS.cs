@@ -7,7 +7,7 @@ public class DisplayFPS : MonoBehaviour
 {
     public float updateDelay = 0f;
 
-    private float _targetFPS = 72f;
+    private float _targetFPS = 85f;
     private float _currentFPS = 0f;
     private float _deltaTime = 0f;
 
