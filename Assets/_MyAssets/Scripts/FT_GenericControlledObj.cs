@@ -117,22 +117,22 @@ public class FT_GenericControlledObj : MonoBehaviour
     }
 
 
-     private void RemoveFromRigidbodiesInZone(GameObject other)
+     protected virtual void RemoveFromRigidbodiesInZone(GameObject other)
     {
         rigidbodiesInZone.Remove(other.GetInstanceID());
         Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
     }
     
 
-     private void AddToRigidbodiesInZone(GameObject other)
+     protected virtual void AddToRigidbodiesInZone(GameObject other)
     {
         rigidbodiesInZone.Add(other.gameObject.GetInstanceID(), other.GetComponent<Rigidbody>());
         other.GetComponent<Rigidbody>().mass = 0.1f;
-        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
+//        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
     }
     private void HandleParentingCapturedObjects(Collider other, bool shouldRelease)
     {
-        if (other.gameObject.tag == "FT_GamePiece")
+        if (other.gameObject.tag == "FT_GamePiece"  && !other.GetComponent<FT_GamePiece>().gamePiecePlaced)
         {
             if (shouldRelease)
             {
@@ -233,7 +233,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         //Debug.Log("Movement Vector: " + movement.x + " " + movement.y + " " + movement.z);
         // Debug.Log("rotation" + this.transform.rotation.x + "," + this.transform.rotation.y + "," + this.transform.rotation.z);
 
-        Debug.Log("about to translate" + speed + " " + y + " movement y " + movement.y);
+//        Debug.Log("about to translate" + speed + " " + y + " movement y " + movement.y);
 
         if ((!checkForValidSufaceTag||isClearForward) && y > movementThreshold)
         {

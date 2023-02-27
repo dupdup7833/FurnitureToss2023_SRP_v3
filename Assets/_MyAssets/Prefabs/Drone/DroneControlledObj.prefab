@@ -51,6 +51,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.06
       objectReference: {fileID: 0}
+    - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5938280250131216450, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_Name
       value: DroneControlledObj
@@ -118,6 +122,17 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1220581823781848807, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+--- !u!114 &2108576881398100753 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2037212386564901213, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+  m_PrefabInstance: {fileID: 73898585672890956}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ebc937e678155e4d86feeb9248cca97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6012173782631203342 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5938280250131216450, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
@@ -157,8 +172,11 @@ MonoBehaviour:
   checkHowOftenSeconds: 0.1
   drawFrontandBackCheckers: 1
   gravityEffect: 20
-  upwardsSpeedAdjustment: 20
+  upwardsSpeedAdjustment: 100
   triggerThreshold: 0.1
+  forcePerCarriedObject: 11
+  downwardCompensationForcePerObject: 11
+  ejectForce: 2
 --- !u!114 &8339549031997607124
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -172,8 +190,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   snapTo: {fileID: 0}
-  snapTime: 2
-  grabbable: {fileID: 0}
+  snapTime: 10
+  grabbable: {fileID: 2108576881398100753}
 --- !u!4 &8104036245488847012 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8174552673256698600, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
@@ -248,7 +266,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9101180831262984153}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: e005ef2bcb1a32841b3d89009b5882fa, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
