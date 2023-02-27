@@ -54,6 +54,8 @@ public class FT_GenericControlledObj : MonoBehaviour
     [Header("Debugging")]
     public bool drawFrontandBackCheckers = true;
 
+    protected Dictionary<int, Rigidbody> rigidbodiesInZone = new Dictionary<int, Rigidbody>();
+
     protected Rigidbody rb;
 
 
@@ -114,6 +116,20 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     }
 
+
+     private void RemoveFromRigidbodiesInZone(GameObject other)
+    {
+        rigidbodiesInZone.Remove(other.GetInstanceID());
+        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
+    }
+    
+
+     private void AddToRigidbodiesInZone(GameObject other)
+    {
+        rigidbodiesInZone.Add(other.gameObject.GetInstanceID(), other.GetComponent<Rigidbody>());
+        other.GetComponent<Rigidbody>().mass = 0.1f;
+        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
+    }
     private void HandleParentingCapturedObjects(Collider other, bool shouldRelease)
     {
         if (other.gameObject.tag == "FT_GamePiece")
@@ -121,10 +137,12 @@ public class FT_GenericControlledObj : MonoBehaviour
             if (shouldRelease)
             {
                 other.gameObject.transform.SetParent(other.gameObject.GetComponent<FT_GamePiece>().originalParent);
+                RemoveFromRigidbodiesInZone(other.gameObject);
             }
             else
             {
                 other.gameObject.transform.SetParent(this.transform);
+                AddToRigidbodiesInZone(other.gameObject);
             }
         }
     }
@@ -324,7 +342,7 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     }
 
-    public void ReleasePlayerFromMountPosition()
+    public virtual void ReleasePlayerFromMountPosition()
     {
         ftPlayerController.overridePlayerMovement = false;
         if (playerMovesWithTheControlledObj)

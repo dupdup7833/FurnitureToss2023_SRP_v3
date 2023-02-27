@@ -39,6 +39,18 @@ PrefabInstance:
       propertyPath: HandFullReleased.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ReleasePlayerFromMountPosition
       objectReference: {fileID: 0}
+    - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: m_Center.x
+      value: -0.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: m_Center.y
+      value: 0.62
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: m_Center.z
+      value: 0.06
+      objectReference: {fileID: 0}
     - target: {fileID: 5938280250131216450, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_Name
       value: DroneControlledObj
@@ -161,6 +173,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   snapTo: {fileID: 0}
   snapTime: 2
+  grabbable: {fileID: 0}
 --- !u!4 &8104036245488847012 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8174552673256698600, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
