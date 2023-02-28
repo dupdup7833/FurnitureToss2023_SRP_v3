@@ -10,6 +10,7 @@ using HurricaneVR.Framework.Core.Grabbers;
 
 public class FT_GamePiece : MonoBehaviour
 {
+
     public float lastTouchedTime = 0.0f;
     private GameObject lastItemTouched;
 
@@ -26,6 +27,8 @@ public class FT_GamePiece : MonoBehaviour
 
     public HashSet<string> surfacesTouchedSet = new HashSet<string>();
 
+    public string lastPossessedByDisplayName;
+
     // Surfaces that don't count for bank shots
     public HashSet<string> objectNamesToNotCountForSurfacesTouchedSet = new HashSet<string>{"Physics LeftHand","Physics RightHand","FloorCollision","FT_Painting1_GamePiece(Clone)"};
 
@@ -39,6 +42,9 @@ public class FT_GamePiece : MonoBehaviour
  
     }
 
+   public void Grabbed(){
+        lastPossessedByDisplayName = "Player";
+    }
     public void ResetGamePiece()
     {
         this.transform.localPosition = this.startingPositionVec3;
@@ -69,8 +75,13 @@ public class FT_GamePiece : MonoBehaviour
         // destroy the components so it can't be picked up again
         Rigidbody rb = GetComponent<Rigidbody>();
         rb.isKinematic = true;
+         
         HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
         grabbable.enabled = false;
+        // if being carried by a vehicle it might be parented to it.
+        if (originalParent!=this.transform.parent) {
+            this.transform.SetParent(originalParent);
+        }
     }
     private void OnCollisionEnter(Collision other)
     {

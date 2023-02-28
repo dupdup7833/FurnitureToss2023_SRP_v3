@@ -107,6 +107,10 @@ PrefabInstance:
       value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1220581823781848807, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: displayName
+      value: Boat
+      objectReference: {fileID: 0}
+    - target: {fileID: 1220581823781848807, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: rotateUpAndDown
       value: 0
       objectReference: {fileID: 0}

@@ -160,6 +160,7 @@ MonoBehaviour:
   resetPlayerRotationOnDismount: 0
   rotateUpAndDown: 0
   playerMovesWithTheControlledObj: 0
+  displayName: Drone
   frontChecker: {fileID: 0}
   backChecker: {fileID: 0}
   isClearForward: 1

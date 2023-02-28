@@ -40,6 +40,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2438852266614098472, guid: b99abff2a1963d54795cf1e068326988, type: 3}
+      propertyPath: displayName
+      value: Mini ATV
+      objectReference: {fileID: 0}
+    - target: {fileID: 2438852266614098472, guid: b99abff2a1963d54795cf1e068326988, type: 3}
       propertyPath: rotateUpAndDown
       value: 0
       objectReference: {fileID: 0}

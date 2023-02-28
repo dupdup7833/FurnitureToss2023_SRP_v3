@@ -32,6 +32,7 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     public bool playerMovesWithTheControlledObj = true;
 
+    public string displayName;
     private Transform previousParent;
     private Transform previousRotation;
 
@@ -74,11 +75,12 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     private void FixedUpdate()
     {
-        
-        if (checkForValidSufaceTag) {
+
+        if (checkForValidSufaceTag)
+        {
             CheckWhetherForwardAndBackAreClear();
         }
-         
+
     }
 
     private void StartAnimation()
@@ -117,22 +119,22 @@ public class FT_GenericControlledObj : MonoBehaviour
     }
 
 
-     protected virtual void RemoveFromRigidbodiesInZone(GameObject other)
+    protected virtual void RemoveFromRigidbodiesInZone(GameObject other)
     {
         rigidbodiesInZone.Remove(other.GetInstanceID());
         Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
     }
-    
 
-     protected virtual void AddToRigidbodiesInZone(GameObject other)
+
+    protected virtual void AddToRigidbodiesInZone(GameObject other)
     {
         rigidbodiesInZone.Add(other.gameObject.GetInstanceID(), other.GetComponent<Rigidbody>());
         other.GetComponent<Rigidbody>().mass = 0.1f;
-//        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
+        //        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
     }
     private void HandleParentingCapturedObjects(Collider other, bool shouldRelease)
     {
-        if (other.gameObject.tag == "FT_GamePiece"  && !other.GetComponent<FT_GamePiece>().gamePiecePlaced)
+        if (other.gameObject.tag == "FT_GamePiece" && !other.GetComponent<FT_GamePiece>().gamePiecePlaced)
         {
             if (shouldRelease)
             {
@@ -141,8 +143,12 @@ public class FT_GenericControlledObj : MonoBehaviour
             }
             else
             {
-                other.gameObject.transform.SetParent(this.transform);
-                AddToRigidbodiesInZone(other.gameObject);
+                if (!other.GetComponent<FT_GamePiece>().gamePiecePlaced)
+                {
+                    other.gameObject.transform.SetParent(this.transform);
+                    AddToRigidbodiesInZone(other.gameObject);
+                    other.GetComponent<FT_GamePiece>().lastPossessedByDisplayName = this.displayName;
+                }
             }
         }
     }
@@ -233,15 +239,15 @@ public class FT_GenericControlledObj : MonoBehaviour
         //Debug.Log("Movement Vector: " + movement.x + " " + movement.y + " " + movement.z);
         // Debug.Log("rotation" + this.transform.rotation.x + "," + this.transform.rotation.y + "," + this.transform.rotation.z);
 
-//        Debug.Log("about to translate" + speed + " " + y + " movement y " + movement.y);
+        //        Debug.Log("about to translate" + speed + " " + y + " movement y " + movement.y);
 
-        if ((!checkForValidSufaceTag||isClearForward) && y > movementThreshold)
+        if ((!checkForValidSufaceTag || isClearForward) && y > movementThreshold)
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
 
             //   Debug.Log("about to translate FORWARD" + speed * Time.deltaTime);
         }
-        else if ((!checkForValidSufaceTag|| isClearBackward) && y < -1 * movementThreshold)
+        else if ((!checkForValidSufaceTag || isClearBackward) && y < -1 * movementThreshold)
 
         {
             this.transform.Translate(0, 0, speed * Time.deltaTime);
@@ -372,3 +378,4 @@ public enum ForwardMovementControlledBy
     Trigger,
     JoystickOrTrackpad
 }
+

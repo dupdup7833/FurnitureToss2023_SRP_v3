@@ -14,6 +14,8 @@ public class FT_DropZone : MonoBehaviour
 {
     public UnityEvent Snapped = new UnityEvent();
     public float durationOfScoringMessageSeconds = 5.0f;
+
+    [Header("Scoring Bonuses")]
     public int comboBonus = 100;
     public int doubleDropBonus = 50;
     public int bankShotBonus = 50;
@@ -22,6 +24,9 @@ public class FT_DropZone : MonoBehaviour
     public float ejectForce = 700f;
 
     public int forceGrabDrop = 25;
+
+    public int droneDropBonus = 200;
+    public int miniATVDropBonus = 100;
     public FT_DropZone secondaryDropZone;
 
     public FT_DropZoneObstacle obstacle;
@@ -111,7 +116,7 @@ public class FT_DropZone : MonoBehaviour
                 Debug.Log(other.gameObject.name);
             }
         }
-        else if (!objectPlaced && (other.tag == "FT_GamePiece" ||other.tag == "FT_Vehicle")  )
+        else if (!objectPlaced && (other.tag == "FT_GamePiece" || other.tag == "FT_Vehicle"))
         {
             // it's a game object but not the one that matches
             AddToRigidbodiesInZone(other.gameObject);
@@ -141,7 +146,7 @@ public class FT_DropZone : MonoBehaviour
     private void PreSnapToZone(GameObject otherGameObject, bool forceDrop)
     {
         EjectOtherRigidBodies();
-         StartCoroutine(SnapToZone(otherGameObject, forceDrop));
+        StartCoroutine(SnapToZone(otherGameObject, forceDrop));
     }
 
     private void EjectOtherRigidBodies()
@@ -149,7 +154,7 @@ public class FT_DropZone : MonoBehaviour
         Debug.Log("ejecting");
         foreach (Rigidbody rb in rigidbodiesInZone.Values)
         {
-            Debug.Log("ejecting and object: "+rb.gameObject.name);
+            Debug.Log("ejecting and object: " + rb.gameObject.name);
             rb.AddForce(Vector3.up * ejectForce);
         }
     }
@@ -184,10 +189,11 @@ public class FT_DropZone : MonoBehaviour
                 }
             }
             guideGamePiece.SetActive(false);
-            
+
         }
-        if (other.tag == "FT_GamePiece" ||other.tag == "FT_Vehicle"){
-        RemoveFromRigidbodiesInZone(other.gameObject);
+        if (other.tag == "FT_GamePiece" || other.tag == "FT_Vehicle")
+        {
+            RemoveFromRigidbodiesInZone(other.gameObject);
         }
     }
 
@@ -301,7 +307,40 @@ public class FT_DropZone : MonoBehaviour
         FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
         string scoreMessageToReturn = "";
 
-        // DISTANCE BONUS
+
+        DistanceBonus(ref currentStylePoints, ref scoreMessageToReturn);
+
+        ComboDrop(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+
+        DoubleDrop(ref currentStylePoints, ref scoreMessageToReturn);
+
+        BankShot(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+
+        /// ADDITIVE BONUSES - added to any previous caculation
+        ForceDrop(forceDrop, ref currentStylePoints, ref scoreMessageToReturn);
+
+        DroneDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+
+        MiniATVDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+
+
+
+
+        // scoreMessageToReturn += "good stuff!!!";
+        Debug.Log("Score Message to Return: " + scoreMessageToReturn);
+
+        FT_GameController.GC.lastPlacement = Time.time;
+        FT_GameController.GC.stylePointsTotal += currentStylePoints;
+
+        return scoreMessageToReturn;
+
+
+    }
+
+
+
+    private void DistanceBonus(ref int currentStylePoints, ref string scoreMessageToReturn)
+    {
         float distance = Vector3.Distance(FT_GameController.playerTransform.position, this.transform.position);
         Debug.Log("Distance of throw: " + distance + " Player Position: " + FT_GameController.playerTransform.position);
         if (distance > 3)
@@ -314,8 +353,10 @@ public class FT_DropZone : MonoBehaviour
         {
             // scoreMessageToReturn += "Too short for distance bonus\n";
         }
+    }
 
-
+    private void ComboDrop(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn)
+    {
         // COMBO BONUS
         if ((Time.time - ftGamePiece.lastTouchedTime) > 3)
         {
@@ -329,9 +370,10 @@ public class FT_DropZone : MonoBehaviour
         {
             Debug.Log("Time since it was touched:" + (Time.time - ftGamePiece.lastTouchedTime));
         }
-        // Debug.Log("Distance Thrown:" + distance);
+    }
 
-
+    private void DoubleDrop(ref int currentStylePoints, ref string scoreMessageToReturn)
+    {
         // DOUBLE DROP BONUS
         if (FT_GameController.GC.lastPlacement > 0)
         {
@@ -344,8 +386,20 @@ public class FT_DropZone : MonoBehaviour
                 currentStylePoints += doubleDropBonus;
             }
         }
+    }
 
-        // BANK SHOT
+    private void ForceDrop(bool forceDrop, ref int currentStylePoints, ref string scoreMessageToReturn)
+    {
+        // Force Drop
+        if (forceDrop)
+        {
+            scoreMessageToReturn += "\nForce Grab Drop +" + forceGrabDrop;
+            currentStylePoints += forceGrabDrop;
+        }
+    }
+
+    private void BankShot(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn)
+    {
         if (ftGamePiece.surfacesTouchedSet.Count > 0)
         {
             int surfacesTouched = ftGamePiece.surfacesTouchedSet.Count;
@@ -367,27 +421,26 @@ public class FT_DropZone : MonoBehaviour
             }
 
         }
+    }
 
-        /// ADDITIVE BONUSES - added to any previous caculation
-        // Force Drop
-        if (forceDrop)
+    private void MiniATVDropBonus(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn)
+    {
+        if (ftGamePiece.lastPossessedByDisplayName == "Mini ATV")
         {
-            scoreMessageToReturn += "\nForce Grab Drop +" + forceGrabDrop;
-            currentStylePoints += forceGrabDrop;
+            scoreMessageToReturn += "Mini ATV Drop Bonus +" + miniATVDropBonus + " \n";
         }
 
 
+    }
 
-        // check for a force grab
+    private void DroneDropBonus(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn)
+    {
+        if (ftGamePiece.lastPossessedByDisplayName == "Drone")
+        {
+            scoreMessageToReturn += "Drone Drop Bonus +" + droneDropBonus + " \n";
+            currentStylePoints += droneDropBonus;
 
-
-        // scoreMessageToReturn += "good stuff!!!";
-        Debug.Log("Score Message to Return: " + scoreMessageToReturn);
-
-        FT_GameController.GC.lastPlacement = Time.time;
-        FT_GameController.GC.stylePointsTotal += currentStylePoints;
-
-        return scoreMessageToReturn;
+        }
 
 
     }
