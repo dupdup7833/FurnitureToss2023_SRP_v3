@@ -21,6 +21,8 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
 
         base.Move(movement, speed);
 
+        audioSource.volume = idleVolume * 2.0f;
+
         if (speed < triggerThreshold && movement.x == 0 && movement.y == 0)
         {
             Vector3 downwardForce = Vector3.down * gravityEffect * Time.fixedDeltaTime;

@@ -7,7 +7,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     Animator anim;
     //public Transform player;
 
-    AudioSource audioSource;
+    protected AudioSource audioSource;
 
     public Transform mountPosition;
 
