@@ -47,8 +47,8 @@ public class FT_Gun : HVRGunBase
 
         
         yield return new WaitForSeconds(this.BulletLife);
-        Debug.Log("ftGamePiece.gamePiecePlaced "+ftGamePiece.gamePiecePlaced);
-        if (!ftGamePiece.gamePiecePlaced)
+        Debug.Log("ftGamePiece.gamePiecePlaced "+ftGamePiece.IsGamePiecePlaced());
+        if (!ftGamePiece.IsGamePiecePlaced())
         {
             Destroy(ftGamePiece.gameObject);
         } else {

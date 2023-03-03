@@ -206,7 +206,7 @@ public class FT_DropZone : MonoBehaviour
         snapToZoneSound.Play(0);
         objectPlaced = true;
 
-        otherGameObject.GetComponent<FT_GamePiece>().PlacePiece();
+        otherGameObject.GetComponent<FT_GamePiece>().PlacePiece(true);
 
         // lerp to the Game Piece Guide scale, position, rotation
         Vector3 startingPos = otherGameObject.transform.position;
@@ -234,8 +234,7 @@ public class FT_DropZone : MonoBehaviour
             obstacle.SetObstacleStatus(false);
         }
 
-        FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
-        ftGamePiece.gamePiecePlaced = true;
+
         Debug.Log("about to check secondary drop zone");
         if (secondaryDropZone != null)
         {

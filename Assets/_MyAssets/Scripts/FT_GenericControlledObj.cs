@@ -154,8 +154,9 @@ public class FT_GenericControlledObj : MonoBehaviour
     }
     private void HandleParentingCapturedObjects(Collider other, bool shouldRelease)
     {
-        if (other.gameObject.tag == "FT_GamePiece" && !other.GetComponent<FT_GamePiece>().gamePiecePlaced)
+        if (other.gameObject.tag == "FT_GamePiece" && !other.GetComponent<FT_GamePiece>().IsGamePiecePlaced())
         {
+            Debug.Log("Captured by Generic Controlled Object, placed? "+other.GetComponent<FT_GamePiece>().IsGamePiecePlaced()+other.gameObject.transform.parent.name);
             if (shouldRelease)
             {
                 other.gameObject.transform.SetParent(other.gameObject.GetComponent<FT_GamePiece>().originalParent);
@@ -163,7 +164,7 @@ public class FT_GenericControlledObj : MonoBehaviour
             }
             else
             {
-                if (!other.GetComponent<FT_GamePiece>().gamePiecePlaced)
+                if (!other.GetComponent<FT_GamePiece>().IsGamePiecePlaced())
                 {
                     other.gameObject.transform.SetParent(this.transform);
                     AddToRigidbodiesInZone(other.gameObject);
@@ -275,11 +276,13 @@ public class FT_GenericControlledObj : MonoBehaviour
             Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime);
         }
 
-        audioSource.volume = System.Math.Max(speed, idleVolume);
+        ControlSound(speed);
 
+    }
 
-
-
+    private void ControlSound(float speed)
+    {
+        audioSource.volume = System.Math.Max(System.Math.Abs(speed), idleVolume);
     }
 
     /* public void StartFlying(bool flyWithUnicorn)

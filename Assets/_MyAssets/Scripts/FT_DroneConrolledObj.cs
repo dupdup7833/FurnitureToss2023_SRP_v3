@@ -14,7 +14,7 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
     public float downwardCompensationForcePerObject = 11f;
     public float ejectForce = 2.0f;
 
-     
+
 
     public override void Move(Vector3 movement, float speed)
     {
@@ -28,13 +28,13 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
             Vector3 downwardForce = Vector3.down * gravityEffect * Time.fixedDeltaTime;
             //trigger is not pressed and they are not moving in any direction
             if (rigidbodiesInZone.Count > 0)
-                    {
-                      downwardForce = downwardForce + (rigidbodiesInZone.Count * (forcePerCarriedObject/downwardCompensationForcePerObject) *Vector3.down);
-                     }
-            Debug.Log("DownwardForce: "+downwardForce+ " y:"+downwardForce.y);
+            {
+                downwardForce = downwardForce + (rigidbodiesInZone.Count * (forcePerCarriedObject / downwardCompensationForcePerObject) * Vector3.down);
+            }
+            Debug.Log("DownwardForce: " + downwardForce + " y:" + downwardForce.y);
 
-            
-             
+
+
             rb.AddForce(downwardForce);
         }
         else
@@ -42,10 +42,10 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
             Vector3 upwardForce = Vector3.up * speed * Time.fixedDeltaTime * upwardsSpeedAdjustment;
 
             // account for extra payload
-                   if (rigidbodiesInZone.Count > 0)
-                 {
-                   upwardForce = upwardForce * rigidbodiesInZone.Count * forcePerCarriedObject;
-             }
+            if (rigidbodiesInZone.Count > 0)
+            {
+                upwardForce = upwardForce * rigidbodiesInZone.Count * forcePerCarriedObject;
+            }
             rb.AddForce(upwardForce);
         }
     }
@@ -66,19 +66,18 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
 
     }
 
-    // protected override void RemoveFromRigidbodiesInZone(GameObject other)
-    // {
-    //     rigidbodiesInZone.Remove(other.GetInstanceID());
-    //     other.GetComponent<Rigidbody>().isKinematic = false;
-    //     Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
-    // }
+    private void OnCollisionEnter(Collision other)
+    {
+//        Debug.Log("Drone Hit: " + other.gameObject.name);
+        if (other.gameObject.tag == "Terrain")
+        {
+            HandleDroneCrash();
+        }
 
-
-    // protected override void AddToRigidbodiesInZone(GameObject other)
-    // {
-    //     rigidbodiesInZone.Add(other.gameObject.GetInstanceID(), other.GetComponent<Rigidbody>());
-    //     other.GetComponent<Rigidbody>().isKinematic = true;
-    //     Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
-    // }
+    }
+    private void HandleDroneCrash()
+    {
+        ReleasePlayerFromMountPosition();
+    }
 }
 

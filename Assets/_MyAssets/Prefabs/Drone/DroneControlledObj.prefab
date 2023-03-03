@@ -289,21 +289,33 @@ PrefabInstance:
       value: ReleasePlayerFromMountPosition
       objectReference: {fileID: 0}
     - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: m_Size.x
+      value: 0.5804615
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: m_Size.y
+      value: 0.76949394
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
+      propertyPath: m_Size.z
+      value: 0.77700806
+      objectReference: {fileID: 0}
+    - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_Center.x
-      value: -0.13
+      value: 0.0028734207
       objectReference: {fileID: 0}
     - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_Center.y
-      value: 0.62
+      value: 0.504747
       objectReference: {fileID: 0}
     - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_Center.z
-      value: 0.06
+      value: -0.0053596497
       objectReference: {fileID: 0}
     - target: {fileID: 2925005849058799521, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_Material
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 13400000, guid: e005ef2bcb1a32841b3d89009b5882fa, type: 2}
     - target: {fileID: 5938280250131216450, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
       propertyPath: m_Name
       value: DroneControlledObj
@@ -395,6 +407,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5938280250131216450, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
   m_PrefabInstance: {fileID: 73898585672890956}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &5815095724475526513
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6012173782631203342}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.35855675, y: 0.11314672, z: 0.44395828}
+  m_Center: {x: 0.000039100647, y: 0.011784226, z: 0.0004749298}
 --- !u!114 &5306389926357145355
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -646,19 +671,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fa21534efe31bac4ca2f2cb05c36f0c3, type: 3}
   m_PrefabInstance: {fileID: 8254124426678467208}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &6609162502201454053
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9101180831262984153}
-  m_Material: {fileID: 13400000, guid: e005ef2bcb1a32841b3d89009b5882fa, type: 2}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.48581433, y: 0.13990757, z: 0.32220992}
-  m_Center: {x: 0.000000029802322, y: -0.0046744198, z: 0.0070116073}
 --- !u!95 &4320479521116506272
 Animator:
   serializedVersion: 5
@@ -679,3 +691,4 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

@@ -21,7 +21,7 @@ public class FT_GamePiece : MonoBehaviour
 
     private int surfacesTouched = 0;
 
-    public bool gamePiecePlaced = false;
+    private bool gamePiecePlaced = false;
 
     public bool projectileGamePiece = false;
 
@@ -30,7 +30,7 @@ public class FT_GamePiece : MonoBehaviour
     public string lastPossessedByDisplayName;
 
     // Surfaces that don't count for bank shots
-    public HashSet<string> objectNamesToNotCountForSurfacesTouchedSet = new HashSet<string>{"Physics LeftHand","Physics RightHand","FloorCollision","FT_Painting1_GamePiece(Clone)"};
+    public HashSet<string> objectNamesToNotCountForSurfacesTouchedSet = new HashSet<string> { "Physics LeftHand", "Physics RightHand", "FloorCollision", "FT_Painting1_GamePiece(Clone)" };
 
     public string pieceName;
     // Start is called before the first frame update
@@ -39,10 +39,11 @@ public class FT_GamePiece : MonoBehaviour
         this.startingPositionVec3 = this.transform.localPosition;
         this.startingScaleVec3 = this.transform.localScale;
         this.originalParent = this.transform.parent;
- 
+
     }
 
-   public void Grabbed(){
+    public void Grabbed()
+    {
         lastPossessedByDisplayName = "Player";
     }
     public void ResetGamePiece()
@@ -53,7 +54,7 @@ public class FT_GamePiece : MonoBehaviour
         rb.isKinematic = false;
         HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
         grabbable.enabled = true;
-        this.gamePiecePlaced = false;
+        this.PlacePiece(false);
 
     }
     public void ResetPosition()
@@ -70,18 +71,34 @@ public class FT_GamePiece : MonoBehaviour
 
     }
 
-    public void PlacePiece()
+    public bool IsGamePiecePlaced()
+    {
+        return gamePiecePlaced;
+    }
+    public void PlacePiece(bool isItPlaced)
     {
         // destroy the components so it can't be picked up again
-        Rigidbody rb = GetComponent<Rigidbody>();
-        rb.isKinematic = true;
-         
-        HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
-        grabbable.enabled = false;
-        // if being carried by a vehicle it might be parented to it.
-        if (originalParent!=this.transform.parent) {
-            this.transform.SetParent(originalParent);
+        if (isItPlaced)
+        {
+            Rigidbody rb = GetComponent<Rigidbody>();
+            rb.isKinematic = true;
+            Debug.Log("Game piece is placed");
+            this.gamePiecePlaced = true;
+            HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
+            grabbable.enabled = false;
+            // if being carried by a vehicle it might be parented to it.
+            if (originalParent != this.transform.parent)
+            {
+                Debug.Log("Reparenting to original parent!");
+                this.transform.SetParent(originalParent);
+            }
         }
+        else
+        {
+            Debug.Log("This piece was UN placed");
+            this.gamePiecePlaced = false;
+        }
+        Debug.Log("IsGamePiecePlaced " + this.IsGamePiecePlaced());
     }
     private void OnCollisionEnter(Collision other)
     {
@@ -94,12 +111,12 @@ public class FT_GamePiece : MonoBehaviour
     private void CalculateSurfacesTouched(Collision other)
     {
         lastItemTouched = other.gameObject;
-        if ( !(objectNamesToNotCountForSurfacesTouchedSet.Contains(lastItemTouched.name)))
+        if (!(objectNamesToNotCountForSurfacesTouchedSet.Contains(lastItemTouched.name)))
         {
 
             surfacesTouchedSet.Add(lastItemTouched.name);
             surfacesTouched = surfacesTouchedSet.Count;
-          //  Debug.Log("ADDED: " + lastItemTouched.name);
+            //  Debug.Log("ADDED: " + lastItemTouched.name);
         }
     }
 }
