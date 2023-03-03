@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class FT_GenericControlledObj : MonoBehaviour
 {
+
+
     Animator anim;
     //public Transform player;
 
@@ -47,9 +49,12 @@ public class FT_GenericControlledObj : MonoBehaviour
     public float frontDistanceCheck = 2.0f;
     public float backDistanceCheck = 2.0f;
 
+    [Tooltip("Use raycasts to look for surface from or back.  A boat would want it on while a flying object would not.")]
     public bool checkForValidSufaceTag = true;
+    [Tooltip("Raycasts will look for tag on this object to determine if vehicle can go forward or back onto it.")]
     public string validSurfaceTag = "Water";
 
+    [Tooltip("Amount of time to pause between checking for things like obstacles front and back.")]
     public float checkHowOftenSeconds = 0.1f;
 
     [Header("Debugging")]
@@ -70,17 +75,32 @@ public class FT_GenericControlledObj : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         audioSource.volume = idleVolume;
         rb = this.GetComponent<Rigidbody>();
+
     }
 
 
-    private void FixedUpdate()
+    // private void FixedUpdate()
+    // {
+
+    //     if (checkForValidSufaceTag)
+    //     {
+    //         CheckWhetherForwardAndBackAreClear();
+    //     }
+
+    // }
+
+    IEnumerator DoChecksOnAnInterval()
     {
+        while (true) {
+       
 
-        if (checkForValidSufaceTag)
-        {
-            CheckWhetherForwardAndBackAreClear();
+            if (checkForValidSufaceTag)
+            {
+                CheckWhetherForwardAndBackAreClear();
+            }
+            yield return new WaitForSeconds(checkHowOftenSeconds);
         }
-
+       
     }
 
     private void StartAnimation()
@@ -331,7 +351,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     public void SnapPlayerToMountPosition()
     {
         ftPlayerController.overridePlayerMovement = true;
-
+        StartCoroutine(DoChecksOnAnInterval());
         if (playerMovesWithTheControlledObj)
         {
             ftPlayerController.CharacterController.enabled = false;
@@ -351,6 +371,8 @@ public class FT_GenericControlledObj : MonoBehaviour
     public virtual void ReleasePlayerFromMountPosition()
     {
         ftPlayerController.overridePlayerMovement = false;
+
+        StopCoroutine(DoChecksOnAnInterval());
         if (playerMovesWithTheControlledObj)
         {
             if (resetPlayerRotationOnDismount)
