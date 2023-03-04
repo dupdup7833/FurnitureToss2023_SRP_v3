@@ -55,6 +55,13 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
 
     public override void ReleasePlayerFromMountPosition()
     {
+        EjectAllCarriedRigidBodies();
+        base.ReleasePlayerFromMountPosition();
+
+    }
+
+    private void EjectAllCarriedRigidBodies()
+    {
         foreach (Rigidbody rb in rigidbodiesInZone.Values)
         {
             rb.gameObject.transform.SetParent(rb.gameObject.GetComponent<FT_GamePiece>().originalParent);
@@ -62,8 +69,6 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
             rb.AddForce(Vector3.forward * ejectForce);
 
         }
-        base.ReleasePlayerFromMountPosition();
-
     }
 
     private void OnCollisionEnter(Collision other)
