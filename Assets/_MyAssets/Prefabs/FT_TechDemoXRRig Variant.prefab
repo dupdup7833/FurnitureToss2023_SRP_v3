@@ -1312,9 +1312,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CanJump: 0
-  CanSteerWhileJumping: 1
+  CanSteerWhileJumping: 0
   CanSprint: 1
-  CanCrouch: 1
+  CanCrouch: 0
   DirectionStyle: 2
   InitialHMDAdjustment: 1
   GroundedLayerMask:
@@ -1333,7 +1333,7 @@ MonoBehaviour:
   MaxFallSpeed: 2
   JumpVelocity: 5
   DoubleClickThreshold: 0.25
-  RotationType: 0
+  RotationType: 1
   SmoothTurnSpeed: 90
   SmoothTurnThreshold: 0.1
   SnapAmount: 45
