@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2951870539218565415}
   - component: {fileID: 2951870539218565411}
   - component: {fileID: 9204875379487214568}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: FT_Base_DropZone
   m_TagString: FT_DropZone
   m_Icon: {fileID: 0}
@@ -125,6 +125,8 @@ MonoBehaviour:
   distanceMultiplierBonus: 25
   ejectForce: 700
   forceGrabDrop: 25
+  droneDropBonus: 200
+  miniATVDropBonus: 100
   secondaryDropZone: {fileID: 0}
   obstacle: {fileID: 0}
   isSecondaryDropZone: 0
@@ -240,7 +242,7 @@ GameObject:
   - component: {fileID: 2951870540005278612}
   - component: {fileID: 2951870540005278619}
   - component: {fileID: 2951870540005278618}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: DropArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +337,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2398222780404834530}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: SecondaryDropZonePosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -368,7 +370,7 @@ GameObject:
   - component: {fileID: 6178615146989825758}
   - component: {fileID: 5346744467832710087}
   - component: {fileID: 5054303176250290225}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: ScorePopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -540,7 +542,7 @@ GameObject:
   - component: {fileID: 2532267379870658623}
   - component: {fileID: 7500165675442980810}
   - component: {fileID: 4116669741837695042}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: GamePieceGuide
   m_TagString: Untagged
   m_Icon: {fileID: 0}

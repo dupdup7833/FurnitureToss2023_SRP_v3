@@ -1438,7 +1438,7 @@ MonoBehaviour:
     m_Bits: 3145984
   TeleportableLayers:
     serializedVersion: 2
-    m_Bits: 4292869871
+    m_Bits: 4292804335
   MaxSurfaceAngle: 45
   Capsule: {fileID: 0}
   BeforeDashTeleport:
