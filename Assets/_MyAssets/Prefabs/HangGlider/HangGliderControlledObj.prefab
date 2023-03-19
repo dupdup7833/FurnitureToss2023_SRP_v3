@@ -274,6 +274,21 @@ MonoBehaviour:
   drawFrontandBackCheckers: 1
   downwardSpeed: -0.2
   forwardSpeed: 1.3
+--- !u!114 &5089239345116185142
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 847413634364128628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe9c2fb39c4bdd42bcfca07a09191f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  snapTo: {fileID: 0}
+  snapTime: 10
+  grabbable: {fileID: 5039032678858050667}
 --- !u!4 &2943740078683207646 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8174552673256698600, guid: 43c40d4a3476b3e4fbd2a9a2bda9e22a, type: 3}
