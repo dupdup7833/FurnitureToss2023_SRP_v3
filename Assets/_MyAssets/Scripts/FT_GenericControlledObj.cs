@@ -75,7 +75,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         audioSource.volume = idleVolume;
         rb = this.GetComponent<Rigidbody>();
-
+rb.centerOfMass += new Vector3(0, -.5f, 0);
     }
 
 
