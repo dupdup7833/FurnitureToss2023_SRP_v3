@@ -9,6 +9,8 @@ public class FT_PlayerController : HVRPlayerController
 
     [Header("Furniture Toss")]
     public bool overridePlayerMovement = false;
+
+    public MobilePostProcessing postProcessing;
     //private bool inBoat = true;
     // public FT_Boat boat;
 

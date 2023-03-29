@@ -3,25 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class FT_HangGliderControlledObj : FT_GenericControlledObj
-{ 
+{
     public float downwardSpeed = -.2f;
     public float forwardSpeed = 1.2f;
 
-     public override void Move(Vector3 movement, float speed)
+    public override void Move(Vector3 movement, float speed)
     {
 
 
-       if (movement.x > movementThreshold || movement.x < -1 * movementThreshold)
+        if (movement.x > movementThreshold || movement.x < -1 * movementThreshold)
         {
             //    
-            this.transform.Rotate(0, movement.x * Time.deltaTime * rotationSpeed,0);
-            
+            this.transform.Rotate(0, movement.x * Time.deltaTime * rotationSpeed, 0);
+
         }
         //base.Move(movement, speed);
-         this.transform.Translate(0, downwardSpeed * Time.deltaTime, forwardSpeed * Time.deltaTime);
-        Debug.Log("Movement"+movement+"   speed"+speed);
-
-        audioSource.volume =2f;
+        this.transform.Translate(0, downwardSpeed * Time.deltaTime, forwardSpeed * Time.deltaTime);
+        Debug.Log("Movement" + movement + "   speed" + speed);
+        base.ControlVignette(forwardSpeed);
+        audioSource.volume = 2f;
 
         // if (speed < triggerThreshold && movement.x == 0 && movement.y == 0)
         // {

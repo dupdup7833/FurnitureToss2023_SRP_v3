@@ -1161,6 +1161,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3924027509387932074, guid: 6974999791dc8804fafee05e319aa932, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 3924027509387932085, guid: 6974999791dc8804fafee05e319aa932, type: 3}
       propertyPath: m_PoseSource
       value: 3
@@ -1271,7 +1275,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 3924027509387932073, guid: 6974999791dc8804fafee05e319aa932, type: 3}
   m_PrefabInstance: {fileID: 2324868847136511305}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8012697590615009853
+--- !u!114 &3758539944402929910
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1280,10 +1284,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 1600860191058568416}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00df77d6b8288ce42a467fadf2aaada0, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d3f749976c088a4a8a73772e8a572bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  updateDelay: 0
+  Blur: 0
+  BlurAmount: 1
+  BlurMask: {fileID: 0}
+  Bloom: 0
+  BloomColor: {r: 1, g: 1, b: 1, a: 1}
+  BloomAmount: 1
+  BloomDiffuse: 1
+  BloomThreshold: 0
+  BloomSoftness: 0
+  LUT: 0
+  LutAmount: 0
+  SourceLut: {fileID: 0}
+  ImageFiltering: 0
+  Color: {r: 1, g: 1, b: 1, a: 1}
+  Contrast: 0
+  Brightness: 0
+  Saturation: 0
+  Exposure: 0
+  Gamma: 0
+  Sharpness: 0
+  ChromaticAberration: 0
+  Offset: 0
+  FishEyeDistortion: 0
+  GlitchAmount: 0
+  Distortion: 0
+  LensDistortion: 0
+  Vignette: 0
+  VignetteColor: {r: 0, g: 0, b: 0, a: 1}
+  VignetteAmount: 0.708
+  VignetteSoftness: 0.23
+  material: {fileID: 2100000, guid: 3aeedadbfc1ffb644834cb2b7d57aa77, type: 2}
 --- !u!4 &1600860191058568417 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3924027509387932072, guid: 6974999791dc8804fafee05e319aa932, type: 3}
@@ -1365,6 +1399,7 @@ MonoBehaviour:
   IsGrounded: 0
   _actualVelocity: 0
   overridePlayerMovement: 0
+  postProcessing: {fileID: 3758539944402929910}
 --- !u!114 &490642107
 MonoBehaviour:
   m_ObjectHideFlags: 0

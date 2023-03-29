@@ -75,7 +75,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         audioSource.volume = idleVolume;
         rb = this.GetComponent<Rigidbody>();
-rb.centerOfMass += new Vector3(0, -.5f, 0);
+        rb.centerOfMass += new Vector3(0, -.5f, 0);
     }
 
 
@@ -91,8 +91,9 @@ rb.centerOfMass += new Vector3(0, -.5f, 0);
 
     IEnumerator DoChecksOnAnInterval()
     {
-        while (true) {
-       
+        while (true)
+        {
+
 
             if (checkForValidSufaceTag)
             {
@@ -100,7 +101,7 @@ rb.centerOfMass += new Vector3(0, -.5f, 0);
             }
             yield return new WaitForSeconds(checkHowOftenSeconds);
         }
-       
+
     }
 
     private void StartAnimation()
@@ -156,7 +157,7 @@ rb.centerOfMass += new Vector3(0, -.5f, 0);
     {
         if (other.gameObject.tag == "FT_GamePiece" && !other.GetComponent<FT_GamePiece>().IsGamePiecePlaced())
         {
-            Debug.Log("Captured by Generic Controlled Object, placed? "+other.GetComponent<FT_GamePiece>().IsGamePiecePlaced()+other.gameObject.transform.parent.name);
+            Debug.Log("Captured by Generic Controlled Object, placed? " + other.GetComponent<FT_GamePiece>().IsGamePiecePlaced() + other.gameObject.transform.parent.name);
             if (shouldRelease)
             {
                 other.gameObject.transform.SetParent(other.gameObject.GetComponent<FT_GamePiece>().originalParent);
@@ -275,9 +276,25 @@ rb.centerOfMass += new Vector3(0, -.5f, 0);
 
             Debug.Log("about to translate BACKWARD" + speed * Time.deltaTime);
         }
-
+        ControlVignette(speed);
         ControlSound(speed);
 
+    }
+
+    protected void ControlVignette(float speed)
+    {
+        if (playerMovesWithTheControlledObj)
+        {
+            if (speed > 0)
+            {
+                ftPlayerController.postProcessing.Vignette = true;
+
+            }
+            else
+            {
+                ftPlayerController.postProcessing.Vignette = false;
+            }
+        }
     }
 
     private void ControlSound(float speed)
@@ -392,6 +409,7 @@ rb.centerOfMass += new Vector3(0, -.5f, 0);
             Debug.Log("they left the " + this.gameObject.name + " and everything should have been cleaned up");
         }
         audioSource.volume = idleVolume;
+        ControlVignette(0);
 
 
     }
