@@ -3,11 +3,19 @@ using System.Collections.Generic;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System;
 
 [System.Serializable]
 public class GamePiecePlacedStringEvent : UnityEvent<string>
 {
 }
+
+ [System.Serializable]
+ public struct SpaceDoorEntry {
+     public string levelName;
+     public FT_SpaceDoor spaceDoor;
+}
+
 public class FT_GameController : MonoBehaviour
 {
     public static FT_GameController GC;
@@ -27,6 +35,8 @@ public class FT_GameController : MonoBehaviour
     public FT_PlayerOptions playerOptions = new FT_PlayerOptions();
 
     public FT_GenericControlledObj currentVehicle;
+
+    public List<SpaceDoorEntry> levelDoors = new List<SpaceDoorEntry>(); 
 
 
 
@@ -109,11 +119,23 @@ public class FT_GameController : MonoBehaviour
         UnloadPreviousScene();
 
         currentSceneName = sceneName;
+
         //
         // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         StartCoroutine(LoadYourAsyncScene(sceneName));
+        
     }
 
+    private  FT_SpaceDoor  GetSpaceDoorForLevel(string sceneName)
+    {
+        foreach (SpaceDoorEntry spaceDoorEntry in levelDoors) {
+            if (spaceDoorEntry.levelName == sceneName) {
+                return spaceDoorEntry.spaceDoor;
+            }
+            
+        }
+       throw new Exception("SpaceDoor Not found by scene name");
+    }
 
     IEnumerator LoadYourAsyncScene(string sceneName)
     {
@@ -130,5 +152,13 @@ public class FT_GameController : MonoBehaviour
         {
             yield return null;
         }
+        // wait for the level to fully load and then open the space door
+        OpenSpaceDoor(sceneName);
+    }
+
+    private void OpenSpaceDoor(string sceneName)
+    {
+        FT_SpaceDoor spaceDoor = GetSpaceDoorForLevel(sceneName);
+        spaceDoor.OpenDoor();
     }
 }
