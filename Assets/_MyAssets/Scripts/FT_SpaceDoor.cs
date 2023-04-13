@@ -5,19 +5,18 @@ using UnityEngine;
 public class FT_SpaceDoor : MonoBehaviour
 {
     Animator anim;
-    // Start is called before the first frame update
-
-    private AnimatorClipInfo[] clipInfo;
+ 
     void Start()
     {
         anim = GetComponent<Animator>();
+        Debug.Log("anim component "+anim);
 
     }
 
-    // Update is called once per frame
+    // Update is called once per frame  
     public void OpenDoor()
     {
-         Debug.Log("Open door "+anim.GetBool("IsDoorOpen"));
+        Debug.Log("Open door " + anim.GetBool("IsDoorOpen"));
         if (!anim.GetBool("IsDoorOpen"))
         {
             anim.SetTrigger("OpenDoor");
@@ -27,17 +26,11 @@ public class FT_SpaceDoor : MonoBehaviour
 
     public void CloseDoor()
     {
-        Debug.Log("Close door "+anim.GetBool("IsDoorOpen"));
+        Debug.Log("Close door " + anim.GetBool("IsDoorOpen"));
         if (anim.GetBool("IsDoorOpen"))
         {
             anim.SetTrigger("CloseDoor");
         }
     }
 
-    public string GetCurrentClipName()
-    {
-        int layerIndex = 0;
-        clipInfo = anim.GetCurrentAnimatorClipInfo(layerIndex);
-        return clipInfo[0].clip.name;
-    }
 }

@@ -99,6 +99,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5771514784176499984, guid: 8518218c8c097134f95eb84c5332b788, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7121939392198295811, guid: 8518218c8c097134f95eb84c5332b788, type: 3}
       propertyPath: m_Name
       value: WallModuleDoor00_00 Variant
@@ -136,7 +140,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3566175976141270648
+--- !u!114 &1515011952965654817
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

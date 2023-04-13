@@ -126,15 +126,19 @@ public class FT_GameController : MonoBehaviour
         
     }
 
-    private  FT_SpaceDoor  GetSpaceDoorForLevel(string sceneName)
+    private void OpenSpaceDoorForLevel(string sceneName)
     {
+        // Close all doors that are not the one for the current level
+        // Open the one that is for the level
         foreach (SpaceDoorEntry spaceDoorEntry in levelDoors) {
             if (spaceDoorEntry.levelName == sceneName) {
-                return spaceDoorEntry.spaceDoor;
+                spaceDoorEntry.spaceDoor.OpenDoor();
+            } else {
+                spaceDoorEntry.spaceDoor.CloseDoor();
             }
             
         }
-       throw new Exception("SpaceDoor Not found by scene name");
+        
     }
 
     IEnumerator LoadYourAsyncScene(string sceneName)
@@ -153,12 +157,8 @@ public class FT_GameController : MonoBehaviour
             yield return null;
         }
         // wait for the level to fully load and then open the space door
-        OpenSpaceDoor(sceneName);
+        OpenSpaceDoorForLevel(sceneName);
     }
 
-    private void OpenSpaceDoor(string sceneName)
-    {
-        FT_SpaceDoor spaceDoor = GetSpaceDoorForLevel(sceneName);
-        spaceDoor.OpenDoor();
-    }
+
 }
