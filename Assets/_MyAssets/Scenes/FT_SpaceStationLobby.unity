@@ -5237,6 +5237,29 @@ PrefabInstance:
       propertyPath: m_AnchorMin.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2610312492521571966, guid: 0b322ad7971bd314eb0e3c48a0a0397d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 1800
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230148629421930216, guid: 0b322ad7971bd314eb0e3c48a0a0397d, type: 3}
+      propertyPath: m_text
+      value: 'Comfort Setting
+
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230148629455682247, guid: 0b322ad7971bd314eb0e3c48a0a0397d, type: 3}
+      propertyPath: m_Value
+      value: 2.991
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230148629455682247, guid: 0b322ad7971bd314eb0e3c48a0a0397d, type: 3}
+      propertyPath: m_MaxValue
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4230148629455682247, guid: 0b322ad7971bd314eb0e3c48a0a0397d, type: 3}
+      propertyPath: m_WholeNumbers
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4230148630909758123, guid: 0b322ad7971bd314eb0e3c48a0a0397d, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

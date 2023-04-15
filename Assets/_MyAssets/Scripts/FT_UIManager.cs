@@ -20,12 +20,15 @@ public class FT_UIManager : DemoUIManager
     string[] qualitySettingNames;
     FT_PlayerController ftPlayerController;
 
+    string[] comfortSettingNames  = {"Off","Low","Medium","High"};
+    float[] vignetteAmtSettings = {0f,.4f, .65f, .75f};
+
     // HURRICANE UPGRADE NOTE: Had to change the accessibility of Start in DemoUIManager
     public override void Start()
     {
         base.Start();
         SetUpGraphicsQuality();
-        SetUpVignetteAmt();
+        SetUpComfortSetting();
         ftPlayerController = Player.GetComponent<FT_PlayerController>();
         Debug.Log("ftPlayerController" + ftPlayerController);
 
@@ -40,11 +43,13 @@ public class FT_UIManager : DemoUIManager
         CurrentQualitySettingText.text = qualitySettingNames[QualitySettings.GetQualityLevel()];
     }
 
-    private void SetUpVignetteAmt()
+    private void SetUpComfortSetting()
     {
-        VignetteAmtSlider.onValueChanged.AddListener(OnVignetteAmountChanged);
-        VignetteAmtSlider.SetValueWithoutNotify(FT_GameController.GC.playerOptions.vignetteAmt);
-        CurrentVignetteAmountText.text = FT_GameController.GC.playerOptions.vignetteAmt.ToString();
+        VignetteAmtSlider.onValueChanged.AddListener(OnComfortSettingChanged);
+        Debug.Log("FT_GameController.GC.playerOptions.comfortSetting "+FT_GameController.GC.playerOptions.comfortSetting);
+        VignetteAmtSlider.SetValueWithoutNotify(FT_GameController.GC.playerOptions.comfortSetting);
+
+        CurrentVignetteAmountText.text = comfortSettingNames[FT_GameController.GC.playerOptions.comfortSetting];
     }
     private void OnGraphicsQualityChanged(float level)
     {
@@ -55,11 +60,12 @@ public class FT_UIManager : DemoUIManager
     }
 
 
-    private void OnVignetteAmountChanged(float amt)
+    private void OnComfortSettingChanged(float amt)
     {
 
-        ftPlayerController.postProcessing.VignetteAmount = amt;
-        CurrentVignetteAmountText.text = amt.ToString();
+        ftPlayerController.postProcessing.VignetteAmount =vignetteAmtSettings[ (int)amt];
+        CurrentVignetteAmountText.text = comfortSettingNames[(int)amt];
+        PlayerPrefs.SetInt("comfortSetting", (int)amt);
         // FT_GameController.GC.playerOption.vignetteAmt", .75f);
 
     }

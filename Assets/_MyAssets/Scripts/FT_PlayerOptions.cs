@@ -8,6 +8,6 @@ public struct FT_PlayerOptions {
 
     public float hudDuration;
 
-    public float vignetteAmt;
+    public int comfortSetting;
  
 }

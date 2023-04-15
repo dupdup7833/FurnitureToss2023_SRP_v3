@@ -44,7 +44,7 @@ public class FT_GameController : MonoBehaviour
 
     void Start()
     {
-        SetPlayerOptions();
+       // SetPlayerOptions();
         LoadPlayerOptions();
 
     }
@@ -67,6 +67,7 @@ public class FT_GameController : MonoBehaviour
         playerOptions.hudStylePointsTotal = PlayerPrefs.GetInt("hudStylePointsTotal") == 1;
         playerOptions.hudStylePointsTotalAlwaysOn = PlayerPrefs.GetInt("hudStylePointsTotalAlwaysOn") == 1;
         playerOptions.hudDuration = PlayerPrefs.GetFloat("hudDuration");
+        playerOptions.comfortSetting = PlayerPrefs.GetInt("comfortSetting");
         Debug.Log("PlayerOptions.hudTimer:" + playerOptions.hudTimer);
         Debug.Log("PlayerOptions.hudInfoText:" + playerOptions.hudInfoText);
         Debug.Log("PlayerOptions.hudStylePointsTotal:" + playerOptions.hudStylePointsTotal);
@@ -82,6 +83,7 @@ public class FT_GameController : MonoBehaviour
         PlayerPrefs.SetInt("hudStylePointsTotal", 0);
         PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn", 0);
         PlayerPrefs.SetFloat("hudDuration", 5.0f);
+        PlayerPrefs.SetInt("comfortSetting", 1); //low
     }
 
 
