@@ -7,5 +7,7 @@ public struct FT_PlayerOptions {
     public bool hudStylePointsTotalAlwaysOn;
 
     public float hudDuration;
+
+    public float vignetteAmt;
  
 }

@@ -83,16 +83,7 @@ public class FT_GameController : MonoBehaviour
         PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn", 0);
         PlayerPrefs.SetFloat("hudDuration", 5.0f);
     }
-    void Update()
-    {
-        // TEMPORARY FOR GAME TESTING
-        if (Input.GetKeyDown("space"))
-        {
-            Debug.Log("Started level " + currentStageNumber);
-            //  GC.startStage(currentStageNumber);
-        }
-        // END TEMPORARY FOR GAME TESTING
-    }
+
 
 
 
