@@ -44,6 +44,7 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
             // account for extra payload
             if (rigidbodiesInZone.Count > 0)
             {
+                Debug.Log("extra objects in the zone "+rigidbodiesInZone.Count);
                 upwardForce = upwardForce * rigidbodiesInZone.Count * forcePerCarriedObject;
             }
             rb.AddForce(upwardForce);
