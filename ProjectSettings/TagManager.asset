@@ -20,6 +20,7 @@ TagManager:
   - Terrain
   - Water
   - FT_Vehicle
+  - FT_Obstacle
   layers:
   - Default
   - TransparentFX

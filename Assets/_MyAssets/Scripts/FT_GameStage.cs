@@ -10,6 +10,8 @@ public class FT_GameStage : MonoBehaviour
 
     public GameObject[] drones;
 
+    public GameObject[] obstacles;
+
     public float stageMinimumHeight = -5.0f;
 
     public TextMeshPro scoreResult;
@@ -48,6 +50,7 @@ public class FT_GameStage : MonoBehaviour
         gamePieces = GameObject.FindGameObjectsWithTag("FT_GamePiece");
         dropZones = GameObject.FindGameObjectsWithTag("FT_DropZone");
         drones = GameObject.FindGameObjectsWithTag("FT_Drone");
+        obstacles = GameObject.FindGameObjectsWithTag("FT_Obstacle");
     }
 
 
@@ -102,6 +105,13 @@ public class FT_GameStage : MonoBehaviour
     // Update is called once per frame
 
 
+    private void SetupObstacles(bool startObstacles)
+    {
+        for (int i = 0; i < obstacles.Length; i++)
+        {
+            obstacles[i].GetComponent<FT_DropZoneObstacle>().SetObstacleStatus(startObstacles);
+        }
+    }
     IEnumerator UpdateTimer()
     {
 
@@ -126,6 +136,7 @@ public class FT_GameStage : MonoBehaviour
         SetupGamePieces(true);
         SetupDropZones(true);
         SetupDrones(true);
+        SetupObstacles(true);
         startTime = Time.time;
         StartCoroutine(UpdateTimer());
         FT_GameController.GC.currentStage = this;
@@ -139,6 +150,7 @@ public class FT_GameStage : MonoBehaviour
     {
         Debug.Log("EndStage");
         stageInProgress = false;
+         SetupObstacles(false);
         if (AudioStageComplete)
         {
             if (SFXPlayer.Instance) SFXPlayer.Instance.PlaySFX(AudioStageComplete, FT_GameController.playerTransform.position);

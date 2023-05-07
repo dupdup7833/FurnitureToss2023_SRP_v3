@@ -19,7 +19,8 @@ public class FT_DropZoneObstacle : MonoBehaviour
     public float speed = 3f;
     private Vector3 currentDestination;
 
-    private bool isActive = false;
+    public bool isActive = false;
+    public bool isAlwaysVisible = false;
     void Start()
     {
         // save the starting point of the obstacle
@@ -32,6 +33,8 @@ public class FT_DropZoneObstacle : MonoBehaviour
         startPoint.GetComponent<MeshRenderer>().enabled = false;
         startPoint.gameObject.SetActive(false);
         endPoint.gameObject.SetActive(false);
+
+       SetAlwaysVisible(isAlwaysVisible);
     }
 
     public void SetObstacleStatus(bool active)
@@ -42,10 +45,17 @@ public class FT_DropZoneObstacle : MonoBehaviour
     }
 
 
+    public void SetAlwaysVisible(bool isAlwaysVisible){
+         startPoint.gameObject.SetActive(isAlwaysVisible);
+         
+    }
+
+     
     private void Update()
     {
         if (isActive)
         {
+            Debug.Log ("moving the obstacle");
             // get the direction to current destination
             Vector3 direction = currentDestination - startPoint.transform.position;
 

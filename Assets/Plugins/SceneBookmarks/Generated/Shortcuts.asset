@@ -50,13 +50,13 @@ MonoBehaviour:
       is2D: 0
       size: 1.3740706
       thumbnail: {fileID: 2800000, guid: 6d2832945fdf48f47af1efb4e7cad42f, type: 3}
-    - name: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
-      isOrthographic: 0
+    - name: shortcut_6
+      position: {x: 2.5344238, y: 1.8966376, z: -69.00742}
+      rotation: {x: 7.3221974, y: 342.29553, z: -0.00012255543}
+      isOrthographic: 1
       is2D: 0
-      size: 0
-      thumbnail: {fileID: 0}
+      size: 0.5037226
+      thumbnail: {fileID: 2800000, guid: b862e62a842b9634a814ffd797cd8247, type: 3}
     - name: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
@@ -254,13 +254,13 @@ MonoBehaviour:
       is2D: 0
       size: 15.547727
       thumbnail: {fileID: 2800000, guid: 81ad8568eba8d7044bdf8b6c9fb85d87, type: 3}
-    - name: 
-      position: {x: 0, y: 0, z: 0}
-      rotation: {x: 0, y: 0, z: 0}
+    - name: shortcut_2
+      position: {x: 102.90751, y: 21.272627, z: -116.020966}
+      rotation: {x: 20.90134, y: 281.27545, z: 0.000030159115}
       isOrthographic: 0
       is2D: 0
-      size: 0
-      thumbnail: {fileID: 0}
+      size: 5.1492953
+      thumbnail: {fileID: 2800000, guid: b70af5b2fc0354a45b973dee9886c117, type: 3}
     - name: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0}
