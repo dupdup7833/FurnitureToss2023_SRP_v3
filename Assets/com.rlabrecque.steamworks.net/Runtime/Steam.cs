@@ -65,7 +65,8 @@ namespace Steamworks {
 		// since the DRM wrapper will ensure that your application was launched properly through Steam.
 		public static bool RestartAppIfNecessary(AppId_t unOwnAppID) {
 			InteropHelp.TestIfPlatformSupported();
-			return NativeMethods.SteamAPI_RestartAppIfNecessary(unOwnAppID);
+			return false;
+			//return NativeMethods.SteamAPI_RestartAppIfNecessary(unOwnAppID);
 		}
 
 		// Many Steam API functions allocate a small amount of thread-local memory for parameter storage.

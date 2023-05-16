@@ -283,10 +283,13 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     protected void ControlVignette(float speed)
     {
+        /*
         if (playerMovesWithTheControlledObj)
         {
+            Debug.Log("ftPlayerController.postProcessing.VignetteAmount: "+ftPlayerController.postProcessing.VignetteAmount);
             if (speed > 0)
             {
+
                 ftPlayerController.postProcessing.Vignette = true;
 
             }
@@ -295,6 +298,7 @@ public class FT_GenericControlledObj : MonoBehaviour
                 ftPlayerController.postProcessing.Vignette = false;
             }
         }
+        */
     }
 
     private void ControlSound(float speed)

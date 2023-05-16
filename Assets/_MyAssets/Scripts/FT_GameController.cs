@@ -10,10 +10,11 @@ public class GamePiecePlacedStringEvent : UnityEvent<string>
 {
 }
 
- [System.Serializable]
- public struct SpaceDoorEntry {
-     public string levelName;
-     public FT_SpaceDoor spaceDoor;
+[System.Serializable]
+public struct SpaceDoorEntry
+{
+    public string levelName;
+    public FT_SpaceDoor spaceDoor;
 }
 
 public class FT_GameController : MonoBehaviour
@@ -36,16 +37,22 @@ public class FT_GameController : MonoBehaviour
 
     public FT_GenericControlledObj currentVehicle;
 
-    public List<SpaceDoorEntry> levelDoors = new List<SpaceDoorEntry>(); 
+    public List<SpaceDoorEntry> levelDoors = new List<SpaceDoorEntry>();
 
 
+    public static string[] comfortSettingNames = { "Off", "Low", "Medium", "High" };
+    public static float[] vignetteAmtSettings = { 0f, .4f, .65f, .75f };
+
+    FT_PlayerController player;
 
     public static GamePiecePlacedStringEvent gamePiecePlacedEvent = new GamePiecePlacedStringEvent();
 
     void Start()
     {
-       // SetPlayerOptions();
+      //  SetPlayerOptions();
+     // player = GameObject.FindGameObjectWithTag("Player").GetComponent<FT_PlayerController>();
         LoadPlayerOptions();
+        
 
     }
     void Awake()
@@ -60,7 +67,7 @@ public class FT_GameController : MonoBehaviour
 
     }
 
-    private void LoadPlayerOptions()
+    public void LoadPlayerOptions()
     {
         playerOptions.hudTimer = PlayerPrefs.GetInt("hudTimer") == 1;
         playerOptions.hudInfoText = PlayerPrefs.GetInt("hudInfoText") == 1;
@@ -68,6 +75,9 @@ public class FT_GameController : MonoBehaviour
         playerOptions.hudStylePointsTotalAlwaysOn = PlayerPrefs.GetInt("hudStylePointsTotalAlwaysOn") == 1;
         playerOptions.hudDuration = PlayerPrefs.GetFloat("hudDuration");
         playerOptions.comfortSetting = PlayerPrefs.GetInt("comfortSetting");
+      //  Debug.Log("comfort setting:"+playerOptions.comfortSetting+player);
+      //  player.postProcessing.VignetteAmount = vignetteAmtSettings[playerOptions.comfortSetting];
+
         Debug.Log("PlayerOptions.hudTimer:" + playerOptions.hudTimer);
         Debug.Log("PlayerOptions.hudInfoText:" + playerOptions.hudInfoText);
         Debug.Log("PlayerOptions.hudStylePointsTotal:" + playerOptions.hudStylePointsTotal);
@@ -83,7 +93,7 @@ public class FT_GameController : MonoBehaviour
         PlayerPrefs.SetInt("hudStylePointsTotal", 0);
         PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn", 0);
         PlayerPrefs.SetFloat("hudDuration", 5.0f);
-        PlayerPrefs.SetInt("comfortSetting", 1); //low
+        PlayerPrefs.SetInt("comfortSetting", 0); //low
     }
 
 
@@ -116,22 +126,26 @@ public class FT_GameController : MonoBehaviour
         //
         // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
         StartCoroutine(LoadYourAsyncScene(sceneName));
-        
+
     }
 
     private void OpenSpaceDoorForLevel(string sceneName)
     {
         // Close all doors that are not the one for the current level
         // Open the one that is for the level
-        foreach (SpaceDoorEntry spaceDoorEntry in levelDoors) {
-            if (spaceDoorEntry.levelName == sceneName) {
+        foreach (SpaceDoorEntry spaceDoorEntry in levelDoors)
+        {
+            if (spaceDoorEntry.levelName == sceneName)
+            {
                 spaceDoorEntry.spaceDoor.OpenDoor();
-            } else {
+            }
+            else
+            {
                 spaceDoorEntry.spaceDoor.CloseDoor();
             }
-            
+
         }
-        
+
     }
 
     IEnumerator LoadYourAsyncScene(string sceneName)
@@ -150,7 +164,7 @@ public class FT_GameController : MonoBehaviour
             yield return null;
         }
         // wait for the level to fully load and then open the space door
-        OpenSpaceDoorForLevel(sceneName);
+       // OpenSpaceDoorForLevel(sceneName);
     }
 
 
