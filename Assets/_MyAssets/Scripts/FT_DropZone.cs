@@ -253,7 +253,8 @@ public class FT_DropZone : MonoBehaviour
         FT_GameController.GamePiecePlaced(scoreMessage);
         FT_GameController.GC.currentStage.CheckIfComplete();
 
-        ShowScore(scoreMessage);
+        // commented out to try and use the hud version instead
+       // ShowScore(scoreMessage);
 
 
         // invoke the snapped event so that listening scoring tiles can turn on
@@ -287,7 +288,9 @@ public class FT_DropZone : MonoBehaviour
     {
 
         StartCoroutine(HideAfterSeconds(durationOfScoringMessageSeconds, scoreResult.gameObject));
-        scoreResult.transform.LookAt(FT_GameController.playerTransform);
+       GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+        scoreResult.transform.LookAt(cam.transform);
+        scoreResult.transform.position =  cam.transform.position+new Vector3(2,0,0);
         scoreResult.SetText(scoreMessageIn);
         scoreResult.gameObject.SetActive(true);
         Quaternion q = scoreResult.transform.rotation;

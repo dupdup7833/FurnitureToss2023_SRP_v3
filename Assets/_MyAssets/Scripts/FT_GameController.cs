@@ -49,7 +49,7 @@ public class FT_GameController : MonoBehaviour
 
     void Start()
     {
-      //  SetPlayerOptions();
+        SetPlayerOptions();
      // player = GameObject.FindGameObjectWithTag("Player").GetComponent<FT_PlayerController>();
         LoadPlayerOptions();
         
@@ -89,9 +89,9 @@ public class FT_GameController : MonoBehaviour
     private void SetPlayerOptions()
     {
         PlayerPrefs.SetInt("hudTimer", 0);
-        PlayerPrefs.SetInt("hudInfoText", 0);
+        PlayerPrefs.SetInt("hudInfoText", 1);
         PlayerPrefs.SetInt("hudStylePointsTotal", 0);
-        PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn", 0);
+        PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn",0);
         PlayerPrefs.SetFloat("hudDuration", 5.0f);
         PlayerPrefs.SetInt("comfortSetting", 0); //low
     }
