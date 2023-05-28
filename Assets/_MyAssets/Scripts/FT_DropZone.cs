@@ -27,6 +27,8 @@ public class FT_DropZone : MonoBehaviour
 
     public int droneDropBonus = 200;
     public int miniATVDropBonus = 100;
+
+    private int hangGliderDropBonus = 150;
     public FT_DropZone secondaryDropZone;
 
     public FT_DropZoneObstacle obstacle;
@@ -325,6 +327,8 @@ public class FT_DropZone : MonoBehaviour
 
         MiniATVDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
 
+        HangGliderBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+
 
 
 
@@ -445,5 +449,12 @@ public class FT_DropZone : MonoBehaviour
         }
 
 
+    }
+
+    private void HangGliderBonus(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn) {
+        if (FT_GameController.GC.currentVehicle!=null && FT_GameController.GC.currentVehicle.displayName=="Hang Glider") {
+            scoreMessageToReturn += "Hang Glider Drop Bonus +" + hangGliderDropBonus + " \n";
+            currentStylePoints += hangGliderDropBonus;
+        }
     }
 }

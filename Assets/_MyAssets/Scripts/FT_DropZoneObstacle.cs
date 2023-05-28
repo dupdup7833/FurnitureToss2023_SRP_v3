@@ -55,7 +55,7 @@ public class FT_DropZoneObstacle : MonoBehaviour
     {
         if (isActive)
         {
-            Debug.Log ("moving the obstacle");
+             
             // get the direction to current destination
             Vector3 direction = currentDestination - startPoint.transform.position;
 

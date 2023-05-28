@@ -6,8 +6,10 @@ using TMPro;
 public class FT_HUD : FT_Scoreboard
 {
 
+  
     protected override void Update()
     {
+        
         // if (FT_GameController.GC.playerOptions.hudTimer)
         // {
         //     base.Update();
@@ -16,8 +18,12 @@ public class FT_HUD : FT_Scoreboard
 
     protected override void UpdateScorboard(string message)
     {
+         Debug.Log(this.gameObject.name+": Update the scorboard");
+        informationText.text = "afdfdsafdsafsaf";
+        //Debug.Log("the hud got called");
         if (FT_GameController.GC.playerOptions.hudInfoText)
         {
+            informationText.text = message;
             base.UpdateScorboard(message);
         }
          ShowStylePointsText();

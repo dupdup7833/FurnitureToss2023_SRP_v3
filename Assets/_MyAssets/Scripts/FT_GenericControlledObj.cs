@@ -381,7 +381,7 @@ public class FT_GenericControlledObj : MonoBehaviour
             ftPlayerController.CharacterController.enabled = false;
             // previousRotation = ftPlayerController.transform;
             ftPlayerController.transform.SetParent(this.transform, true);
-            //  FT_GameController.GC.currentVehicle = this;
+            FT_GameController.GC.currentVehicle = this;
             //  playerInTheControlledObj = true;
 
 
@@ -407,7 +407,7 @@ public class FT_GenericControlledObj : MonoBehaviour
             Debug.Log("they left the " + this.gameObject.name);
             ftPlayerController.transform.SetParent(previousParent, true);
             //  ftPlayerController.transform.rotation = Quaternion.identity;
-            // FT_GameController.GC.currentVehicle = null;
+            FT_GameController.GC.currentVehicle = null;
             // playerInTheControlledObj = false;
 
             Debug.Log("they left the " + this.gameObject.name + " and everything should have been cleaned up");
