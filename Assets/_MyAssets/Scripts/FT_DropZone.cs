@@ -21,6 +21,9 @@ public class FT_DropZone : MonoBehaviour
     public int bankShotBonus = 50;
     public float distanceMultiplierBonus = 25.0f;
 
+    private float velocityThresholdBonus = 10f;
+    public int velocityBonus = 25;
+
     public float ejectForce = 700f;
 
     public int forceGrabDrop = 25;
@@ -103,6 +106,7 @@ public class FT_DropZone : MonoBehaviour
                 else if (!grabbable.IsBeingHeld)
                 {
                     // it is not held a entering the zone, so snap to drop zone
+                    
                     DroppedIntoTheZone(other, grabbable);
                 }
                 else if (grabbable.IsBeingHeld)
@@ -128,8 +132,10 @@ public class FT_DropZone : MonoBehaviour
 
     private void AddToRigidbodiesInZone(GameObject other)
     {
-        rigidbodiesInZone.Add(other.gameObject.GetInstanceID(), other.GetComponent<Rigidbody>());
-        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
+        if (!rigidbodiesInZone.ContainsKey(other.gameObject.GetInstanceID())) {
+            rigidbodiesInZone.Add(other.gameObject.GetInstanceID(), other.GetComponent<Rigidbody>());
+            Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
+        }
     }
 
     private void RemoveFromRigidbodiesInZone(GameObject other)
@@ -203,7 +209,7 @@ public class FT_DropZone : MonoBehaviour
     {
         Debug.Log("Snap to Zone");
 
-
+       float velocityOfThrow = otherGameObject.GetComponent<Rigidbody>().velocity.magnitude;
 
         snapToZoneSound.Play(0);
         objectPlaced = true;
@@ -251,7 +257,7 @@ public class FT_DropZone : MonoBehaviour
             //  secondaryDropZone.objectPlaced = false;
         }
 
-        string scoreMessage = CalculateScore(otherGameObject, forceDrop: forceDrop);
+        string scoreMessage = CalculateScore(otherGameObject, forceDrop: forceDrop, velocityOfThrow: velocityOfThrow);
         FT_GameController.GamePiecePlaced(scoreMessage);
         FT_GameController.GC.currentStage.CheckIfComplete();
 
@@ -305,7 +311,7 @@ public class FT_DropZone : MonoBehaviour
         obj.SetActive(false);
     }
 
-    private string CalculateScore(GameObject otherGameObject, bool forceDrop)
+    private string CalculateScore(GameObject otherGameObject, bool forceDrop, float velocityOfThrow)
     {
         int currentStylePoints = 0;
         FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
@@ -328,6 +334,8 @@ public class FT_DropZone : MonoBehaviour
         MiniATVDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
 
         HangGliderBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+
+        VelocityBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn, velocityOfThrow );
 
 
 
@@ -455,6 +463,16 @@ public class FT_DropZone : MonoBehaviour
         if (FT_GameController.GC.currentVehicle!=null && FT_GameController.GC.currentVehicle.displayName=="Hang Glider") {
             scoreMessageToReturn += "Hang Glider Drop Bonus +" + hangGliderDropBonus + " \n";
             currentStylePoints += hangGliderDropBonus;
+        }
+    }
+
+    private void VelocityBonus(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn, float velocity) {
+        Debug.Log("Velocity : "+velocity+(velocity > velocityThresholdBonus)+velocityThresholdBonus);
+        if (velocity > velocityThresholdBonus) {
+            Debug.Log("Velocity Bonus occured");    
+             scoreMessageToReturn += "Velocity Bonus +" + velocityBonus + " \n";
+             currentStylePoints += velocityBonus;
+
         }
     }
 }
