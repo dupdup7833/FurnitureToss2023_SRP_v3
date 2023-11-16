@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_MyAssets/Scenes/SingleLevel_FurnToss_SRP_2023.unity
+    guid: 9ef6902f1c2bc4f4a9e96f690f03158f
+  - enabled: 1
     path: Assets/_MyAssets/Scenes/FT_SpaceStationLobby.unity
     guid: b408560a2a73180448b39071ba80f32f
   - enabled: 1

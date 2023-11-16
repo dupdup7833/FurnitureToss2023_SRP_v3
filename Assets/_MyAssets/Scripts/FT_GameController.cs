@@ -50,9 +50,9 @@ public class FT_GameController : MonoBehaviour
     void Start()
     {
         SetPlayerOptions();
-     // player = GameObject.FindGameObjectWithTag("Player").GetComponent<FT_PlayerController>();
+        // player = GameObject.FindGameObjectWithTag("Player").GetComponent<FT_PlayerController>();
         LoadPlayerOptions();
-        
+
 
     }
     void Awake()
@@ -75,8 +75,8 @@ public class FT_GameController : MonoBehaviour
         playerOptions.hudStylePointsTotalAlwaysOn = PlayerPrefs.GetInt("hudStylePointsTotalAlwaysOn") == 1;
         playerOptions.hudDuration = PlayerPrefs.GetFloat("hudDuration");
         playerOptions.comfortSetting = PlayerPrefs.GetInt("comfortSetting");
-      //  Debug.Log("comfort setting:"+playerOptions.comfortSetting+player);
-      //  player.postProcessing.VignetteAmount = vignetteAmtSettings[playerOptions.comfortSetting];
+        //  Debug.Log("comfort setting:"+playerOptions.comfortSetting+player);
+        //  player.postProcessing.VignetteAmount = vignetteAmtSettings[playerOptions.comfortSetting];
 
         Debug.Log("PlayerOptions.hudTimer:" + playerOptions.hudTimer);
         Debug.Log("PlayerOptions.hudInfoText:" + playerOptions.hudInfoText);
@@ -91,7 +91,7 @@ public class FT_GameController : MonoBehaviour
         PlayerPrefs.SetInt("hudTimer", 0);
         PlayerPrefs.SetInt("hudInfoText", 1);
         PlayerPrefs.SetInt("hudStylePointsTotal", 0);
-        PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn",0);
+        PlayerPrefs.SetInt("hudStylePointsTotalAlwaysOn", 0);
         PlayerPrefs.SetFloat("hudDuration", 5.0f);
         PlayerPrefs.SetInt("comfortSetting", 0); //low
     }
@@ -118,15 +118,31 @@ public class FT_GameController : MonoBehaviour
     }
     public void LoadScene(string sceneName)
     {
-        Debug.Log("Loading Scene " + sceneName);
-        UnloadPreviousScene();
+        if (AllowNewSceneToLoad())
+        {
+            Debug.Log("Loading Scene " + sceneName);
+            UnloadPreviousScene();
 
-        currentSceneName = sceneName;
+            currentSceneName = sceneName;
 
-        //
-        // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-        StartCoroutine(LoadYourAsyncScene(sceneName));
+            //
+            // SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            StartCoroutine(LoadYourAsyncScene(sceneName));
+        }
 
+    }
+
+    private bool AllowNewSceneToLoad()
+    {
+        if (GC.currentStage != null && GC.currentStage.stageInProgress)
+        {
+            Debug.Log("There is a scene currently loaded you need to cancel before loading another scene");
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     private void OpenSpaceDoorForLevel(string sceneName)
@@ -164,10 +180,10 @@ public class FT_GameController : MonoBehaviour
             yield return null;
         }
         // wait for the level to fully load and then open the space door
-       // OpenSpaceDoorForLevel(sceneName);
+        OpenSpaceDoorForLevel(sceneName);
     }
 
-    
+
 
 
 }

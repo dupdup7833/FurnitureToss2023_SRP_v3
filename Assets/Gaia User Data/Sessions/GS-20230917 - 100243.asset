@@ -1,0 +1,242 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e251860fcd970734c9f14ebd98a146c3, type: 3}
+  m_Name: GS-20230917 - 100243
+  m_EditorClassIdentifier: 
+  m_name: Session 20230917-100243
+  m_description: 'Rocking out at Creativity Central!
+
+
+    If you like Gaia please
+    consider rating it :)'
+  m_previewImage: {fileID: 0}
+  m_dateCreated: 9/17/2023 10:02:43 AM
+  m_terrainWidth: 128
+  m_terrainDepth: 128
+  m_terrainHeight: 128
+  m_seaLevel: 3.125
+  m_spawnDensity: 0.8
+  m_isLocked: 0
+  m_previewImageBytes: 
+  m_previewImageWidth: 0
+  m_previewImageHeight: 0
+  m_operations:
+  - m_description: 'Creating World: 1 x 1 tiles, tile size: 128'
+    m_operationType: 0
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 100243
+    m_operationDateTime: 9/17/2023 10:02:43 AM
+    scriptableObjectAssetGUID: cf4d6590c110d0340afc1a41743b0529
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: 'Updating World To: 1 x 1 tiles, tile size: 128'
+    m_operationType: 14
+    m_isActive: 1
+    m_affectedTerrainNames: []
+    m_operationDateTime: 9/17/2023 10:06:05 AM
+    scriptableObjectAssetGUID: bff19a6eb96d8174c86e9dd4bc8e6eea
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: RaiseHeight - 2k Island 5
+    m_operationType: 4
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 100243
+    m_operationDateTime: 9/17/2023 10:06:35 AM
+    scriptableObjectAssetGUID: dad5fecbeb1df9f468d2a0b8fdffeb9a
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Gaia Pro Sample-Texture(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 100243
+    m_operationDateTime: 9/17/2023 10:06:36 AM
+    scriptableObjectAssetGUID: 386cf8698ff79994a877fb8f8e002600
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Multiple Spawners (4)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 100243
+    m_operationDateTime: 9/17/2023 10:06:43 AM
+    scriptableObjectAssetGUID: a2ca94d368236c34085fd6a7a83349e1
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: 'Creating World: 1 x 1 tiles, tile size: 256'
+    m_operationType: 0
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101128
+    m_operationDateTime: 9/17/2023 10:11:29 AM
+    scriptableObjectAssetGUID: 83b837f012d8bc94fa995567c02778ee
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: RaiseHeight - 2k Island 3
+    m_operationType: 4
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101128
+    m_operationDateTime: 9/17/2023 10:12:10 AM
+    scriptableObjectAssetGUID: fb9e6a5d510cddd498d5dac3eebae503
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Gaia Pro Sample-Texture(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101128
+    m_operationDateTime: 9/17/2023 10:12:11 AM
+    scriptableObjectAssetGUID: df8931b888e5e324397775fbfd823211
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Multiple Spawners (4)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101128
+    m_operationDateTime: 9/17/2023 10:12:16 AM
+    scriptableObjectAssetGUID: edfab7ed423e5ca449f08ac7346bc776
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: 'Creating World: 1 x 1 tiles, tile size: 256'
+    m_operationType: 0
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101333
+    m_operationDateTime: 9/17/2023 10:13:33 AM
+    scriptableObjectAssetGUID: 6b4cddbc3e4f8d440be9b00f56acc494
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: BlendHeight - 2k Island 5
+    m_operationType: 4
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101333
+    m_operationDateTime: 9/17/2023 10:15:30 AM
+    scriptableObjectAssetGUID: 3eff083df02d1ab44aeb6070d8e9ddcd
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Gaia Pro Sample-Texture(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101333
+    m_operationDateTime: 9/17/2023 10:15:31 AM
+    scriptableObjectAssetGUID: d7615beff86ccd741b0e3f28d58e42c9
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Multiple Spawners (4)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101333
+    m_operationDateTime: 9/17/2023 10:15:36 AM
+    scriptableObjectAssetGUID: a0c04aa9767e54d4d96f162feaa5f811
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: 'Creating World: 1 x 1 tiles, tile size: 512'
+    m_operationType: 0
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101710
+    m_operationDateTime: 9/17/2023 10:17:11 AM
+    scriptableObjectAssetGUID: d6da1da18739cca4481230d4c97682af
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: BlendHeight - 2k Island 5
+    m_operationType: 4
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101710
+    m_operationDateTime: 9/17/2023 10:17:23 AM
+    scriptableObjectAssetGUID: 67092830d82b2f4418099955cfda84f6
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Gaia Pro Sample-Texture(Clone)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101710
+    m_operationDateTime: 9/17/2023 10:17:24 AM
+    scriptableObjectAssetGUID: 82d71dd06be07364783a860155711041
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: Spawning - Multiple Spawners (4)
+    m_operationType: 7
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 101710
+    m_operationDateTime: 9/17/2023 10:17:29 AM
+    scriptableObjectAssetGUID: 861e262c00a2284408dadf367f1a334b
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: 'Creating World: 1 x 1 tiles, tile size: 512'
+    m_operationType: 0
+    m_isActive: 1
+    m_affectedTerrainNames:
+    - Terrain_0_0-20230917 - 213738
+    m_operationDateTime: 9/17/2023 9:37:38 PM
+    scriptableObjectAssetGUID: 7a69b1ccf59c9e646bedaa673e4da9f0
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  - m_description: 'Updating World To: 1 x 1 tiles, tile size: 512'
+    m_operationType: 14
+    m_isActive: 1
+    m_affectedTerrainNames: []
+    m_operationDateTime: 9/17/2023 10:06:43 PM
+    scriptableObjectAssetGUID: 2394173abc0158546b3322ee2633f97c
+    m_isFoldedOut: 0
+    sessionPlaybackState: 1
+    m_terrainsFoldedOut: 0
+    m_serializedExternalAction: 
+  m_terrainMinMaxCache: []
+  m_bakedMaskCacheEntries: []
+  m_worldBiomeMaskSettings: {fileID: 0}
