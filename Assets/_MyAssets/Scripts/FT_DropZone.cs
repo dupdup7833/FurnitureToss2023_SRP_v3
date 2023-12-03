@@ -316,26 +316,27 @@ public class FT_DropZone : MonoBehaviour
         int currentStylePoints = 0;
         FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
         string scoreMessageToReturn = "";
+        
+         // don't check for any other bonuses if doing force drop
+        if (!ForceDrop(forceDrop, ref currentStylePoints, ref scoreMessageToReturn)) {
+            DistanceBonus(ref currentStylePoints, ref scoreMessageToReturn);
+            
+            DoubleDrop(ref currentStylePoints, ref scoreMessageToReturn);
 
+            BankShot(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+            
+            ComboDrop(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
 
-        DistanceBonus(ref currentStylePoints, ref scoreMessageToReturn);
+            /// ADDITIVE BONUSES - added to any previous caculation      
+            DroneDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
 
-        ComboDrop(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+            MiniATVDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
 
-        DoubleDrop(ref currentStylePoints, ref scoreMessageToReturn);
+            HangGliderBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
+        
+            VelocityBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn, velocityOfThrow );
 
-        BankShot(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
-
-        /// ADDITIVE BONUSES - added to any previous caculation
-        ForceDrop(forceDrop, ref currentStylePoints, ref scoreMessageToReturn);
-
-        DroneDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
-
-        MiniATVDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
-
-        HangGliderBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
-
-        VelocityBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn, velocityOfThrow );
+        }
 
 
 
@@ -360,7 +361,7 @@ public class FT_DropZone : MonoBehaviour
         if (distance > 3)
         {
             currentStylePoints += (int)(distanceMultiplierBonus * distance);
-            scoreMessageToReturn += "Distance Bonus +" + currentStylePoints + "\n";
+            scoreMessageToReturn += "Distance Bonus! +" + currentStylePoints + "\n";
             FT_Steamworks_Integration.LongDistanceThrow100Points();
         }
         else
@@ -378,7 +379,7 @@ public class FT_DropZone : MonoBehaviour
             // it must have been hit by another game piece, so combo bonus.
             Debug.Log("Time since it was touched:" + (Time.time - ftGamePiece.lastTouchedTime));
             currentStylePoints += comboBonus;
-            scoreMessageToReturn += "\nCombo Bonus! +" + comboBonus;
+            scoreMessageToReturn += "Combo Bonus! +" + comboBonus+"\n";
         }
         else
         {
@@ -396,20 +397,23 @@ public class FT_DropZone : MonoBehaviour
             FT_GameController.GC.lastPlacement = Time.time;
             if (timeBetween < 1)
             {
-                scoreMessageToReturn += "\nDouble Drop Bonus! +" + doubleDropBonus;
+                scoreMessageToReturn += "Double Drop Bonus! +" + doubleDropBonus+"\n";
                 currentStylePoints += doubleDropBonus;
             }
         }
     }
 
-    private void ForceDrop(bool forceDrop, ref int currentStylePoints, ref string scoreMessageToReturn)
+    private bool ForceDrop(bool forceDrop, ref int currentStylePoints, ref string scoreMessageToReturn)
     {
         // Force Drop
         if (forceDrop)
         {
-            scoreMessageToReturn += "\nForce Grab Drop +" + forceGrabDrop;
+            
+            scoreMessageToReturn += "Force Grab Drop Bonus! +" + forceGrabDrop+"\n";
             currentStylePoints += forceGrabDrop;
+            return true;
         }
+        return false;
     }
 
     private void BankShot(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn)
@@ -419,12 +423,12 @@ public class FT_DropZone : MonoBehaviour
             int surfacesTouched = ftGamePiece.surfacesTouchedSet.Count;
             if (surfacesTouched == 1)
             {
-                scoreMessageToReturn += "\nSingle Bank Shot Bonus! +" + bankShotBonus;
+                scoreMessageToReturn += "Single Bank Shot Bonus! +" + bankShotBonus+"\n";
                 currentStylePoints += bankShotBonus;
             }
             else
             {
-                scoreMessageToReturn += "\n" + surfacesTouched + " Surface Bank Shot Bonus! +" + (surfacesTouched * bankShotBonus) * 2;
+                scoreMessageToReturn +=  surfacesTouched + " Surface Bank Shot Bonus! +" + (surfacesTouched * bankShotBonus) * 2+"\n";
                 currentStylePoints += (surfacesTouched * bankShotBonus) * 2;
                 // Debug.Log("Surfaces touched: " + ftGamePiece.surfacesTouchedSet);
                 foreach (string surface in ftGamePiece.surfacesTouchedSet)
@@ -470,9 +474,11 @@ public class FT_DropZone : MonoBehaviour
         Debug.Log("Velocity : "+velocity+(velocity > velocityThresholdBonus)+velocityThresholdBonus);
         if (velocity > velocityThresholdBonus) {
             Debug.Log("Velocity Bonus occured");    
-             scoreMessageToReturn += "Velocity Bonus +" + velocityBonus + " \n";
+             scoreMessageToReturn += "Velocity Bonus! +" + velocityBonus + " \n";
              currentStylePoints += velocityBonus;
+            
 
         }
+         
     }
 }

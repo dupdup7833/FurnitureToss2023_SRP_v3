@@ -55,6 +55,7 @@ public class FT_GamePiece : MonoBehaviour
         HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
         grabbable.enabled = true;
         this.PlacePiece(false);
+        AddGlassSphere();
 
     }
     public void ResetPosition()
@@ -92,6 +93,8 @@ public class FT_GamePiece : MonoBehaviour
                 Debug.Log("Reparenting to original parent!");
                 this.transform.SetParent(originalParent);
             }
+
+            RemoveGlassSphere();
         }
         else
         {
@@ -106,6 +109,15 @@ public class FT_GamePiece : MonoBehaviour
         CalculateSurfacesTouched(other);
         // TODO keep a set of surfaces touched.  Insure that a surface is only counted once.  Exclude certain surfaces like the floor.
 
+    }
+
+    private void RemoveGlassSphere() {
+        this.transform.Find("GlassSphereHolder").GetComponent<MeshRenderer>().enabled = false;
+
+    }
+
+    private void AddGlassSphere() {
+        this.transform.Find("GlassSphereHolder").GetComponent<MeshRenderer>().enabled = true;
     }
 
     private void CalculateSurfacesTouched(Collision other)
