@@ -56,6 +56,7 @@ public class FT_GamePiece : MonoBehaviour
         grabbable.enabled = true;
         this.PlacePiece(false);
         AddGlassSphere();
+   
 
     }
     public void ResetPosition()
@@ -95,6 +96,7 @@ public class FT_GamePiece : MonoBehaviour
             }
 
             RemoveGlassSphere();
+            
         }
         else
         {
@@ -113,11 +115,13 @@ public class FT_GamePiece : MonoBehaviour
 
     private void RemoveGlassSphere() {
         this.transform.Find("GlassSphereHolder").GetComponent<MeshRenderer>().enabled = false;
+        this.GetComponent<SphereCollider>().enabled = false;
 
     }
 
     private void AddGlassSphere() {
         this.transform.Find("GlassSphereHolder").GetComponent<MeshRenderer>().enabled = true;
+        this.GetComponent<SphereCollider>().enabled = true;
     }
 
     private void CalculateSurfacesTouched(Collision other)
@@ -131,4 +135,6 @@ public class FT_GamePiece : MonoBehaviour
             //  Debug.Log("ADDED: " + lastItemTouched.name);
         }
     }
+
+ 
 }

@@ -7,6 +7,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 460492928006132420, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.40745556
+      objectReference: {fileID: 0}
+    - target: {fileID: 460492928006132420, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.40046096
+      objectReference: {fileID: 0}
+    - target: {fileID: 460492928006132420, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.20214735
+      objectReference: {fileID: 0}
+    - target: {fileID: 460492928006132420, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.003
+      objectReference: {fileID: 0}
+    - target: {fileID: 460492928006132420, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.0232
+      objectReference: {fileID: 0}
+    - target: {fileID: 460492928006132420, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.0555
+      objectReference: {fileID: 0}
     - target: {fileID: 2041422501830588045, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -105,15 +129,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6672923011037364985, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
       propertyPath: m_Radius
-      value: 0.1741535
+      value: 0.12937208
+      objectReference: {fileID: 0}
+    - target: {fileID: 6672923011037364985, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: m_Center.x
+      value: -0.010000005
       objectReference: {fileID: 0}
     - target: {fileID: 6672923011037364985, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
       propertyPath: m_Center.y
-      value: 0.01
+      value: 0.01000002
       objectReference: {fileID: 0}
     - target: {fileID: 6672923011037364985, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
       propertyPath: m_Center.z
-      value: 0.15
+      value: 0.054049775
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7569123816956708785, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
