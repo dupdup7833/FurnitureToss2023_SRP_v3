@@ -33,12 +33,20 @@ public class FT_GamePiece : MonoBehaviour
     public HashSet<string> objectNamesToNotCountForSurfacesTouchedSet = new HashSet<string> { "Physics LeftHand", "Physics RightHand", "FloorCollision", "FT_Painting1_GamePiece(Clone)" };
 
     public string pieceName;
+
+    private AudioSource bounceSound;
+
+    private Rigidbody rb;
+  
     // Start is called before the first frame update
     void Start()
     {
         this.startingPositionVec3 = this.transform.localPosition;
         this.startingScaleVec3 = this.transform.localScale;
         this.originalParent = this.transform.parent;
+        this.bounceSound = this.GetComponent<AudioSource>();
+        this.rb = GetComponent<Rigidbody>();
+
 
     }
 
@@ -50,7 +58,7 @@ public class FT_GamePiece : MonoBehaviour
     {
         this.transform.localPosition = this.startingPositionVec3;
         this.transform.localScale = this.startingScaleVec3;
-        Rigidbody rb = GetComponent<Rigidbody>();
+        
         rb.isKinematic = false;
         HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
         grabbable.enabled = true;
@@ -82,7 +90,7 @@ public class FT_GamePiece : MonoBehaviour
         // destroy the components so it can't be picked up again
         if (isItPlaced)
         {
-            Rigidbody rb = GetComponent<Rigidbody>();
+             
             rb.isKinematic = true;
             Debug.Log("Game piece is placed");
             this.gamePiecePlaced = true;
@@ -109,10 +117,19 @@ public class FT_GamePiece : MonoBehaviour
     {
         //  Debug.Log("Last Item Touched: " + other.gameObject.name);
         CalculateSurfacesTouched(other);
+        MakeBounceSound();
         // TODO keep a set of surfaces touched.  Insure that a surface is only counted once.  Exclude certain surfaces like the floor.
 
     }
 
+    private void MakeBounceSound() {
+        Debug.Log("velocity"+rb.velocity.magnitude);
+        if (!this.bounceSound.isPlaying  ) {
+            this.bounceSound.volume = Mathf.Clamp(rb.velocity.magnitude / 4.0f,0f,1f);
+            this.bounceSound.Play();
+        }
+    }
+ 
     private void RemoveGlassSphere() {
         this.transform.Find("GlassSphereHolder").GetComponent<MeshRenderer>().enabled = false;
         this.GetComponent<SphereCollider>().enabled = false;
