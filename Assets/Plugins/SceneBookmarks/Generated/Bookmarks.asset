@@ -22,3 +22,10 @@ MonoBehaviour:
       is2D: 0
       size: 1.6232576
       thumbnail: {fileID: 0}
+    - name: Shelf
+      position: {x: 1.5529138, y: 0.7025318, z: -57.399452}
+      rotation: {x: 31.730137, y: 97.46009, z: -0.000024091392}
+      isOrthographic: 1
+      is2D: 0
+      size: 1.0749791
+      thumbnail: {fileID: 0}
