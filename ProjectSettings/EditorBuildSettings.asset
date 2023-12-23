@@ -20,6 +20,9 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_MyAssets/Scenes/ArchViz6_FurnToss_SRP_2023.unity
     guid: fbe50356f5d92c44e8cd867bfea1f014
+  - enabled: 0
+    path: Assets/ArchVizPRO Interior Vol.5/3D SCENE/AVP5_VR.unity
+    guid: bb1d27639d4da9640b1373dcd2f2b9d2
   m_configObjects:
     Unity.XR.OpenVR.Settings: {fileID: 11400000, guid: cb4c7a39b35eaa6479cc314ba1e15469, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8c6418da8f266334ca6ee2e550c481b6, type: 2}

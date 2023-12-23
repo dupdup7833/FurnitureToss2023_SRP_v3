@@ -39,7 +39,7 @@ TagManager:
   - FT_GamePieces
   - PostProcessing
   - FT_DropZones
-  - 
+  - BlockDirectionalLight
   - 
   - 
   - Grabbable
