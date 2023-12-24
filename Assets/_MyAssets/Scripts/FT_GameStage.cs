@@ -26,8 +26,8 @@ public class FT_GameStage : MonoBehaviour
 
     public AudioClip AudioStageComplete;
 
-    public FT_LeaderboardUI_ESL StylePointsLeaderboard;
-    public FT_LeaderboardUI_ESL TimeLeaderboard;
+    //public FT_LeaderboardUI_ESL StylePointsLeaderboard;
+    //public FT_LeaderboardUI_ESL TimeLeaderboard;
 
     public List<GameObject> projectileGamePieces = new List<GameObject>();
 
@@ -167,20 +167,20 @@ public class FT_GameStage : MonoBehaviour
     private void UploadScoresToSteamLeaderboard()
     {
         Debug.Log("TimerVal" + timerVal);
-        StylePointsLeaderboard.UploadScoreToLeaderboard(FT_GameController.GC.stylePointsTotal);
-        StartCoroutine(UploadAfterSeconds(1));
+        //StylePointsLeaderboard.UploadScoreToLeaderboard(FT_GameController.GC.stylePointsTotal);
+        //StartCoroutine(UploadAfterSeconds(1));
 
     }
 
     IEnumerator UploadAfterSeconds(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        TimeLeaderboard.UploadScoreToLeaderboard((int)timerVal);
+       // TimeLeaderboard.UploadScoreToLeaderboard((int)timerVal);
     }
     IEnumerator RefreshLeaderboards(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-        StylePointsLeaderboard.FetchLeaderboard();
+        //StylePointsLeaderboard.FetchLeaderboard();
         // TimeLeaderboard.FetchLeaderboard();
 
         StartCoroutine(RefreshSecondLeaderboard(1));
@@ -191,7 +191,7 @@ public class FT_GameStage : MonoBehaviour
     {
 
         yield return new WaitForSeconds(seconds);
-        TimeLeaderboard.FetchLeaderboard();
+        //TimeLeaderboard.FetchLeaderboard();
 
     }
     public void CheckIfComplete()
