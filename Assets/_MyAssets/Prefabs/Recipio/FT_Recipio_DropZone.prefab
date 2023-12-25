@@ -108,6 +108,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: gamePiece
+      value: 
+      objectReference: {fileID: 764805063824578451, guid: e6ae71dc039a92944aebd8a4b9a436d7, type: 3}
+    - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: secondaryDropZone
       value: 
       objectReference: {fileID: 0}

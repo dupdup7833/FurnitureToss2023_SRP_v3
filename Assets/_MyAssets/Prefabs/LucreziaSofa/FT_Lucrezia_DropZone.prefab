@@ -76,6 +76,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: gamePiece
+      value: 
+      objectReference: {fileID: 870375207741267734, guid: 3130c62455fd4e442b9eac171b025925, type: 3}
+    - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: scoreResult
       value: 
       objectReference: {fileID: 7983890004586456781}

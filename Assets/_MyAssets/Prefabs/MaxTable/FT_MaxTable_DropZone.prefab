@@ -71,6 +71,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: gamePiece
+      value: 
+      objectReference: {fileID: 870375207741267734, guid: 9f3723ba0cbf6164e99cea65125f1d1a, type: 3}
     - target: {fileID: 2951870539218565413, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_Name
       value: FT_MaxTable_DropZone

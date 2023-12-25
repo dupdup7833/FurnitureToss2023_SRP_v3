@@ -40,7 +40,8 @@ public class FT_GameStage : MonoBehaviour
         SetupGamePieces(false);
         SetupDropZones(false);
         SetupDrones(false);
-        StartCoroutine(RefreshLeaderboards(2));
+        //StartCoroutine(RefreshLeaderboards(2));
+        ShowAllDropZoneSolutions();
 
 
     }
@@ -102,8 +103,31 @@ public class FT_GameStage : MonoBehaviour
             //Debug.Log("disabling:" + stagePieces[i].name);
         }
     }
-    // Update is called once per frame
 
+    private void ShowAllDropZoneSolutions()
+    {
+        int howManyToSolve = 5;
+        List<int> randomNumberList = new List<int>();
+        int randomNumber;
+        do
+        {
+            randomNumber = Random.Range(0, dropZones.Length);
+            if (!randomNumberList.Contains(randomNumber))
+            {
+                randomNumberList.Add(randomNumber);
+                 Debug.Log("random number "+randomNumber+" list length "+randomNumberList.Count);
+            }
+        } while (randomNumberList.Count < howManyToSolve);
+
+       // Debug.Log("random numbers"+randomNumberList.Values);
+        for (int i = 0; i < dropZones.Length; i++)
+        {
+            if (!randomNumberList.Contains(i))
+            {
+                dropZones[i].GetComponent<FT_DropZone>().ShowDropZoneSolution();
+            }
+        }
+    }
 
     private void SetupObstacles(bool startObstacles)
     {
@@ -150,7 +174,7 @@ public class FT_GameStage : MonoBehaviour
     {
         Debug.Log("EndStage");
         stageInProgress = false;
-         SetupObstacles(false);
+        SetupObstacles(false);
         if (AudioStageComplete)
         {
             if (SFXPlayer.Instance) SFXPlayer.Instance.PlaySFX(AudioStageComplete, FT_GameController.playerTransform.position);
@@ -175,7 +199,7 @@ public class FT_GameStage : MonoBehaviour
     IEnumerator UploadAfterSeconds(float seconds)
     {
         yield return new WaitForSeconds(seconds);
-       // TimeLeaderboard.UploadScoreToLeaderboard((int)timerVal);
+        // TimeLeaderboard.UploadScoreToLeaderboard((int)timerVal);
     }
     IEnumerator RefreshLeaderboards(float seconds)
     {

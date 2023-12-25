@@ -43,6 +43,8 @@ public class FT_DropZone : MonoBehaviour
     // Transforms to act as start and end markers for the journey.
     public GameObject dropZone;
     public GameObject guideGamePiece;
+
+    public FT_GamePiece gamePiece;
     private Mesh guideGamePieceMesh;
 
     // Movement speed in units per second.
@@ -292,6 +294,29 @@ public class FT_DropZone : MonoBehaviour
 
 
     }
+
+    public void ShowDropZoneSolution() {
+        guideGamePiece.SetActive(true);
+       Renderer ren =  guideGamePiece.GetComponent<Renderer>();
+       Renderer gamePieceRen;
+       Material[] mat = ren.sharedMaterials;
+       if (gamePiece!=null) {
+          gamePieceRen = gamePiece.GetComponent<Renderer>();
+           
+         for (int i=0; i<gamePieceRen.sharedMaterials.Length; i++) {
+            mat[i] = gamePieceRen.sharedMaterials[i];
+
+          }
+          ren.sharedMaterials = mat;
+          dropZone.SetActive(false);
+            
+       }
+       
+      
+    }       
+ 
+ 
+ 
     private void ShowScore(string scoreMessageIn)
     {
 
