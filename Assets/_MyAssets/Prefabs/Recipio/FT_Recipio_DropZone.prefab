@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2398222780404834530, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.026
+      value: -0.025
       objectReference: {fileID: 0}
     - target: {fileID: 2398222780404834530, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_LocalPosition.z
@@ -114,7 +114,7 @@ PrefabInstance:
     - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: secondaryDropZone
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8705922035727997939, guid: a15e8a4b57dd2f344b1bbf8c33ebda64, type: 3}
     - target: {fileID: 2951870539218565413, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_Name
       value: FT_Recipio_DropZone

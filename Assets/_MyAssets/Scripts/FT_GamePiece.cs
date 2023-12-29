@@ -39,7 +39,7 @@ public class FT_GamePiece : MonoBehaviour
     private Rigidbody rb;
   
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         this.startingPositionVec3 = this.transform.localPosition;
         this.startingScaleVec3 = this.transform.localScale;
@@ -130,7 +130,7 @@ public class FT_GamePiece : MonoBehaviour
         }
     }
  
-    private void RemoveGlassSphere() {
+    public void RemoveGlassSphere() {
         this.transform.Find("GlassSphereHolder").GetComponent<MeshRenderer>().enabled = false;
         this.GetComponent<SphereCollider>().enabled = false;
 

@@ -9,6 +9,7 @@ using HurricaneVR.Framework.Core;
 using HurricaneVR.Framework.Core.Grabbers;
 using TMPro;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 public class FT_DropZone : MonoBehaviour
 {
@@ -44,8 +45,14 @@ public class FT_DropZone : MonoBehaviour
     public GameObject dropZone;
     public GameObject guideGamePiece;
 
-    public FT_GamePiece gamePiece;
+    public GameObject colliders;
+
+    public GameObject gamePiece;
+
+    private GameObject gamePieceInst;
     private Mesh guideGamePieceMesh;
+
+    public GameObject solvedGamePiece;
 
     // Movement speed in units per second.
 
@@ -71,12 +78,17 @@ public class FT_DropZone : MonoBehaviour
         //     obstacle.SetObstacleStatus(false);
         //  }
         snapToZoneSound = GetComponent<AudioSource>();
+
+       // SetUpRevealedSolutionGameObject();
+        
         //  if (secondaryDropZone != null)
         //  {
         //       secondaryDropZone.dropZone.SetActive(false);
         //  }
 
     }
+
+
 
 
 
@@ -108,7 +120,7 @@ public class FT_DropZone : MonoBehaviour
                 else if (!grabbable.IsBeingHeld)
                 {
                     // it is not held a entering the zone, so snap to drop zone
-                    
+
                     DroppedIntoTheZone(other, grabbable);
                 }
                 else if (grabbable.IsBeingHeld)
@@ -134,7 +146,8 @@ public class FT_DropZone : MonoBehaviour
 
     private void AddToRigidbodiesInZone(GameObject other)
     {
-        if (!rigidbodiesInZone.ContainsKey(other.gameObject.GetInstanceID())) {
+        if (!rigidbodiesInZone.ContainsKey(other.gameObject.GetInstanceID()))
+        {
             rigidbodiesInZone.Add(other.gameObject.GetInstanceID(), other.GetComponent<Rigidbody>());
             Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
         }
@@ -211,7 +224,7 @@ public class FT_DropZone : MonoBehaviour
     {
         Debug.Log("Snap to Zone");
 
-       float velocityOfThrow = otherGameObject.GetComponent<Rigidbody>().velocity.magnitude;
+        float velocityOfThrow = otherGameObject.GetComponent<Rigidbody>().velocity.magnitude;
 
         snapToZoneSound.Play(0);
         objectPlaced = true;
@@ -264,7 +277,7 @@ public class FT_DropZone : MonoBehaviour
         FT_GameController.GC.currentStage.CheckIfComplete();
 
         // commented out to try and use the hud version instead
-       // ShowScore(scoreMessage);
+        // ShowScore(scoreMessage);
 
 
         // invoke the snapped event so that listening scoring tiles can turn on
@@ -288,42 +301,128 @@ public class FT_DropZone : MonoBehaviour
         {
             dropZone.SetActive(false);
             this.gameObject.SetActive(false);
+            this.solvedGamePiece.SetActive(false);
+            dropZone.GetComponent<Renderer>().enabled = true;
         }
         objectPlaced = false;
         rigidbodiesInZone.Clear();
 
 
     }
+    private void SetUpRevealedSolutionGameObject()
+    {
 
-    public void ShowDropZoneSolution() {
-        guideGamePiece.SetActive(true);
-       Renderer ren =  guideGamePiece.GetComponent<Renderer>();
-       Renderer gamePieceRen;
-       Material[] mat = ren.sharedMaterials;
-       if (gamePiece!=null) {
-          gamePieceRen = gamePiece.GetComponent<Renderer>();
-           
-         for (int i=0; i<gamePieceRen.sharedMaterials.Length; i++) {
-            mat[i] = gamePieceRen.sharedMaterials[i];
+        if (gamePiece != null)
+        {
 
-          }
-          ren.sharedMaterials = mat;
-          dropZone.SetActive(false);
-            
-       }
-       
-      
-    }       
- 
- 
- 
+            gamePieceInst = Instantiate(gamePiece, guideGamePiece.transform.position, guideGamePiece.transform.rotation);
+
+            //gamePieceInst.Start();
+            gamePieceInst.GetComponent<FT_GamePiece>().RemoveGlassSphere();
+            gamePieceInst.transform.localScale = guideGamePiece.transform.localScale;
+
+
+            //  gamePieceInst.PlacePiece(true);
+
+/*
+            BoxCollider[] colliders = gamePiece.GetComponents<BoxCollider>();
+            Debug.Log("game piece " + gamePiece.gameObject.name + " collider count " + colliders.Length);
+
+            //solvedGamePiece.SetRedgamePiece.GetComponent<Mesh>();
+
+            Renderer gamePieceRen = gamePiece.GetComponent<Renderer>();
+            Renderer solvedGamePieceRen = solvedGamePiece.GetComponent<Renderer>();
+
+            Material[] mat = solvedGamePieceRen.sharedMaterials;
+            for (int i = 0; i < gamePieceRen.sharedMaterials.Length; i++)
+            {
+                mat[i] = gamePieceRen.sharedMaterials[i];
+
+            }
+            solvedGamePieceRen.sharedMaterials = mat;
+*/
+        }
+
+    }
+
+
+    public static Mesh CloneMesh(Mesh source)
+    {
+        Mesh mesh = new Mesh();
+
+        // Using unity combine mesh to combine a single mesh into another one, making a full copy.
+        CombineInstance[] instancesToCombine = new CombineInstance[source.subMeshCount];
+        for (int i = 0; i < source.subMeshCount; i++)
+        {
+            instancesToCombine[i] = new CombineInstance()
+            {
+                mesh = source,
+                subMeshIndex = i,
+                lightmapScaleOffset = new Vector4(1, 1, 0, 0),
+                realtimeLightmapScaleOffset = new Vector4(1, 1, 0, 0),
+                transform = Matrix4x4.identity
+            };
+        }
+        mesh.CombineMeshes(instancesToCombine, false, false, false);
+
+        mesh.name = source.name;
+        return mesh;
+    }
+
+    public void ShowDropZoneSolution()
+    {
+        if (solvedGamePiece!=null) {
+            this.solvedGamePiece.SetActive(true);
+            objectPlaced = true;
+             dropZone.GetComponent<Renderer>().enabled = false;
+        }
+
+        //Renderer ren =  guideGamePiece.GetComponent<Renderer>();
+        //Renderer gamePieceRen;
+        //Material[] mat = ren.sharedMaterials;
+        /* this.gameObject.SetActive(false);
+         FT_GamePiece gamePieceInst;
+         if (gamePiece != null)
+         {
+              gamePieceInst = (FT_GamePiece)Instantiate(gamePiece, guideGamePiece.transform.position, guideGamePiece.transform.rotation);
+             Debug.Log("game stage: "+FT_GameController.GC.currentStage+" ");
+             Debug.Log("+FT_GameController.GC.currentStage.revealedGamePieceList"+FT_GameController.GC.currentStage.revealedGamePieceList);
+             FT_GameController.GC.currentStage.revealedGamePieceList.Add(gamePieceInst);
+             gamePieceInst.Start();
+             gamePieceInst.GetComponent<FT_GamePiece>().RemoveGlassSphere();
+             gamePieceInst.transform.localScale = guideGamePiece.transform.localScale;
+             gamePieceInst.PlacePiece(true);
+
+             this.objectPlaced = true;
+             Destroy(gamePieceInst);
+             // gamePieceRen = gamePiece.GetComponent<Renderer>();
+
+             // for (int i=0; i<gamePieceRen.sharedMaterials.Length; i++) {
+             //  mat[i] = gamePieceRen.sharedMaterials[i];
+
+             //}
+             //ren.sharedMaterials = mat;
+
+
+         }
+         Debug.Log("drop zone is :" + dropZone);
+         // turn off drop zone pad
+         dropZone.SetActive(false);
+         dropZone.GetComponent<Renderer>().enabled = false;
+         Debug.Log("drop zone status is: " + dropZone.activeSelf);
+ */
+
+    }
+
+
+
     private void ShowScore(string scoreMessageIn)
     {
 
         StartCoroutine(HideAfterSeconds(durationOfScoringMessageSeconds, scoreResult.gameObject));
-       GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
+        GameObject cam = GameObject.FindGameObjectWithTag("MainCamera");
         scoreResult.transform.LookAt(cam.transform);
-        scoreResult.transform.position =  cam.transform.position+new Vector3(2,0,0);
+        scoreResult.transform.position = cam.transform.position + new Vector3(2, 0, 0);
         scoreResult.SetText(scoreMessageIn);
         scoreResult.gameObject.SetActive(true);
         Quaternion q = scoreResult.transform.rotation;
@@ -341,15 +440,16 @@ public class FT_DropZone : MonoBehaviour
         int currentStylePoints = 0;
         FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
         string scoreMessageToReturn = "";
-        
-         // don't check for any other bonuses if doing force drop
-        if (!ForceDrop(forceDrop, ref currentStylePoints, ref scoreMessageToReturn)) {
+
+        // don't check for any other bonuses if doing force drop
+        if (!ForceDrop(forceDrop, ref currentStylePoints, ref scoreMessageToReturn))
+        {
             DistanceBonus(ref currentStylePoints, ref scoreMessageToReturn);
-            
+
             DoubleDrop(ref currentStylePoints, ref scoreMessageToReturn);
 
             BankShot(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
-            
+
             ComboDrop(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
 
             /// ADDITIVE BONUSES - added to any previous caculation      
@@ -358,8 +458,8 @@ public class FT_DropZone : MonoBehaviour
             MiniATVDropBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
 
             HangGliderBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn);
-        
-            VelocityBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn, velocityOfThrow );
+
+            VelocityBonus(ref currentStylePoints, ftGamePiece, ref scoreMessageToReturn, velocityOfThrow);
 
         }
 
@@ -404,7 +504,7 @@ public class FT_DropZone : MonoBehaviour
             // it must have been hit by another game piece, so combo bonus.
             Debug.Log("Time since it was touched:" + (Time.time - ftGamePiece.lastTouchedTime));
             currentStylePoints += comboBonus;
-            scoreMessageToReturn += "Combo Bonus! +" + comboBonus+"\n";
+            scoreMessageToReturn += "Combo Bonus! +" + comboBonus + "\n";
         }
         else
         {
@@ -422,7 +522,7 @@ public class FT_DropZone : MonoBehaviour
             FT_GameController.GC.lastPlacement = Time.time;
             if (timeBetween < 1)
             {
-                scoreMessageToReturn += "Double Drop Bonus! +" + doubleDropBonus+"\n";
+                scoreMessageToReturn += "Double Drop Bonus! +" + doubleDropBonus + "\n";
                 currentStylePoints += doubleDropBonus;
             }
         }
@@ -433,8 +533,8 @@ public class FT_DropZone : MonoBehaviour
         // Force Drop
         if (forceDrop)
         {
-            
-            scoreMessageToReturn += "Force Grab Drop Bonus! +" + forceGrabDrop+"\n";
+
+            scoreMessageToReturn += "Force Grab Drop Bonus! +" + forceGrabDrop + "\n";
             currentStylePoints += forceGrabDrop;
             return true;
         }
@@ -448,12 +548,12 @@ public class FT_DropZone : MonoBehaviour
             int surfacesTouched = ftGamePiece.surfacesTouchedSet.Count;
             if (surfacesTouched == 1)
             {
-                scoreMessageToReturn += "Single Bank Shot Bonus! +" + bankShotBonus+"\n";
+                scoreMessageToReturn += "Single Bank Shot Bonus! +" + bankShotBonus + "\n";
                 currentStylePoints += bankShotBonus;
             }
             else
             {
-                scoreMessageToReturn +=  surfacesTouched + " Surface Bank Shot Bonus! +" + (surfacesTouched * bankShotBonus) * 2+"\n";
+                scoreMessageToReturn += surfacesTouched + " Surface Bank Shot Bonus! +" + (surfacesTouched * bankShotBonus) * 2 + "\n";
                 currentStylePoints += (surfacesTouched * bankShotBonus) * 2;
                 // Debug.Log("Surfaces touched: " + ftGamePiece.surfacesTouchedSet);
                 foreach (string surface in ftGamePiece.surfacesTouchedSet)
@@ -488,22 +588,26 @@ public class FT_DropZone : MonoBehaviour
 
     }
 
-    private void HangGliderBonus(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn) {
-        if (FT_GameController.GC.currentVehicle!=null && FT_GameController.GC.currentVehicle.displayName=="Hang Glider") {
+    private void HangGliderBonus(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn)
+    {
+        if (FT_GameController.GC.currentVehicle != null && FT_GameController.GC.currentVehicle.displayName == "Hang Glider")
+        {
             scoreMessageToReturn += "Hang Glider Drop Bonus +" + hangGliderDropBonus + " \n";
             currentStylePoints += hangGliderDropBonus;
         }
     }
 
-    private void VelocityBonus(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn, float velocity) {
-        Debug.Log("Velocity : "+velocity+(velocity > velocityThresholdBonus)+velocityThresholdBonus);
-        if (velocity > velocityThresholdBonus) {
-            Debug.Log("Velocity Bonus occured");    
-             scoreMessageToReturn += "Velocity Bonus! +" + velocityBonus + " \n";
-             currentStylePoints += velocityBonus;
-            
+    private void VelocityBonus(ref int currentStylePoints, FT_GamePiece ftGamePiece, ref string scoreMessageToReturn, float velocity)
+    {
+        Debug.Log("Velocity : " + velocity + (velocity > velocityThresholdBonus) + velocityThresholdBonus);
+        if (velocity > velocityThresholdBonus)
+        {
+            Debug.Log("Velocity Bonus occured");
+            scoreMessageToReturn += "Velocity Bonus! +" + velocityBonus + " \n";
+            currentStylePoints += velocityBonus;
+
 
         }
-         
+
     }
 }

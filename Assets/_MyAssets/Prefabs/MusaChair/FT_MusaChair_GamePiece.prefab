@@ -135,6 +135,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -0.06
       objectReference: {fileID: 0}
+    - target: {fileID: 6944900698111898649, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 109cf51672683b948995536cae36ce66, type: 2}
     m_RemovedComponents:
     - {fileID: 2041422503623216258, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
@@ -178,7 +182,7 @@ BoxCollider:
   m_GameObject: {fileID: 5003292523783097659}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.44098097, y: 0.35726744, z: 0.1384797}
   m_Center: {x: 0.0029772967, y: -0.1970419, z: 0.14454758}
@@ -191,7 +195,7 @@ BoxCollider:
   m_GameObject: {fileID: 5003292523783097659}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.44098097, y: 0.08757298, z: 0.49279124}
   m_Center: {x: 0.0029772967, y: 0.03361299, z: -0.08414498}

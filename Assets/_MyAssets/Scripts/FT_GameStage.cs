@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using HurricaneVR.Framework.Core.Utils;
+using UnityEditor.ProjectWindowCallback;
 public class FT_GameStage : MonoBehaviour
 {
     public GameObject[] gamePieces;
+
+    public List<FT_GamePiece> revealedGamePieceList = new();
     public GameObject[] dropZones;
 
     public GameObject[] drones;
@@ -26,6 +29,14 @@ public class FT_GameStage : MonoBehaviour
 
     public AudioClip AudioStageComplete;
 
+    public enum GameType
+    {
+        Full,
+        Quick5
+    }
+
+    GameType gameType = GameType.Quick5;
+
     //public FT_LeaderboardUI_ESL StylePointsLeaderboard;
     //public FT_LeaderboardUI_ESL TimeLeaderboard;
 
@@ -41,7 +52,7 @@ public class FT_GameStage : MonoBehaviour
         SetupDropZones(false);
         SetupDrones(false);
         //StartCoroutine(RefreshLeaderboards(2));
-        ShowAllDropZoneSolutions();
+
 
 
     }
@@ -72,6 +83,8 @@ public class FT_GameStage : MonoBehaviour
             Destroy(item);
 
         }
+
+        
 
     }
 
@@ -109,17 +122,22 @@ public class FT_GameStage : MonoBehaviour
         int howManyToSolve = 5;
         List<int> randomNumberList = new List<int>();
         int randomNumber;
+
         do
         {
             randomNumber = Random.Range(0, dropZones.Length);
             if (!randomNumberList.Contains(randomNumber))
             {
-                randomNumberList.Add(randomNumber);
-                 Debug.Log("random number "+randomNumber+" list length "+randomNumberList.Count);
+                if (!dropZones[randomNumber].GetComponent<FT_DropZone>().isSecondaryDropZone)
+                {
+                    // don't add anything to subset that is a secondary drop zone.
+                    randomNumberList.Add(randomNumber);
+                }
+                Debug.Log("random number " + randomNumber + " list length " + randomNumberList.Count);
             }
         } while (randomNumberList.Count < howManyToSolve);
 
-       // Debug.Log("random numbers"+randomNumberList.Values);
+        // Debug.Log("random numbers"+randomNumberList.Values);
         for (int i = 0; i < dropZones.Length; i++)
         {
             if (!randomNumberList.Contains(i))
@@ -166,7 +184,8 @@ public class FT_GameStage : MonoBehaviour
         FT_GameController.GC.currentStage = this;
         FT_GameController.GC.stylePointsTotal = 0;
         Debug.Log("current stage " + FT_GameController.GC.currentStage + " " + this);
-        SteamLeaderboards.Init();
+        //SteamLeaderboards.Init();
+        ShowAllDropZoneSolutions();
 
     }
 
@@ -227,7 +246,14 @@ public class FT_GameStage : MonoBehaviour
         {
             if (!dropZones[i].GetComponent<FT_DropZone>().objectPlaced)
             {
-                //                Debug.Log("Found one not placed");
+
+                if (gameType == GameType.Quick5 && (
+                    dropZones[i].GetComponent<FT_DropZone>().isSecondaryDropZone || dropZones[i].GetComponent<FT_DropZone>().obstacle != null))
+                {
+                    // don't chekck for secondary or obstacle drop zones for quick games.
+                    continue;
+                }
+                Debug.Log("Found one not placed" + dropZones[i].gameObject.name);
                 anyLeftToPlace = true;
             }
             else
