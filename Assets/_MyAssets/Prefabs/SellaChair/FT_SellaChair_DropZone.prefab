@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 80839196098540030, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2951870539218565410, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -54,7 +58,7 @@ PrefabInstance:
     - target: {fileID: 2951870539218565411, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: gamePiece
       value: 
-      objectReference: {fileID: 2570089979918520313, guid: 55239091377b51f4ca21d547b2362470, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 2951870539218565413, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_Name
       value: FT_SellaChair_DropZone
@@ -99,9 +103,45 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.0049
       objectReference: {fileID: 0}
+    - target: {fileID: 3410669855206643836, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Size.x
+      value: 1.009815
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410669855206643836, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Size.y
+      value: 0.4613644
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410669855206643836, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Size.z
+      value: 0.43143073
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410669855206643836, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Center.x
+      value: -0.0007365942
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410669855206643836, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Center.y
+      value: 0.23039222
+      objectReference: {fileID: 0}
+    - target: {fileID: 3410669855206643836, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Center.z
+      value: 0.002045229
+      objectReference: {fileID: 0}
     - target: {fileID: 7500165675442980810, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 4300000, guid: fc90a5ed2d46659498bb4b9fb31c5586, type: 3}
+    - target: {fileID: 7519811804169327743, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 0905aba6b22f9434e8cd82f5337f8276, type: 2}
+    - target: {fileID: 8167450301901515093, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: fc90a5ed2d46659498bb4b9fb31c5586, type: 3}
+    - target: {fileID: 8324479127505863613, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.501
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78a106dd44ac887419c048b1ffb55a4b, type: 3}
