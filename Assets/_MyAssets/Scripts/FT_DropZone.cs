@@ -299,119 +299,32 @@ public class FT_DropZone : MonoBehaviour
         }
         else
         {
-            dropZone.SetActive(false);
-            this.gameObject.SetActive(false);
-            this.solvedGamePiece.SetActive(false);
-            dropZone.GetComponent<Renderer>().enabled = true;
+            Debug.Log("turning off solved game Piece");
+            solvedGamePiece.SetActive(false);
+            dropZone.SetActive(true);
         }
         objectPlaced = false;
         rigidbodiesInZone.Clear();
 
 
     }
-    private void SetUpRevealedSolutionGameObject()
-    {
-
-        if (gamePiece != null)
-        {
-
-            gamePieceInst = Instantiate(gamePiece, guideGamePiece.transform.position, guideGamePiece.transform.rotation);
-
-            //gamePieceInst.Start();
-            gamePieceInst.GetComponent<FT_GamePiece>().RemoveGlassSphere();
-            gamePieceInst.transform.localScale = guideGamePiece.transform.localScale;
-
-
-            //  gamePieceInst.PlacePiece(true);
-
-/*
-            BoxCollider[] colliders = gamePiece.GetComponents<BoxCollider>();
-            Debug.Log("game piece " + gamePiece.gameObject.name + " collider count " + colliders.Length);
-
-            //solvedGamePiece.SetRedgamePiece.GetComponent<Mesh>();
-
-            Renderer gamePieceRen = gamePiece.GetComponent<Renderer>();
-            Renderer solvedGamePieceRen = solvedGamePiece.GetComponent<Renderer>();
-
-            Material[] mat = solvedGamePieceRen.sharedMaterials;
-            for (int i = 0; i < gamePieceRen.sharedMaterials.Length; i++)
-            {
-                mat[i] = gamePieceRen.sharedMaterials[i];
-
-            }
-            solvedGamePieceRen.sharedMaterials = mat;
-*/
-        }
-
-    }
-
-
-    public static Mesh CloneMesh(Mesh source)
-    {
-        Mesh mesh = new Mesh();
-
-        // Using unity combine mesh to combine a single mesh into another one, making a full copy.
-        CombineInstance[] instancesToCombine = new CombineInstance[source.subMeshCount];
-        for (int i = 0; i < source.subMeshCount; i++)
-        {
-            instancesToCombine[i] = new CombineInstance()
-            {
-                mesh = source,
-                subMeshIndex = i,
-                lightmapScaleOffset = new Vector4(1, 1, 0, 0),
-                realtimeLightmapScaleOffset = new Vector4(1, 1, 0, 0),
-                transform = Matrix4x4.identity
-            };
-        }
-        mesh.CombineMeshes(instancesToCombine, false, false, false);
-
-        mesh.name = source.name;
-        return mesh;
-    }
+    
 
     public void ShowDropZoneSolution()
     {
         if (solvedGamePiece!=null) {
-            this.solvedGamePiece.SetActive(true);
+            solvedGamePiece.SetActive(true);
             objectPlaced = true;
-             dropZone.GetComponent<Renderer>().enabled = false;
+            Debug.Log("turning on guide for ");
+           // dropZone.GetComponent<Renderer>().enabled = false;
+           dropZone.SetActive(false);
         }
+    }
 
-        //Renderer ren =  guideGamePiece.GetComponent<Renderer>();
-        //Renderer gamePieceRen;
-        //Material[] mat = ren.sharedMaterials;
-        /* this.gameObject.SetActive(false);
-         FT_GamePiece gamePieceInst;
-         if (gamePiece != null)
-         {
-              gamePieceInst = (FT_GamePiece)Instantiate(gamePiece, guideGamePiece.transform.position, guideGamePiece.transform.rotation);
-             Debug.Log("game stage: "+FT_GameController.GC.currentStage+" ");
-             Debug.Log("+FT_GameController.GC.currentStage.revealedGamePieceList"+FT_GameController.GC.currentStage.revealedGamePieceList);
-             FT_GameController.GC.currentStage.revealedGamePieceList.Add(gamePieceInst);
-             gamePieceInst.Start();
-             gamePieceInst.GetComponent<FT_GamePiece>().RemoveGlassSphere();
-             gamePieceInst.transform.localScale = guideGamePiece.transform.localScale;
-             gamePieceInst.PlacePiece(true);
-
-             this.objectPlaced = true;
-             Destroy(gamePieceInst);
-             // gamePieceRen = gamePiece.GetComponent<Renderer>();
-
-             // for (int i=0; i<gamePieceRen.sharedMaterials.Length; i++) {
-             //  mat[i] = gamePieceRen.sharedMaterials[i];
-
-             //}
-             //ren.sharedMaterials = mat;
-
-
-         }
-         Debug.Log("drop zone is :" + dropZone);
-         // turn off drop zone pad
-         dropZone.SetActive(false);
-         dropZone.GetComponent<Renderer>().enabled = false;
-         Debug.Log("drop zone status is: " + dropZone.activeSelf);
- */
-
+    public void TurnOffSolution() {
+        if (solvedGamePiece!=null) {
+        solvedGamePiece?.SetActive(false);
+        }
     }
 
 
@@ -439,10 +352,11 @@ public class FT_DropZone : MonoBehaviour
     {
         int currentStylePoints = 0;
         FT_GamePiece ftGamePiece = otherGameObject.GetComponent<FT_GamePiece>();
+        
         string scoreMessageToReturn = "";
 
         // don't check for any other bonuses if doing force drop
-        if (!ForceDrop(forceDrop, ref currentStylePoints, ref scoreMessageToReturn))
+        if (!ForceDrop(forceDrop, ref currentStylePoints, ref scoreMessageToReturn) && !ftGamePiece.projectileGamePiece)
         {
             DistanceBonus(ref currentStylePoints, ref scoreMessageToReturn);
 

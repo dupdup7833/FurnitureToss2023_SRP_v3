@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using HurricaneVR.Framework.Core.Utils;
-using UnityEditor.ProjectWindowCallback;
+//using UnityEditor.ProjectWindowCallback;
+using HeathenEngineering.SteamworksIntegration;
 public class FT_GameStage : MonoBehaviour
 {
+    public LeaderboardManager fivePieceTimeLeaderboard;
     public GameObject[] gamePieces;
 
     public List<FT_GamePiece> revealedGamePieceList = new();
@@ -107,19 +109,32 @@ public class FT_GameStage : MonoBehaviour
         // dropZones = GameObject.FindGameObjectsWithTag("FT_DropZone");
         for (int i = 0; i < dropZones.Length; i++)
         {
-            dropZones[i].SetActive(showDropZones);
-            if (showDropZones)
-            {
+            //dropZones[i].SetActive(showDropZones);
+           //if (showDropZones)
+           // {
                 dropZones[i].GetComponent<FT_DropZone>().ResetDropZone();
-            }
+           // }
 
             //Debug.Log("disabling:" + stagePieces[i].name);
         }
     }
 
+   public void TurnOffAllSolutions() {
+         for (int i = 0; i < dropZones.Length; i++)
+        {
+            //dropZones[i].SetActive(showDropZones);
+           //if (showDropZones)
+           // {
+                dropZones[i].GetComponent<FT_DropZone>().TurnOffSolution();
+           // }
+
+            //Debug.Log("disabling:" + stagePieces[i].name);
+        }
+   }
+
     private void ShowAllDropZoneSolutions()
     {
-        int howManyToSolve = 5;
+        int howManyToSolve = 0;
         List<int> randomNumberList = new List<int>();
         int randomNumber;
 
@@ -137,7 +152,8 @@ public class FT_GameStage : MonoBehaviour
             }
         } while (randomNumberList.Count < howManyToSolve);
 
-        // Debug.Log("random numbers"+randomNumberList.Values);
+          Debug.Log("random numbers"+randomNumberList);
+        
         for (int i = 0; i < dropZones.Length; i++)
         {
             if (!randomNumberList.Contains(i))
@@ -175,6 +191,7 @@ public class FT_GameStage : MonoBehaviour
     public void StartStage()
     {
         stageInProgress = true;
+        TurnOffAllSolutions();
         SetupGamePieces(true);
         SetupDropZones(true);
         SetupDrones(true);
@@ -201,6 +218,9 @@ public class FT_GameStage : MonoBehaviour
 
         //SteamLeaderboards.UpdateScore(FT_GameController.GC.stylePointsTotal);
         UploadScoresToSteamLeaderboard();
+        fivePieceTimeLeaderboard.UploadScore((int)timerVal);
+        fivePieceTimeLeaderboard.GetTopEntries(10);
+        //fivePieceTimeLeaderboard.evtQueryCompleted.Invoke(); 
 
     }
 

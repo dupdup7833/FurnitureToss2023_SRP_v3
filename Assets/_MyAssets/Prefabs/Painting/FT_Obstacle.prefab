@@ -218,6 +218,8 @@ MonoBehaviour:
   obstacle: {fileID: 9163741870732112823}
   stoppingDistance: 0.25
   speed: 3
+  isActive: 0
+  isAlwaysVisible: 0
 --- !u!1 &9163741870732112823
 GameObject:
   m_ObjectHideFlags: 0
@@ -284,7 +286,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6ff6a533b32c41941a001eedc076e0d0, type: 2}
+  - {fileID: 2100000, guid: 6829f1a3c96c5d042801cbb3374242f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

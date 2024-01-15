@@ -59,7 +59,8 @@ public class FT_GamePiece : MonoBehaviour
         this.transform.localPosition = this.startingPositionVec3;
         this.transform.localScale = this.startingScaleVec3;
         
-        rb.isKinematic = false;
+        if (rb!=null) {rb.isKinematic = false;}
+
         HVRGrabbable grabbable = GetComponent<HVRGrabbable>();
         grabbable.enabled = true;
         this.PlacePiece(false);
@@ -123,8 +124,8 @@ public class FT_GamePiece : MonoBehaviour
     }
 
     private void MakeBounceSound() {
-        Debug.Log("velocity"+rb.velocity.magnitude);
-        if (!this.bounceSound.isPlaying  ) {
+        Debug.Log("make bounce"+this.bounceSound+" rb "+rb+" this "+gameObject.name);
+        if (!this.bounceSound.isPlaying  && rb!=null) {
             this.bounceSound.volume = Mathf.Clamp(rb.velocity.magnitude / 4.0f,0f,1f);
             this.bounceSound.Play();
         }
