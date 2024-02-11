@@ -126,7 +126,7 @@ public class FT_GenericControlledObj : MonoBehaviour
     {
         if (other.gameObject.tag == "FT_GamePiece")
         {
-            HandleParentingCapturedObjects(other, shouldRelease: false);
+           // HandleParentingCapturedObjects(other, shouldRelease: false);
         }
 
 
@@ -135,7 +135,8 @@ public class FT_GenericControlledObj : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        HandleParentingCapturedObjects(other, shouldRelease: true);
+        //HandleParentingCapturedObjects(other, shouldRelease: true);
+         
 
     }
 

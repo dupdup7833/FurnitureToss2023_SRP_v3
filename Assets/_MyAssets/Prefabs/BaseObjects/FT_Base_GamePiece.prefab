@@ -100,6 +100,7 @@ GameObject:
   - component: {fileID: 6253225758816123589}
   - component: {fileID: 6672923011037364985}
   - component: {fileID: 2885837180115015455}
+  - component: {fileID: 5007132627315280284}
   m_Layer: 14
   m_Name: FT_Base_GamePiece
   m_TagString: FT_GamePiece
@@ -463,3 +464,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &5007132627315280284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2041422501830879917}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10345b4efa150014fb756a02715a4231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Poses: []
+  CounterScale: {x: 1, y: 1, z: 1}
+  UseRendererBounds: 1
+  ScaleSize: 0
+  SocketScale: 1
+  ScaleOverride: {fileID: 0}
+  SocketedClip: {fileID: 0}
+  UnsocketedClip: {fileID: 0}
+  LinkedGrabbables: []
+  SocketOrientation: {fileID: 0}
+  Tags:
+    Tags: {fileID: 11400000, guid: cd71ccb6d5bcdd645a0126a9d689b414, type: 2}
+    _data: 11

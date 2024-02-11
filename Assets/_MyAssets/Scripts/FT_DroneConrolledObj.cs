@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HurricaneVR.Framework.Core.Grabbers;
 
 public class FT_DroneConrolledObj : FT_GenericControlledObj
 {
@@ -63,13 +64,16 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
 
     private void EjectAllCarriedRigidBodies()
     {
-        foreach (Rigidbody rb in rigidbodiesInZone.Values)
+       HVRSocket socket = this.GetComponentInChildren<HVRSocket>();
+       socket.ForceRelease();
+       /* foreach (Rigidbody rb in rigidbodiesInZone.Values)
         {
             rb.gameObject.transform.SetParent(rb.gameObject.GetComponent<FT_GamePiece>().originalParent);
             rb.GetComponent<Rigidbody>().isKinematic = false;
             rb.AddForce(Vector3.forward * ejectForce);
 
         }
+        */
     }
 
     private void OnCollisionEnter(Collision other)
