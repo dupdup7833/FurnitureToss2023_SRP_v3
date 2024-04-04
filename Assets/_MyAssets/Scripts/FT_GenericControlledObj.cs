@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using HurricaneVR.Framework.Core.Grabbers;
 
 public class FT_GenericControlledObj : MonoBehaviour
 {
@@ -121,32 +122,34 @@ public class FT_GenericControlledObj : MonoBehaviour
 
         playerPrevParent = this.transform.parent;
     }
-
+/*
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "FT_GamePiece")
         {
-           // HandleParentingCapturedObjects(other, shouldRelease: false);
+             HandleParentingCapturedObjects(other, shouldRelease: false);
         }
 
 
 
     }
-
+*/
+/*
     private void OnTriggerExit(Collider other)
     {
-        //HandleParentingCapturedObjects(other, shouldRelease: true);
+         HandleParentingCapturedObjects(other, shouldRelease: true);
          
 
     }
-
-
+*/
+/*
     protected virtual void RemoveFromRigidbodiesInZone(GameObject other)
     {
         rigidbodiesInZone.Remove(other.GetInstanceID());
         Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
     }
-
+*/
+/*
 
     protected virtual void AddToRigidbodiesInZone(GameObject other)
     {
@@ -154,6 +157,8 @@ public class FT_GenericControlledObj : MonoBehaviour
         other.GetComponent<Rigidbody>().mass = 0.1f;
         //        Debug.Log("rigidbodiesInZone" + rigidbodiesInZone.Count);
     }
+    */
+    /*
     private void HandleParentingCapturedObjects(Collider other, bool shouldRelease)
     {
         if (other.gameObject.tag == "FT_GamePiece" && !other.GetComponent<FT_GamePiece>().IsGamePiecePlaced())
@@ -175,7 +180,7 @@ public class FT_GenericControlledObj : MonoBehaviour
             }
         }
     }
-
+*/
 
 
 
@@ -415,6 +420,8 @@ public class FT_GenericControlledObj : MonoBehaviour
         }
         audioSource.volume = idleVolume;
         ControlVignette(0);
+        HVRSocket socket = this.GetComponentInChildren<HVRSocket>();
+        socket.ForceRelease();
 
 
     }

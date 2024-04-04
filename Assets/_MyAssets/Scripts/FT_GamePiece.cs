@@ -124,11 +124,12 @@ public class FT_GamePiece : MonoBehaviour
     }
 
     private void MakeBounceSound() {
-        Debug.Log("make bounce"+this.bounceSound+" rb "+rb+" this "+gameObject.name);
+        /*Debug.Log("make bounce"+this.bounceSound+" rb "+rb+" this "+gameObject.name);
         if (!this.bounceSound.isPlaying  && rb!=null) {
             this.bounceSound.volume = Mathf.Clamp(rb.velocity.magnitude / 4.0f,0f,1f);
             this.bounceSound.Play();
         }
+        */
     }
  
     public void RemoveGlassSphere() {

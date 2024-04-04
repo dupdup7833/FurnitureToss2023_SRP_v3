@@ -134,7 +134,7 @@ public class FT_GameStage : MonoBehaviour
 
     private void ShowAllDropZoneSolutions()
     {
-        int howManyToSolve = 0;
+        int howManyToSolve = 5;
         List<int> randomNumberList = new List<int>();
         int randomNumber;
 

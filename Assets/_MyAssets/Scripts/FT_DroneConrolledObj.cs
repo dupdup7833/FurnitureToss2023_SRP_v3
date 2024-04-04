@@ -52,7 +52,19 @@ public class FT_DroneConrolledObj : FT_GenericControlledObj
         }
     }
 
+private void OnTriggerEnter(Collider other)
+    {
+        
 
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+         
+         
+
+    }
 
 
     public override void ReleasePlayerFromMountPosition()
