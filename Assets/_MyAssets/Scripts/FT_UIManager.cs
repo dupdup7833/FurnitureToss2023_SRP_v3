@@ -24,7 +24,7 @@ public class FT_UIManager : DemoUIManager
     // HURRICANE UPGRADE NOTE: Had to change the accessibility of Start in DemoUIManager
     public override void Start()
     {
-        base.Start();
+       base.Start();
         //FT_GameController.GC.LoadPlayerOptions();
         SetUpGraphicsQuality();
         SetUpComfortSetting();

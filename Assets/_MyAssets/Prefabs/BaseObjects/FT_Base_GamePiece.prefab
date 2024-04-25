@@ -333,6 +333,12 @@ MonoBehaviour:
   UnSocketed:
     m_PersistentCalls:
       m_Calls: []
+  DistanceGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  DistanceReleased:
+    m_PersistentCalls:
+      m_Calls: []
   GrabPointsMeta: []
   Grabbers: []
   HandGrabbers: []
@@ -480,7 +486,7 @@ MonoBehaviour:
   CounterScale: {x: 1, y: 1, z: 1}
   UseRendererBounds: 1
   ScaleSize: 0
-  SocketScale: 1
+  SocketScale: 0.2
   ScaleOverride: {fileID: 0}
   SocketedClip: {fileID: 0}
   UnsocketedClip: {fileID: 0}

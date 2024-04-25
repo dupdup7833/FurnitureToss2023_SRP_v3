@@ -107,6 +107,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: -0.0001283288
       objectReference: {fileID: 0}
+    - target: {fileID: 5007132627315280284, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
+      propertyPath: SocketScale
+      value: 0.25
+      objectReference: {fileID: 0}
     - target: {fileID: 6672923011037364985, guid: 797bebe6caacf70448091b8b93ad8fd9, type: 3}
       propertyPath: m_Radius
       value: 0.58
