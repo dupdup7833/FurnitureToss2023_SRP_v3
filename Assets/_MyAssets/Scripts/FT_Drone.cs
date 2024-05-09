@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -7,6 +8,8 @@ public class FT_Drone : MonoBehaviour
 {
     Transform player;
     UnityEngine.AI.NavMeshAgent agent;
+
+    public Transform wanderTerritory;
     int startingHealthPoints = 3;
     int healthPoints;
 
@@ -16,9 +19,11 @@ public class FT_Drone : MonoBehaviour
     Vector3 startingPosition;
     Quaternion startingRotation;
 
-    Vector3 topCorner = new Vector3(4.58f, 0.91f, -63.66f);
-    Vector3 bottomCorner = new Vector3(-2.6f, 0.91f, -86.80f);
+    public Vector3 currentDestination;
+   // Vector3 topCorner = new Vector3(69.4100037,30.7800007,84.5);
+   // Vector3 bottomCorner = new Vector3(-2.6f, 0.91f, -86.80f);
 
+    
 
 
 
@@ -39,6 +44,7 @@ public class FT_Drone : MonoBehaviour
         // rb.isKinematic = true;
 
         agent = this.GetComponent<UnityEngine.AI.NavMeshAgent>();
+        this.ResetDrone();
 
     }
 
@@ -118,11 +124,34 @@ public class FT_Drone : MonoBehaviour
 
     void FindASpotOnTheLevel()
     {
-///        Debug.Log("FindASpotOnTheLevel: "+Time.time);
-        Vector3 newDestination = new Vector3(Random.Range(bottomCorner.x, topCorner.x), topCorner.y, Random.Range(bottomCorner.z, topCorner.z));
-        agent.SetDestination(newDestination);
+       Debug.Log("Drone: FindASpotOnTheLevel: "+Time.time);
+       // Vector3 newDestination = new Vector3(Random.Range(bottomCorner.x, topCorner.x), topCorner.y, Random.Range(bottomCorner.z, topCorner.z));
+       currentDestination   
+        = new Vector3(this.transform.position.x+Random.Range(-150,50), this.transform.position.y, this.transform.position.z+Random.Range(-50,50));
+        if (IsDestinationValid(currentDestination)) {
+            agent.SetDestination(currentDestination);
+        } else {
+            FindASpotOnTheLevel();
+        }
+        
     }
 
+
+public bool IsDestinationValid(Vector3 destination)
+    {
+        NavMeshHit hit;
+        // Cast a ray from current position to the destination
+        if (NavMesh.Raycast(agent.transform.position, destination, out hit, NavMesh.AllAreas))
+        {
+            // If a path is found, return true
+            return true;
+        }
+        else
+        {
+            // If no path is found, return false
+            return false;
+        }
+    }
 
     //// NOT USED YET
     void Evade(Transform target)
