@@ -21,6 +21,7 @@ TagManager:
   - Water
   - FT_Vehicle
   - FT_Obstacle
+  - FT_Weapon
   layers:
   - Default
   - TransparentFX

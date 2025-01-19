@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: FT_Socketables
   m_EditorClassIdentifier: 
   _socketables:
-  - FurniturePiece
+  - FT_FurniturePiece
+  - FT_Weapon
   - 
   - 
   - 
@@ -44,4 +45,4 @@ MonoBehaviour:
   - 
   - 
   - 
-  - 
+  Identifier: FT_Socketables

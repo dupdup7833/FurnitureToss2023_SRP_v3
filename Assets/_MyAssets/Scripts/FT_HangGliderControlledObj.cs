@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class FT_HangGliderControlledObj : FT_GenericControlledObj
 {
-    public float downwardSpeed = -.2f;
-    public float forwardSpeed = 1.2f;
+    public float downwardSpeed = -.3f;
+    public float forwardSpeed = 1.5f;
 
     public override void Move(Vector3 movement, float speed)
     {
