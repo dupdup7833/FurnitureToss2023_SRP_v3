@@ -346,7 +346,7 @@ public class FT_GenericControlledObj : MonoBehaviour
         if (Physics.Raycast(frontChecker.transform.position, transform.TransformDirection(tiltedForward), out hit, frontDistanceCheck, layerMask))
         {
 
-            //            Debug.Log("Did Hit >" + hit.transform.gameObject.tag);
+                      Debug.Log("Did Hit >" + hit.transform.gameObject.tag+"   "+hit.transform.gameObject.name);
             if (hit.transform.gameObject.tag == validSurfaceTag)
             {
                 isClearForward = true;

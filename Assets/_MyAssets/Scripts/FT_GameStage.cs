@@ -261,7 +261,7 @@ public class FT_GameStage : MonoBehaviour
     {
         piecesPlaced = 0;
         bool anyLeftToPlace = false;
-        //Debug.Log("Dropzones.Lenth: "+dropZones.Length);
+        Debug.Log("Dropzones.Lenth: "+dropZones.Length);
         for (int i = 0; i < dropZones.Length; i++)
         {
             if (!dropZones[i].GetComponent<FT_DropZone>().objectPlaced)

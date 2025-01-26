@@ -124,7 +124,7 @@ public class FT_Drone : MonoBehaviour
 
     void FindASpotOnTheLevel()
     {
-       Debug.Log("Drone: FindASpotOnTheLevel: "+Time.time);
+      // Debug.Log("Drone: FindASpotOnTheLevel: "+Time.time);
        // Vector3 newDestination = new Vector3(Random.Range(bottomCorner.x, topCorner.x), topCorner.y, Random.Range(bottomCorner.z, topCorner.z));
        currentDestination   
         = new Vector3(this.transform.position.x+Random.Range(-150,50), this.transform.position.y, this.transform.position.z+Random.Range(-50,50));

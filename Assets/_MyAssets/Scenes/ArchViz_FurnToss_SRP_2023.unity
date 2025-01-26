@@ -15403,6 +15403,12 @@ MonoBehaviour:
   UnSocketed:
     m_PersistentCalls:
       m_Calls: []
+  DistanceGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  DistanceReleased:
+    m_PersistentCalls:
+      m_Calls: []
   GrabPointsMeta:
   - {fileID: 1575119961}
   Grabbers: []
@@ -23301,6 +23307,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   UnSocketed:
+    m_PersistentCalls:
+      m_Calls: []
+  DistanceGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  DistanceReleased:
     m_PersistentCalls:
       m_Calls: []
   GrabPointsMeta: []
@@ -56754,6 +56766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736ef5d7c56607a4c926f711209a53dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  target: {fileID: 0}
 --- !u!195 &1252001619
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -68469,6 +68482,12 @@ MonoBehaviour:
   UnSocketed:
     m_PersistentCalls:
       m_Calls: []
+  DistanceGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  DistanceReleased:
+    m_PersistentCalls:
+      m_Calls: []
   GrabPointsMeta: []
   Grabbers: []
   HandGrabbers: []
@@ -69096,6 +69115,12 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   UnSocketed:
+    m_PersistentCalls:
+      m_Calls: []
+  DistanceGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  DistanceReleased:
     m_PersistentCalls:
       m_Calls: []
   GrabPointsMeta: []
@@ -93337,6 +93362,12 @@ MonoBehaviour:
   UnSocketed:
     m_PersistentCalls:
       m_Calls: []
+  DistanceGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  DistanceReleased:
+    m_PersistentCalls:
+      m_Calls: []
   GrabPointsMeta: []
   Grabbers: []
   HandGrabbers: []
@@ -93643,7 +93674,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8109019167463174305, guid: 7e5b32c767afb4c43b270cc314d89361, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8109019167463174306, guid: 7e5b32c767afb4c43b270cc314d89361, type: 3}
       propertyPath: m_RootOrder

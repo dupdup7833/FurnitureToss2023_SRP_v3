@@ -12,9 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c7c695651be6f340a32fef05a7d7c9a, type: 3}
   m_Name: Content Builder Config
   m_EditorClassIdentifier: 
-  username: 
-  rememberPassword: 0
-  password: 
+  username: Xb4GQtvGjpKZqPeA5BU52eso1POEYm42Nk356zuPb1OsO1M0n0MZGB/C15gHYXfJzW/KCfafX3d/XeoVQUozqEPRtdH3M8eFdiNUBOKitkRl+vhLk6ZWsbP6DsQqABRK
+  rememberPassword: 1
+  password: 8adFBLM8MKz+udUGw4W/putP3qthmMZtaDN6T/al1V0aw9JWqh/r0JvSDzPPq4JqBJJIm/Npb8qIZWzL3QsAbUyQ73+hUyvLh9SxTeVWlp/DjrQjm1ltQQsK0w/tjPfX
   targetApp: 2269090
   lastDepot: 0
-  depots: []
+  depots:
+  - name: FurnitureTossVR_Windows
+    id: 2269091
+    target: 5
+    extension: 
